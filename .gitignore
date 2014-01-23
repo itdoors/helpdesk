@@ -1,6 +1,8 @@
 cache/*
 log/*
-web/uploads/*
+web/uploads/*,
+.idea,
+.idea/*
 helpdesk/config/databases.yml
 helpdesk/config/ProjectConfiguration.class.php
 helpdesk/config/prope.ini

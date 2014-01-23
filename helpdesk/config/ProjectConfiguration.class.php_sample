@@ -15,8 +15,9 @@ class ProjectConfiguration extends sfProjectConfiguration
   public function setup()
   {
     $this->enablePlugins('sfDoctrinePlugin');
-    $this->setWebDir($this->getRootDir().'/../httpdocs/');
-    //$this->setWebDir($this->getRootDir().'/../');
+    $this->setWebDir($this->getRootDir().'/../web/');
+    $this->setCacheDir($this->getRootDir().'/../cache/');
+    $this->setLogDir($this->getRootDir().'/../log/');
     sfConfig::set('sf_app_i18n_dir', sfConfig::get('sf_root_dir').DIRECTORY_SEPARATOR.'i18n');
     sfConfig::set('sf_app_template_dir', sfConfig::get('sf_root_dir').DIRECTORY_SEPARATOR.'templates');
     $this->enablePlugins('sfDoctrineGuardPlugin');
