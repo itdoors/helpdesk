@@ -1,0 +1,11 @@
+default:
+  http_metas:
+    content-type: text/html
+  
+
+  has_layout:     true
+  layout:         layout
+  
+secureSuccess:
+  has_layout:     true
+  layout:         layout

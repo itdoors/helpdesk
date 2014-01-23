@@ -1,0 +1,1 @@
+<?php echo $claim->getStuff()?><a href="<?php echo url_for('claimopened/editstuffajax').'/id/'.$claim->id; ?>" id="dispatcher_change_stuff_button" class="sf_admin_action_edit"><?php echo __('Change')?></a>

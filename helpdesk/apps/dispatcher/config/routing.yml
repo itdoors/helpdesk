@@ -1,0 +1,65 @@
+departments:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                departments
+    module:               departmentsorganization
+    prefix_path:          /departmentsorganization
+    column:               id
+    with_wildcard_routes: true
+
+changepass:
+  url:   /changepass
+  param: { module: changepass, action: index }
+
+messages:
+  url:   /messages
+  param: { module: messages, action: show } 
+  
+history:
+  url:   /history
+  param: { module: history, action: index } 
+  
+  
+# default rules
+homepage:
+  url:   /
+  param: { module: claimopened, action: index }
+
+# generic rules
+# please, remove them by adding more specific rules
+default_index:
+  url:   /:module
+  param: { action: index }
+
+default:
+  url:   /:module/:action/*
+
+sf_guard_signin:
+  url:   /login
+  param: { module: sfGuardAuth, action: signin }
+
+sf_guard_signout:
+  url:   /logout
+  param: { module: sfGuardAuth, action: signout }   
+
+sf_guard_password:
+  url:   /request_password
+  param: { module: sfGuardAuth, action: password }
+  
+claimopened:
+  url:   /claimopened
+  param: { module: claimopened, action: index } 
+  
+claimclosed:
+  url:   /claimclosed
+  param: { module: claimclosed, action: index } 
+  
+logout:
+  url:   /logout
+  param: { module: sfGuardAuth, action: signout } 
+  
+ 
+  
+
+  
+

@@ -1,0 +1,115 @@
+# # Populate this file with data to be loaded by your ORM's *:data-load task.
+# # You can create multiple files in this directory (i.e. 010_users.yml,
+# # 020_articles.yml, etc) which will be loaded in alphabetical order.
+# # 
+# # See documentation for your ORM's *:data-load task for more information.
+# 
+# User:
+#   fabien:
+#     username: fabien
+#     password: changeme
+#     name:     Fabien Potencier
+#     email:    fabien.potencier@symfony-project.com
+#   kris:
+#     username: Kris.Wallsmith
+#     password: changeme
+#     name:     Kris Wallsmith
+#     email:    kris.wallsmith@symfony-project.com
+
+region:
+   r1:
+     name: АР Крим
+     square: 26.10 
+     population: 2.13
+   r2:
+     name: Вінницька область
+     square: 26.50
+     population: 1.78
+   r3:
+     name: Волинська область
+     square: 20.00
+     population: 1.00
+   r4:
+     name: Дніпропетровська область
+     square: 31.90
+     population: 3.57
+   r5:
+     name: Донецька область
+     square: 26.50
+     population: 5.39
+   r6:
+     name: Житомирська область
+     square: 29.90
+     population: 1.39
+   r7:
+     name: Закарпатська область
+     square: 12.80
+     population: 1.25
+   r8:
+     name: Івано-Франківська область
+     square: 13.90
+     population: 1.40    
+   r9:
+     name: Київська область
+     square: 28.12
+     population: 1.72
+   r10:
+     name: Кіровоградська область
+     square: 24.00
+     population: 1.00
+   r11:
+     name: Луганська область
+     square: 26.00
+     population: 2.00
+   r12:
+     name: Львівська область
+     square: 21.00
+     population: 2.00
+   r13:
+     name: Миколаївська область
+     square: 24.00
+     population: 1.00
+   r14:
+     name: Одеська область
+     square: 33.00
+     population: 2.00          
+   r15:
+     name: Полтавська область
+     square: 28.00
+     population: 1.00          
+   r16:
+     name: Рівненська область
+     square: 20.10
+     population: 1.15
+   r17:
+     name: Сумська область
+     square: 23.00
+     population: 1.00
+   r18:
+     name: Тернопільська область
+     square: 13.00
+     population: 1.00     
+   r19:
+     name: Харківська область
+     square: 31.40
+     population: 3.00
+   r20:
+     name: Херсонська область
+     square: 28.00
+     population: 1.00
+   r21:
+     name: Хмельницька область
+     square: 20.00
+     population: 1.00                 
+   r22:
+     name: Черкаська область
+     square: 20.90
+     population: 1.39                 
+   r23:
+     name: Чернівецька область
+     square: 8.00
+     population: 1.00                        
+   r24:
+     name: Чернігівська область
+     square: 31.00
+     population: 1.00                          

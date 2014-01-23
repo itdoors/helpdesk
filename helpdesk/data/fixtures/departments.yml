@@ -1,0 +1,418 @@
+# # Populate this file with data to be loaded by your ORM's *:data-load task.
+# # You can create multiple files in this directory (i.e. 010_users.yml,
+# # 020_articles.yml, etc) which will be loaded in alphabetical order.
+# # 
+# # See documentation for your ORM's *:data-load task for more information.
+# 
+# User:
+#   fabien:
+#     username: fabien
+#     password: changeme
+#     name:     Fabien Potencier
+#     email:    fabien.potencier@symfony-project.com
+#   kris:
+#     username: Kris.Wallsmith
+#     password: changeme
+#     name:     Kris Wallsmith
+#     email:    kris.wallsmith@symfony-project.com
+
+departments:
+   de1:
+     name: вул. Іллінська, 8
+     square: 2443  
+     mpk: 1010282k
+     City: ci1
+     address: вул. Іллінська, 8
+     contract: contr1
+   de2:
+     name: пл. Контрактова, 4
+     square: 724.8  
+     mpk: 1010283k
+     City: ci1
+     address: пл. Контрактова, 4
+     contract: contr1
+   de3:
+     name: вул. Червоноармійська, 23
+     square: 325.1  
+     mpk: 1010353k
+     City: ci1
+     address: вул. Червоноармійська, 23
+     contract: contr1
+   de4:
+     name: вул. Червоноармійська, 132
+     square: 105.9 
+     mpk: 1010272k
+     City: ci1
+     address: вул. Червоноармійська, 132
+     contract: contr1        
+   de5:
+     name: вул. Прорізна, 18/1
+     square: 194  
+     mpk: 1010271k
+     City: ci1
+     address:  вул. Прорізна, 18/1
+     contract: contr1
+   de6:
+     name: пр-кт Миру, 13
+     square: 170.20
+     mpk: 1010216k
+     City: ci1
+     address: пр-кт Миру, 13 
+     contract: contr1
+   de7:
+     name: вул. Княжий Затон, 11
+     square: 152
+     mpk: 1010276k
+     City: ci1
+     address: вул. Княжий Затон, 11
+     contract: contr1     
+   de8:
+     name:  вул. Саксаганського, 44
+     square: 234
+     mpk: 1010277k
+     City: ci1
+     address: вул. Саксаганського, 44
+     contract: contr1        
+   de9:
+     name:  вул. Щербакова, 37
+     square: 218
+     mpk: 1010215k
+     City: ci1
+     address: вул. Щербакова, 37
+     contract: contr1    
+   de10:
+     name:  вул. Багговутівська, 1
+     square: 650
+     mpk: 1010278k
+     City: ci1
+     address: вул. Багговутівська, 1
+     contract: contr1                  
+   de11:
+     name:  вул. Срібнокільська, 20
+     square: 33.50
+     mpk: 1010279k
+     City: ci1
+     address: вул. Срібнокільська, 20
+     contract: contr1 
+   de12:
+     name:  пр-кт Перемоги, 136
+     square: 54.10
+     mpk: 1010280k
+     City: ci1
+     address: пр-кт Перемоги, 136
+     contract: contr1     
+   de13:
+     name:  вул. Куренівська/Скляренка, 5/7
+     square: 51.40
+     mpk: 1010281k
+     City: ci1
+     address: вул. Куренівська/Скляренка, 5/7
+     contract: contr1      
+   de14:
+     name: пр-кт Правди, 62
+     square: 50.00
+     mpk: 1010287k
+     City: ci1
+     address: пр-кт Правди, 62
+     contract: contr1 
+   de15:
+     name: вул. Т. Шевченка, 4А
+     square: 146
+     mpk: 1010289k
+     City: ci2
+     address: вул. Т. Шевченка, 4А
+     contract: contr1      
+   de16:
+     name: вул. В. Арнаутська, 123а
+     square: 101.07
+     mpk: 1140088k
+     City: ci3
+     address: вул. В. Арнаутська, 123а
+     contract: contr1     
+   de17:
+     name: вул. В. Арнаутська, 100
+     square: 84.95
+     mpk: 1140068k
+     City: ci3
+     address: вул. В. Арнаутська, 100
+     contract: contr1 
+   de18:
+     name: вул. Пушкінська, 2
+     square: 125.60
+     mpk: 1140069k
+     City: ci3
+     address: вул. Пушкінська, 2
+     contract: contr1      
+   de19:
+     name:  вул. Маяковського, 6А
+     square: 164.20
+     mpk: 1140070k
+     City: ci4
+     address:  вул. Маяковського, 6А
+     contract: contr1  
+   de20:
+     name: пр-кт Перемоги, 2А
+     square: 80.70
+     mpk: 1140071k
+     City: ci5
+     address: пр-кт Перемоги, 2А
+     contract: contr1 
+   de21:
+     name: бульв. Шевченка, 218/220
+     square: 504.30
+     mpk: 1230025k
+     City: ci6
+     address: бульв. Шевченка, 218/220
+     contract: contr1 
+   de22:
+     name:  вул. Чигиринська, 15
+     square: 84.50
+     mpk: 1230027k
+     City: ci6
+     address:  вул. Чигиринська, 15
+     contract: contr1 
+   de23:
+     name:  вул. Горького, 27
+     square: 56.50
+     mpk: 1230026k
+     City: ci6
+     address:  вул. Горького, 27
+     contract: contr1     
+   de24:
+     name: вул. Пролетарська, 56
+     square: 67.20
+     mpk: 1230028k
+     City: ci7
+     address: вул. Пролетарська, 56
+     contract: contr1   
+   de25:
+     name:  вул. Леніна, 11
+     square: 62.30
+     mpk: 1230029k
+     City: ci8
+     address:  вул. Леніна, 11
+     contract: contr1 
+   de26:
+     name:  пр-кт К.Маркса, 82
+     square: 369.60
+     mpk: 1040284k
+     City: ci9
+     address:  пр-кт К.Маркса, 82
+     contract: contr1    
+   de27:
+     name: вул. Будівельників, 9/37
+     square: 62.20
+     mpk: 1040276k
+     City: ci10
+     address: вул. Будівельників, 9/37
+     contract: contr1          
+   de28:
+     name: вул. Куйбишева, 58
+     square: 470.20
+     mpk: 1050077k
+     City: ci12
+     address: вул. Куйбишева, 58
+     contract: contr1  
+   de29:
+     name: вул. 25-річчя РККА, 16, оф.5
+     square: 63.58
+     mpk: 1050078k
+     City: ci12
+     address: вул. 25-річчя РККА, 16, оф.5
+     contract: contr1       
+   de30:
+     name: вул. Постишева, 137А
+     square: 139.90
+     mpk: 1050060k
+     City: ci12
+     address: вул. Постишева, 137А
+     contract: contr1       
+   de31:
+     name:  вул. Артема, 100
+     square: 136
+     mpk: 1050058k
+     City: ci12
+     address:  вул. Артема, 100
+     contract: contr1  
+   de32:
+     name: вул. Шіллера, 9
+     square: 55.10
+     mpk: 1250026k
+     City: ci13
+     address: вул. Шіллера, 9
+     contract: contr1      
+   de33:
+     name:  вул. Підгірна, 38
+     square: 241.40
+     mpk: 1190024k
+     City: ci14
+     address: вул. Шіллера, 9
+     contract: contr1   
+   de34:
+     name:  вул. Гоголя, 24
+     square: 100
+     mpk: 1190025k
+     City: ci15
+     address:  вул. Гоголя, 24
+     contract: contr1      
+   de35:
+     name:  вул. Героїв УПА, 76 
+     square: 285.20
+     mpk: 1120150k
+     City: ci16
+     address:  вул. Героїв УПА, 76 
+     contract: contr1  
+   de36:
+     name:  пл. Соборна, 12А
+     square: 32.50
+     mpk: 1120151k
+     City: ci16
+     address:  вул. Героїв УПА, 76 
+     contract: contr1      
+   de37:
+     name:  вул. Кавалерідзе, 7
+     square: 82.30
+     mpk: 1120105k
+     City: ci16
+     address:  вул. Кавалерідзе, 7
+     contract: contr1   
+   de38:
+     name:  вул. Кавалерідзе, 7
+     square: 300.70
+     mpk: 1160030k
+     City: ci17
+     address:  вул. Кавалерідзе, 7
+     contract: contr1 
+   de39:
+     name: вул. Культури, 15
+     square: 545.50
+     mpk: 1200061k
+     City: ci18
+     address: вул. Культури, 15
+     contract: contr1 
+   de40:
+     name:  вул. Сумська, 63
+     square: 293.10
+     mpk: 1200060k
+     City: ci18
+     address:  вул. Сумська, 63
+     contract: contr1      
+   de41:
+     name: вул. Фрунзе, 12
+     square: 80
+     mpk: 1150015k
+     City: ci19
+     address: вул. Фрунзе, 12
+     contract: contr1   
+   de42:
+     name:  пр-кт Шевченка, 26
+     square: 489
+     mpk: 1170033k
+     City: ci20
+     address:  пр-кт Шевченка, 26
+     contract: contr1   
+   de43:
+     name: вул. Арх. Артінова, 38
+     square: 350.60
+     mpk: 1030029k
+     City: ci21
+     address: вул. Арх. Артінова, 38
+     contract: contr1           
+   de44:
+     name:  вул. Леніна, 44
+     square: 476.90
+     mpk: 1020077k
+     City: ci22
+     address: вул. Леніна, 44
+     contract: contr1           
+   de45:
+     name: бульв. Старшинова, 27
+     square: 206
+     mpk: 1020078k
+     City: ci23
+     address: бульв. Старшинова, 27
+     contract: contr1  
+   de46:
+     name:  вул. Земська, 1
+     square: 43.30
+     mpk: 1020079k
+     City: ci23
+     address:  вул. Земська, 1
+     contract: contr1  
+   de47:
+     name: вул. Севастопольська, 4
+     square: 681
+     mpk: 1020071k
+     City: ci24
+     address: вул. Севастопольська, 4
+     contract: contr1  
+   de48:
+     name: вул. М. Залки, 1/9
+     square: 82
+     mpk: 1020072k
+     City: ci24
+     address: вул. М. Залки, 1/9
+     contract: contr1
+   de49:
+     name: н.п. Аграрне, вул. Наукова, 2
+     square: 93.70
+     mpk: 1020074k
+     City: ci24
+     address: н.п. Аграрне, вул. Наукова, 2
+     contract: contr1        
+   de50:
+     name: вул. Леніна, 41/22
+     square: 41.30
+     mpk: 1020075k
+     City: ci25
+     address: вул. Леніна, 41/22
+     contract: contr1   
+   de51:
+     name: вул. Фрунзе, 46
+     square: 46.80
+     mpk: 1020081k
+     City: ci26
+     address: вул. Фрунзе, 46
+     contract: contr1 
+   de52:
+     name: вул. Сімферопольська, 3
+     square: 7.50
+     mpk: 1020082k
+     City: ci26
+     address: вул. Сімферопольська, 3
+     contract: contr1      
+   de53:
+     name: вул. Інтернаціональна, 121
+     square: 63.40
+     mpk: 1020084k
+     City: ci27
+     address: вул. Інтернаціональна, 121
+     contract: contr1   
+   de54:
+     name: вул. К.Маркса, 20
+     square: 110.90
+     mpk: 1020080k
+     City: ci28
+     address: вул. К.Маркса, 20
+     contract: contr1   
+   de55:
+     name: вул. Рєпіна, 4
+     square: 114.50
+     mpk: 1020083k
+     City: ci29
+     address: вул. Рєпіна, 4
+     contract: contr1 
+   de56:
+     name:  вул. К.Маркса, 9/2
+     square: 94.30
+     mpk: 1020076k
+     City: ci29
+     address:  вул. К.Маркса, 9/2
+     contract: contr1 
+   de57:
+     name: вул. Леніна, 31
+     square: 160.80
+     mpk: 1150040k
+     City: ci30
+     address: вул. Леніна, 31
+     contract: contr1                                                                                                  

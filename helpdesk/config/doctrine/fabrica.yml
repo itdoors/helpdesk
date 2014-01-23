@@ -1,0 +1,79 @@
+Idea:
+  package: Idea.
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true
+    name:
+      type: string(255)
+      notnull: true
+    user_id:
+      type: integer
+      notnull: true
+    createdatetime:
+      type: timestamp
+      notnull: true
+    description:
+      type: string
+    result:
+      type: string
+    expert_description:
+      type: string
+    significance:
+      type: integer
+    financial:
+      type: integer
+    originality:
+      type: integer
+    readiness:
+      type: integer
+  relations:
+    User:
+      class: sfGuardUser
+      onDelete: CASCADE
+      local: user_id
+      foreign: id
+    Goals:
+      class: IdeaGoal
+      refClass: IdeaIdeaGoal
+      local: idea_id
+      foreign: goal_id
+
+IdeaGoal:
+  package: Idea.
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true
+    name:
+      type: string(255)
+      notnull: true
+
+IdeaIdeaGoal:
+  package: Idea.
+  actAs:
+    Timestampable:
+  options:
+    symfony:
+      form: false
+      filter: false
+  columns:
+    idea_id:
+      primary: true
+      type: integer
+    goal_id:
+      primary: true
+      type: integer
+  relations:
+    Idea:
+      class: Idea
+      onDelete: CASCADE
+      local: idea_id
+      foreign: id
+    Goal:
+      class: IdeaGoal
+      onDelete: CASCADE
+      local: goal_id
+      foreign: id

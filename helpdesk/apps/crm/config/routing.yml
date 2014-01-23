@@ -1,0 +1,114 @@
+# You can find more information about this file on the symfony website:
+# http://www.symfony-project.org/reference/1_4/en/10-Routing
+
+# default rules
+homepage:
+  url:   /
+  param: { module: organization, action: index }
+
+# generic rules
+# please, remove them by adding more specific rules
+
+organization:
+  url:   /organization
+  param: { module: organization, action: index }
+
+organization_sort:
+  url:   /organization/sort/:sort_field/:sort_type
+  param: { module: organization, action: sort }
+
+organization_show:
+  url:   /organization/show/:organization_id
+  param: { module: organization, action: show }
+
+organization_new:
+  url:   /organization/new
+  param: { module: organization, action: new }
+
+organization_duplicate:
+  url:   /organization/duplicate
+  param: { module: organization, action: duplicate }
+
+handling:
+  url:   /handling
+  param: { module: handling, action: index }
+
+tender:
+  url:   /tender
+  param: { module: handling, action: tender }
+
+handling_new:
+  url:   /handling/new
+  param: { module: handling, action: new }
+
+handling_sort:
+  url:   /handling/sort/:sort_field/:sort_type
+  param: { module: handling, action: sort }
+
+handling_show:
+  url:   /handling/show/:handling_id
+  param: { module: handling, action: show }
+
+handling_list:
+  url:   /handling/list/organization_id
+  param: { module: handling, action: list }
+
+handling_close:
+  url:   /handling_close/:handling_id/:link
+  param: { module: handling, action: close }
+
+scope:
+  url:   /scope
+  param: { module: scope, action: index }
+
+managers_activity:
+  url:   /managers_activity
+  param: { module: managers_activity, action: index }
+
+managers_activity_done:
+  url:   /managers_activity_done
+  param: { module: managers_activity, action: done }
+
+soled_handlings:
+  url:   /soled_handlings
+  param: { module: soled_handlings, action: index }
+
+soled_handlings_done:
+  url:   /soled_handling_done
+  param: { module: soled_handlings, action: done }
+
+handling_more_info:
+  url:   /handling_more_info/:handlingId/:type
+  param: { module: handling, action: more_info }
+
+handling_more_info_table:
+  url:   /handling_more_info_table
+  param: { module: handling_more_info_table, action: index }
+
+handling_more_info_table_done:
+  url:   /handling_more_info_table_done
+  param: { module: handling_more_info_table, action: done }
+
+
+default_index:
+  url:   /:module
+  param: { action: index }
+
+default:
+  url:   /:module/:action/*
+
+sf_guard_signin:
+  url:   /login
+  param: { module: sfGuardAuth, action: signin }
+
+sf_guard_signout:
+  url:   /logout
+  param: { module: sfGuardAuth, action: signout }
+
+sf_guard_password:
+  url:   /request_password
+  param: { module: sfGuardAuth, action: password }
+
+logout:
+  url:   /logout
+  param: { module: sfGuardAuth, action: signout }

@@ -1,0 +1,28 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           userclient
+    theme:                 admin
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          userclient
+    with_doctrine_route:   true
+
+    config:
+      fields:
+        password_again: { label: "Password (again)" }
+
+      list:
+        title:   User list
+        display:  [=username, first_name, last_name, clientorganization]
+      
+      form:
+        class: userclientForm
+
+      
+      filter:
+        display: [first_name]
+        
+      

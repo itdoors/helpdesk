@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xliff PUBLIC "-//XLIFF//DTD XLIFF//EN" "http://www.oasis-open.org/committees/xliff/documents/xliff.dtd">
+<xliff version="1.0">
+  <file source-language="EN" target-language="uk" datatype="plaintext" original="messages" date="2010-10-26T14:17:04Z" product-name="messages">
+    <header/>
+    <body>
+      <trans-unit id="1">
+        <source>Edit Client</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="2">
+        <source>Edit Client Info</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="3">
+        <source>User list</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="4">
+        <source>Password (again)</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="5">
+        <source>Edit stuff</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="6">
+        <source>Edit stuff Info</source>
+        <target/>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

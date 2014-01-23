@@ -1,0 +1,18 @@
+       # You can find more information about this file on the symfony website:
+# http://www.symfony-project.org/reference/1_4/en/11-App
+
+# default values
+all:
+  tiny_mce:
+    my_settings:
+      theme: advanced
+      plugins : "paste",
+      theme_advanced_buttons1: 'bold, italic, underline,|,justifyleft,justifycenter,justifyright,justifyfull'
+      theme_advanced_buttons2: ''
+      theme_advanced_buttons1_add : "cut,copy,paste, pasteword,selectall,|,bullist,numlist,|,undo,redo, insertdate,inserttime,preview,|,forecolor,backcolor"
+      theme_advanced_toolbar_location : "top",
+      theme_advanced_toolbar_align : "left",
+      language: ru
+      
+  claim:
+    bill_date_day: '05'

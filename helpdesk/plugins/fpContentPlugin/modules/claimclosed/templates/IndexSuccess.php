@@ -1,0 +1,1 @@
+<?php include_partial('claimclosed/date_range_form', array('form' => $form))?>

@@ -1,0 +1,56 @@
+<?php use_helper('Text', 'Date') ?>
+<div class="groupbox"><?php echo $claim->getOrganization()?> - <?php echo $claim->getDepartments()?></div>
+<table width='100%' cellpadding='0' cellspacing='0' class="gray">
+    <tr>
+        <td class='option' width='20%'>Id тикета</td>
+        <td class='value' width='30%'><?php echo $claim->id?></td>
+        <td class='option' width='20%'>Куратор</td>
+        <td class='value' width='30%'><div id="loading_kurator" class="loading_image"></div><div id="dispatcher_change_kurator_value">&nbsp;<?php echo $claim->getKurator()?><a href="<?php echo url_for('claimopened/editkuratorajax').'/id/'.$claim->id; ?>" id="dispatcher_change_kurator_button" class="sf_admin_action_edit"><?php echo __('Change')?></a></div></td>
+    </tr>
+    <tr>
+        <td class='option'>Отдел</td>
+        <td class='value'><div id="loading_claimtype" class="loading_image"></div><div id="dispatcher_change_claimtype_value">&nbsp;<?php echo $claim->getClaimtype()?><a href="<?php echo url_for('claimopened/editclaimtypeajax').'/id/'.$claim->id; ?>" id="dispatcher_change_claimtype_button" class="sf_admin_action_edit"><?php echo __('Change')?></a></div></td>
+        <td class='option'>Исполнитель</td>
+        <td class='value'><div id="loading_stuff" class="loading_image"></div><div id="dispatcher_change_stuff_value">&nbsp;<?php echo $claim->getStuff()?><a href="<?php echo url_for('claimopened/editstuffajax').'/id/'.$claim->id; ?>" id="dispatcher_change_stuff_button" class="sf_admin_action_edit"><?php echo __('Change')?></a></div></td>
+    </tr>
+    <tr>
+        <td class='option'>Создана</td>
+        <td class='value'><?php  echo $claim->getCreatedatetimeGood()?></td>
+        <td class='option'>Важность</td>
+        <td class='value'><?php echo $claim->getImportance()?></td>
+    </tr>
+    <tr>
+        <td class='option'>Закрыта</td>
+        <td class='value'>&nbsp;<?php  echo $claim->getClosedatetimeGood()?></td>
+        <td class='option'>Статус</td>
+        <td class='value'><div id="loading_status" class="loading_image"></div><div id="dispatcher_change_status_value">&nbsp;<?php echo $claim->getStatus()?><a href="<?php echo url_for('claimopened/editstatusajax').'/id/'.$claim->id; ?>" id="dispatcher_change_status_button" class="sf_admin_action_edit"><?php echo __('Change')?></a></div></td>
+    </tr>
+    <tr>
+        <td class='option'>Описание</td>
+        <td class='value'><div id="loading_description" class="loading_image"></div><div id="dispatcher_change_description_value">&nbsp;<?php  echo $claim->getDescription()?><a href="<?php echo url_for('claimopened/editdescriptionajax').'/id/'.$claim->id; ?>" id="dispatcher_change_description_button" class="sf_admin_action_edit"><?php echo __('Change')?></a><div></td>
+        <td class='option'><?php echo __('Work list')?></td>
+        <td class='value'><div id="loading_stuffdescription" class="loading_image"></div><div id="dispatcher_change_stuffdescription_value">&nbsp;<?php  echo $claim->getStuffdescription()?><a href="<?php echo url_for('claimopened/editstuffdescriptionajax').'/id/'.$claim->id; ?>" id="dispatcher_change_stuffdescription_button" class="sf_admin_action_edit"><?php echo __('Change')?></a><div></td>
+    </tr>
+</table>
+   <div class="delimiter"></div>    
+ <?php foreach ($commentss as $comments): ?>
+     <div class="groupbox grayblack"><?php echo $comments->getUsers() ?> - <?php echo $comments->getCreatedatetimeGood();?> <?php if ($comments->isvisible) echo __('Только для персонала'); ?></div>
+     <div class="groupbox normal"><?php echo $comments->getDescription() ?></div>
+     <div class="groupbox normal"><?php include_partial('attach/attachView', array('comments'=>$comments))?></div>
+     <?php endforeach; ?>
+   <div class="delimiter"></div>  
+
+
+   <?php 
+      if (!$claim->getIsclosedClient())
+      {
+          include_partial('form', array('form' => $form, 'claimid'=>$claim->getId())); 
+      }
+    ?>                                                   
+<div id="<?php echo $claim->getId()?>" class="claim_id"></div>
+<div id="result"></div>
+    
+
+
+
+

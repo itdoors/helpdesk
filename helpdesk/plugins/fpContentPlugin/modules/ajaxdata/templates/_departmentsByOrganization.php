@@ -1,0 +1,1 @@
+<?php echo $form['departments_list']->render();?>

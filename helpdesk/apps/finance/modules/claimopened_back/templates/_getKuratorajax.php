@@ -1,0 +1,1 @@
+<?php echo $claim->getKurator()?><a href="<?php echo url_for('claimopened/editkuratorajax').'/id/'.$claim->id; ?>" id="dispatcher_change_kurator_button" class="sf_admin_action_edit"><?php echo __('Change')?></a>

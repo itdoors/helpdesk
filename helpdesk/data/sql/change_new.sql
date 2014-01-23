@@ -1,0 +1,2 @@
+ALTER TABLE finance_claim ADD CONSTRAINT finance_claim_status_id_status_id FOREIGN KEY (status_id) REFERENCES status(id) NOT DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE log_claim ADD CONSTRAINT log_claim_finance_claim_id_finance_claim_id FOREIGN KEY (finance_claim_id) REFERENCES finance_claim(id) NOT DEFERRABLE INITIALLY IMMEDIATE;

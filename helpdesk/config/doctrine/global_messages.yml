@@ -1,0 +1,21 @@
+GlobalMessage:
+  package: GlobalMessage.
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true
+    user_id:
+      type: integer
+    title:
+      type: string(255)
+    description:
+      type: string
+    createdatetime:
+      type: timestamp 
+  relations:
+    User:
+      class: sfGuardUser
+      foreignAlias: GlobalMessage
+      local: user_id
+      foreign: id

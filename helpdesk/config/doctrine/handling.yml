@@ -1,0 +1,253 @@
+Handling:
+  package: Handling.
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true
+    number:
+      type: string(128)
+    createdatetime:
+      type: timestamp
+      notnull: true
+    createdate:
+      type: date
+      notnull: true
+    status_id:
+      type: integer
+    type_id:
+      type: integer
+    status_description:
+      type: string
+    status_change_date:
+      type: timestamp
+    last_handling_date:
+      type: date
+    service_offered:
+      type: string
+    budget:
+      type: string(128)
+    budget_client:
+      type: string(128)
+    square:
+      type: float
+    chance:
+      type: string
+    worktime_withclient:
+      type: string(128)
+    description:
+      type: string
+    result_string:
+      type: string
+    result_id:
+      type: integer
+    status_admin:
+      type: boolean
+    user_id:
+      type: integer
+      notnull: true
+    organization_id:
+      type: integer
+      notnull: true
+    is_closed:
+      type: boolean
+      default: false
+  relations:
+    Organization:
+      class: organization
+      onDelete: CASCADE
+      local: organization_id
+      foreign: id
+    User:
+      class: sfGuardUser
+      onDelete: CASCADE
+      local: user_id
+      foreign: id
+    Status:
+      class: HandlingStatus
+      onDelete: CASCADE
+      local: status_id
+      foreign: id
+    Type:
+      class: HandlingType
+      onDelete: CASCADE
+      local: type_id
+      foreign: id
+    Result:
+      class: HandlingResult
+      onDelete: CASCADE
+      local: result_id
+      foreign: id
+
+HandlingMessageType:
+  package: Handling.
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true
+    name:
+      type: string(128)
+      notnull: true
+    slug:
+      type: string(128)
+
+HandlingMessage:
+  package: Handling.
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true
+    type_id:
+      type: integer
+    createdatetime:
+      type: timespamp
+    createdate:
+      type: date
+    description:
+      type: string
+    handling_id:
+      type: integer
+    user_id:
+      type: integer
+    filename:
+      type: string(128)
+    filepath:
+      type: string(128)
+  relations:
+    Handling:
+      class: Handling
+      onDelete: CASCADE
+      local: handling_id
+      foreign: id
+    HandlingMessageType:
+      class: HandlingMessageType
+      onDelete: CASCADE
+      local: type_id
+      foreign: id
+    User:
+      class: sfGuardUser
+      onDelete: CASCADE
+      local: user_id
+      foreign: id
+
+HandlingUser:
+  package: Handling.
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true
+    handling_id:
+      type: integer
+      notnull: true
+    user_id:
+      type: integer
+      notnull: true
+    part:
+      type: integer
+  relations:
+    Handling:
+      class: Handling
+      onDelete: CASCADE
+      local: handling_id
+      foreign: id
+    User:
+      class: sfGuardUser
+      onDelete: CASCADE
+      local: user_id
+      foreign: id
+
+HandlingType:
+  package: Handling.
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true
+    name:
+      type: string(128)
+      notnull: true
+    slug:
+      type: string(128)
+
+HandlingStatus:
+  package: Handling.
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true
+    name:
+      type: string(128)
+      notnull: true
+
+HandlingResult:
+  package: Handling.
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true
+    name:
+      type: string(128)
+      notnull: true
+    slug:
+      type: string(128)
+
+HandlingMoreInfoType:
+  package: Handling.
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true
+    handling_result_id:
+      type: integer
+    name:
+      type: string(128)
+      notnull: true
+    data_type:
+      type: enum
+      values: [integer, float, string, select]
+    enum_choices:
+      type: string(255)
+  relations:
+    HandlingResult:
+      class: HandlingResult
+      onDelete: CASCADE
+      local: handling_result_id
+      foreign: id
+  indexes:
+    handling_result_id_name:
+      fields: [handling_result_id, name]
+      type: unique
+
+HandlingMoreInfo:
+  package: Handling.
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true
+    handling_id:
+      type: integer
+      notnull: true
+    handling_more_info_type_id:
+      type: integer
+      notnull: true
+    value:
+      type: string(255)
+      notnull: true
+  relations:
+    Handling:
+      class: Handling
+      onDelete: CASCADE
+      local: handling_id
+      foreign: id
+    HandlingMoreInfoType:
+      class: HandlingMoreInfoType
+      onDelete: CASCADE
+      local: handling_more_info_type_id
+      foreign: id

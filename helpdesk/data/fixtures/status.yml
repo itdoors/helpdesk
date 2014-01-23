@@ -1,0 +1,45 @@
+# # Populate this file with data to be loaded by your ORM's *:data-load task.
+# # You can create multiple files in this directory (i.e. 010_users.yml,
+# # 020_articles.yml, etc) which will be loaded in alphabetical order.
+# # 
+# # See documentation for your ORM's *:data-load task for more information.
+# 
+# User:
+#   fabien:
+#     username: fabien
+#     password: changeme
+#     name:     Fabien Potencier
+#     email:    fabien.potencier@symfony-project.com
+#   kris:
+#     username: Kris.Wallsmith
+#     password: changeme
+#     name:     Kris Wallsmith
+#     email:    kris.wallsmith@symfony-project.com
+
+status:
+   st1:
+     stakey: sta_open
+     name: Открыта и подана на рассмотрение
+   st2:
+     stakey: sta_accepted
+     name: Принята, на рассмотрениb
+   st3:
+     stakey: sta_kappointed
+     name: Принята, на рассмотрениее
+   st4:
+     stakey: sta_sappointed_smwait
+     name: Принята, на рассмотрениее
+   st5:
+     stakey: sta_sclose_smwait
+     name: Выполнена исполнителем, на рассмотрении смета
+   st6:
+     stakey: sta_sclose_smwait_cwait
+     name: Выполнена исполнителем, на рассмотрении смета
+   st7:
+     stakey: sta_sclose_smclose_cwait
+     name: Выполнена, ожидание ответа клиента
+   st8:
+     stakey: sta_sclose_smclose_cclose
+     name: Выполнена
+      
+   

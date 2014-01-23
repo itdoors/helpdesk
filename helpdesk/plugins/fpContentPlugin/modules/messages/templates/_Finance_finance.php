@@ -1,0 +1,1 @@
+ <?php echo get_component('messages',"Dispatcher_finance", array('claim'=>$claim))?>    

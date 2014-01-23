@@ -1,0 +1,1 @@
+<?php echo __('Export excel all for 1c added to queue');?>

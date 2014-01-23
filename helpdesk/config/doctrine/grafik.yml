@@ -1,0 +1,385 @@
+Individual:
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true
+    guid:
+      type: string(32)
+    first_name:
+      type: string(128)
+    middle_name:
+      type: string(128)
+    last_name:
+      type: string(128)
+    birthday:
+      type: date
+    tin:
+      type: string(12)
+    passport:
+      type: string(8)
+    phone:
+      type: string(32)
+    address:
+      type: string(128)
+
+DepartmentPeople:
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true
+    department_id:
+      type: integer
+    name:
+      type: string(255)
+    first_name:
+      type: string(128)
+    middle_name:
+      type: string(128)
+    last_name:
+      type: string(128)
+    salary:
+      type: string(255)
+    number:
+      type: string(255)
+    person_code:
+      type: string(128)
+    position_string:
+      type: string(255)
+    position_id:
+      type: integer
+    year:
+      type: integer
+    month:
+      type: integer
+    birthday:
+      type: date
+    type_id:
+      type: integer
+    type_string:
+      type: string(255)
+    employment_type_id:
+      type: integer
+    salary_type_id:
+      type: integer
+    contacts:
+      type: string(255)
+    phone:
+      type: string(255)
+    bonus:
+      type: float
+    fine:
+      type: float
+    is_clean_salary:
+      type: boolean
+      default: false
+    norma_days:
+      type: integer
+    parent_id:
+      type: integer
+    is_from_one_c:
+      type: boolean
+      default: false
+    is_approved:
+      type: boolean
+      default: false
+    drfo:
+      type: string(128)
+    address:
+      type: string(255)
+    admission_date:
+      type: date
+    dismissal_date:
+      type: date
+    individual_id:
+      type: integer
+    guid:
+      type: string(32)
+    passport:
+      type: string(8)
+  relations:
+    Individual:
+      class: Individual
+      foreignAlias: DepartmentPeople
+      local: individual_id
+      foreign: id
+    Department:
+      class: departments
+      foreignAlias: DepartmentPeople
+      local: department_id
+      foreign: id
+    Position:
+      class: DepartmentPeoplePosition
+      foreignAlias: DepartmentPeople
+      local: position_id
+      foreign: id
+    Lookup:
+      class: lookup
+      foreignAlias: DepartmentPeople
+      local: type_id
+      foreign: id
+    Lookup:
+      class: lookup
+      foreignAlias: DepartmentPeople
+      local: employment_type_id
+      foreign: id
+    Lookup:
+      class: lookup
+      foreignAlias: DepartmentPeople
+      local: salary_type_id
+      foreign: id
+    Parent:
+      class: DepartmentPeople
+      foreignAlias: DepartmentPeople
+      local: parent_id
+      foreign: id
+
+DepartmentPeopleMonthInfo:
+  columns:
+    department_people_id:
+      primary: true
+      type: integer
+    year:
+      type: integer
+      primary: true
+    month:
+      type: integer
+      primary: true
+    surcharge:
+      type: float
+    bonus:
+      type: float
+    fine:
+      type: float
+    surcharge_type_id:
+      type: integer
+    bonus_type_id:
+      type: integer
+    fine_type_id:
+      type: integer
+    salary:
+      type: string(128)
+    position_id:
+      type: integer
+    type_id:
+      type: integer
+    type_string:
+      type: string(255)
+    employment_type_id:
+      type: integer
+    salary_type_id:
+      type: integer
+    is_clean_salary:
+      type: boolean
+      default: false
+    norma_days:
+      type: integer
+    department_people_replacement_id:
+      type: integer
+      default: 0
+      primary: true
+    real_salary:
+      type: string(128)
+  relations:
+    Position:
+      class: DepartmentPeoplePosition
+      foreignAlias: DepartmentPeopleMonthInfo
+      local: position_id
+      foreign: id
+    DepartmentPeople:
+      class: DepartmentPeople
+      foreignAlias: DepartmentPeopleMonthInfo
+      local: department_people_id
+      foreign: id
+    DepartmentPeopleReplacement:
+      class: DepartmentPeople
+      foreignAlias: DepartmentPeopleMonthInfo
+      local: department_people_replacement_id
+      foreign: id
+    Type:
+      class: lookup
+      foreignAlias: DepartmentPeopleMonthInfo
+      local: type_id
+      foreign: id
+    EmploymentType:
+      class: lookup
+      foreignAlias: DepartmentPeopleMonthInfo
+      local: employment_type_id
+      foreign: id
+    SalaryType:
+      class: lookup
+      foreignAlias: DepartmentPeopleMonthInfo
+      local: salary_type_id
+      foreign: id
+    SurchargeType:
+      class: lookup
+      foreignAlias: DepartmentPeopleMonthInfo
+      local: surcharge_type_id
+      foreign: id
+    BonusType:
+      class: lookup
+      foreignAlias: DepartmentPeopleMonthInfo
+      local: bonus_type_id
+      foreign: id
+    FineType:
+      class: lookup
+      foreignAlias: DepartmentPeopleMonthInfo
+      local: fine_type_id
+      foreign: id
+
+DepartmentPeoplePosition:
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true
+    name:
+      type: string(128)
+    slug:
+      type: string(128)
+
+Grafik:
+  columns:
+    year:
+      type: integer
+      primary: true
+      notnull: true
+    month:
+      type: integer
+      primary: true
+      notnull: true
+    day:
+      type: integer
+      primary: true
+      notnull: true
+    department_id:
+      type: integer
+      primary: true
+      notnull: truer
+    department_people_id:
+      type: integer
+      primary: true
+      notnull: true
+    department_people_replacement_id:
+      type: integer
+      primary: true
+      notnull: true
+      default: 0
+    total:
+      type: float
+    total_day:
+      type: float
+    total_evening:
+      type: float
+    total_night:
+      type: float
+    is_sick:
+      type: boolean
+      default: false
+    is_skip:
+      type: boolean
+      default: false
+    is_fired:
+      type: boolean
+      default: false
+    is_vacation:
+      type: boolean
+      default: false
+  relations:
+    Department:
+      class: departments
+      foreignAlias: DepartmentPeople
+      local: department_id
+      foreign: id
+    DepartmentPeople:
+      class: DepartmentPeople
+      foreignAlias: DepartmentPeople
+      local: department_people_id
+      foreign: id
+    DepartmentPeopleReplacement:
+      class: DepartmentPeople
+      foreignAlias: Grafik
+      local: department_people_replacement_id
+      foreign: id
+
+GrafikTime:
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true
+    year:
+      type: integer
+      notnull: true
+    month:
+      type: integer
+      notnull: true
+    day:
+      type: integer
+      notnull: true
+    department_id:
+      type: integer
+      notnull: truer
+    department_people_id:
+      type: integer
+      notnull: true
+    department_people_replacement_id:
+      type: integer
+      notnull: true
+      default: 0
+    from_time:
+      type: time
+    to_time:
+      type: time
+    total:
+      type: float
+    total_day:
+      type: float
+    total_evening:
+      type: float
+    total_night:
+      type: float
+  relations:
+    Department:
+      class: departments
+      foreignAlias: DepartmentPeople
+      local: department_id
+      foreign: id
+    DepartmentPeople:
+      class: DepartmentPeople
+      foreignAlias: DepartmentPeople
+      local: department_people_id
+      foreign: id
+    DepartmentPeopleReplacement:
+      class: DepartmentPeople
+      foreignAlias: Grafik
+      local: department_people_replacement_id
+      foreign: id
+
+Salary:
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true
+    year:
+      type: integer
+      notnull: true
+    month:
+      type: integer
+      notnull: true
+    days_count:
+      type: integer
+      notnull: true
+    weekends:
+      type: string(128)
+    day_salary:
+      type: float
+    summary_coef:
+      type: float
+  indexes:
+    year_month:
+      fields: [year, month]
+      type: unique
+    

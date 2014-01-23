@@ -1,0 +1,39 @@
+Tendercategory:
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true
+    name:
+      type: string(200)
+      notnull: true
+Tenderlinks:
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true
+    name:
+      type: string(200)
+      notnull: true
+    tendercategory_id:
+      type: integer
+      notnull: false
+  relations:
+    Tendercategory:
+      class: Tendercategory
+      foreignAlias: Tenderlinks
+      local: tendercategory_id
+      foreign: id
+    
+Tenderkeywords:
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true
+    name:
+      type: string(100)
+      notnull: true
+      
+      

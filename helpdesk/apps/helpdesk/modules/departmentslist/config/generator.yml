@@ -1,0 +1,24 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           departments
+    theme:                 admin
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          departments
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:  ~
+      list:    
+        display: [id, mpk, contract, organization, region, city, address, clientlist, persons]
+      filter:  
+        display: [mpk, city_id, name, contract_id]
+      form:    
+        display: [mpk, name, city_id, address, contract_id, square]
+      edit:    ~
+      new:     ~

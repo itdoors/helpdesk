@@ -1,0 +1,1397 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xliff PUBLIC "-//XLIFF//DTD XLIFF//EN" "http://www.oasis-open.org/committees/xliff/documents/xliff.dtd">
+<xliff version="1.0">
+  <file source-language="EN" datatype="plaintext" original="messages" date="2010-10-26T15:07:58Z" product-name="messages">
+    <header/>
+    <body>
+      <trans-unit>
+        <source>Invalid.</source>
+        <target>Неверно введенные данные</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Required.</source>
+        <target>Обязательное поле для ввода</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Invalid value</source>
+        <target>Недопустимое значение</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Change to stuff</source>
+        <target>Зайти под исполнителем</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Change to kurator</source>
+         <target>Зайти под куратором</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Open claims</source>
+        <target>Открытые заявки</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Close claims</source>
+         <target>Закрытые заявки</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Create claim</source>
+         <target>Создать заявку</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Change password</source>
+         <target>Изменить пароль</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Claim №</source>
+         <target>№</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Createdatetime</source>
+         <target>Дата создания</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Claimtype</source>
+         <target>Отдел</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Organization</source>
+         <target>Организация</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Departments</source>
+         <target>Отделения</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Importance</source>
+         <target>Важность</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Status</source>
+         <target>Статус</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Status</source>
+         <target>Статус сметы</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Kurator</source>
+         <target>Куратор</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Incom with VAT</source>
+         <target>Доход  с НДС</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Client</source>
+         <target>Клиент</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Actions</source>
+         <target>Действия</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Work list</source>
+         <target>Список работ</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Show claim</source>
+         <target>Показать заявку</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Are you sure you want close claim?</source>
+         <target>Вы действительно хотите закрыть заявку?</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Close</source>
+         <target>Закрыть</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Show history</source>
+         <target>Показать историю</target>
+      </trans-unit>
+      <trans-unit>
+        <source>History</source>
+         <target>История</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Add kurator</source>
+         <target>Назначить куратора</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Add stuff</source>
+         <target>Назачить исполнителя</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Logout</source>
+         <target>Выход</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Support</source>
+         <target>Тех. поддержка</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Clear filter</source>
+         <target>Очистить фильтры</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Stuff</source>
+         <target>Исполнитель</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Go to claim</source>
+         <target>Заявка №</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Search</source>
+         <target>Поиск</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Your Price with VAT</source>
+         <target>Стоимость, грн с НДС</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Claim general</source>
+         <target>Основные данные</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Work list + documents</source>
+         <target>Список работ + Документы</target>
+      </trans-unit>       
+      <trans-unit>                
+        <source>Contract importance</source>
+         <target>Важность</target>
+      </trans-unit>       
+      <trans-unit>                
+        <source>City list</source>
+         <target>Город</target>
+      </trans-unit>       
+      <trans-unit>                
+        <source>Comments</source>
+         <target>Сообщение</target>
+      </trans-unit>       
+      <trans-unit>                
+        <source>Description</source>
+         <target>Описание</target>
+      </trans-unit>       
+      <trans-unit>                
+        <source>Back to list</source>
+         <target>Назад</target>
+      </trans-unit>       
+      <trans-unit>                
+        <source>Send</source>
+         <target>Отправить</target>
+      </trans-unit>       
+      <trans-unit>                
+        <source>Save</source>
+         <target>Сохранить</target>
+      </trans-unit>       
+      <trans-unit>                
+        <source>Closedatetime</source>
+         <target>Дата закрытия</target>
+      </trans-unit>       
+       <trans-unit>                
+        <source>Claim has created successfully</source>
+         <target>Заявка успешно создана</target>
+      </trans-unit>       
+      <trans-unit>                
+        <source>Password again</source>
+         <target>Пароль еще раз</target>
+      </trans-unit> 
+      <trans-unit>                
+        <source>No object</source>
+         <target>Обьект не существует</target>
+      </trans-unit>       
+      <trans-unit>                
+        <source>Attach</source>
+         <target>Вложенные файлы</target>
+      </trans-unit>       
+      <trans-unit>                
+        <source>Add Attach</source>
+         <target>Прикрепить файл</target>
+      </trans-unit>       
+      <trans-unit>                
+        <source>Message</source>
+         <target>Сообщение</target>
+      </trans-unit>       
+      <trans-unit>                
+        <source>Filename</source>
+         <target>Название файла</target>
+      </trans-unit>       
+      <trans-unit>                
+        <source>Delete</source>
+         <target>Удалить</target>
+      </trans-unit>       
+      <trans-unit>                
+        <source>Comment has been added successfully</source>
+         <target>Сообщение создано успешно</target>
+      </trans-unit>       
+           <trans-unit>
+        <source>Show</source>
+        <target>Показать</target>
+      </trans-unit>
+      <trans-unit>
+        <source>entries</source>
+        <target>записей</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Showing</source>
+        <target>Итого</target>
+      </trans-unit>
+      <trans-unit>
+        <source>to</source>
+        <target>до</target>
+      </trans-unit>
+      <trans-unit>
+        <source>of</source>
+        <target>из</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Filters</source>
+        <target>Фильтры</target>
+      </trans-unit>
+      <trans-unit>
+        <source>filtered from</source>
+        <target>отображено из</target>
+      </trans-unit>
+       <trans-unit>
+        <source>total entries</source>
+        <target>всего записей</target>
+      </trans-unit>
+      <trans-unit>
+        <source>No matching records found</source>
+        <target>Нет записей, соответствующих Вашему запросу</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Isvisible</source>
+        <target>Только для персонала Impel Griffin</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Income with VAT</source>
+        <target>Доход с НДС</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Documents</source>
+        <target>Документы</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Bill number</source>
+        <target>Номер акта</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Smeta number</source>
+        <target>Номер сметы</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Finance status</source>
+        <target>Финансовый статус</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Costs total with VAT</source>
+        <target>Затраты (общис с НДС)</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Profitability</source>
+        <target>Рентабельность</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Bill formulation</source>
+        <target>Формулировка в счете</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Preliminary smeta costs</source>
+        <target>Предварительная сметная стоимость</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Costs (cash)</source>
+        <target>Затраты (нал)</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Costs with VAT</source>
+        <target>Затраты с НДС</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Edit</source>
+        <target>Редактировать</target>
+      </trans-unit>
+      <trans-unit>
+        <source>User list</source>
+        <target>Список пользователей</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Create group claim</source>
+        <target>Создать групповую заявку</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Reports</source>
+        <target>Отчеты</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Stuff only</source>
+        <target>Только для персонала</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Smeta status</source>
+        <target>Статус сметы</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Loading...</source>
+        <target>Загрузка...</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Saving...</source>
+        <target>Сохранение...</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Price with VAT</source>
+        <target>Доход с НДС</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Our costs</source>
+        <target>Наши затраты</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Name</source>
+        <target>Название</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Datetime</source>
+        <target>Дата документа</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Documentstype</source>
+        <target>Тип документа</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Filepath</source>
+        <target>Файл</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Automatic claims</source>
+        <target>Автоматические заявки</target>
+      </trans-unit>
+      <trans-unit>
+        <source>The item was updated successfully.</source>
+        <target>Объект успешно изменен.</target>
+      </trans-unit>
+      <trans-unit>
+        <source>The item was created successfully.</source>
+        <target>Объект успешно создан.</target>
+      </trans-unit>
+      <trans-unit>
+        <source>All</source>
+        <target>Все</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Finance close</source>
+        <target>Закрыты финансово</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Finance open</source>
+        <target>Не закрыты финансово</target>
+      </trans-unit>
+      <trans-unit>
+        <source>by createdatetime</source>
+        <target>по дате создания</target>
+      </trans-unit>
+      <trans-unit>
+        <source>by closedatetime</source>
+        <target>по дате закрытия</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Date range</source>
+        <target>Временной промежуток</target>
+      </trans-unit>
+      <trans-unit>
+        <source>from</source>
+        <target>от</target>
+      </trans-unit>
+      <trans-unit>
+        <source>to</source>
+        <target>до</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Claim datetype</source>
+        <target>Фильтр</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Claimfinance</source>
+        <target>Финансовый статус</target>
+      </trans-unit>
+       <trans-unit>
+        <source>Condition</source>
+        <target>Состояние</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Organization list</source>
+        <target>Организация</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Client list</source>
+        <target>Клиент</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Added filed lable</source>
+        <target>Дополн.</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Added filed</source>
+        <target>Дополнительное поле</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Show added field</source>
+        <target>Показывать дополнительное поле?</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Is mailed</source>
+        <target>Отправлять оповещения?</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Close_claim</source>
+        <target>Завершить заявку</target>
+      </trans-unit>      
+      <trans-unit>
+        <source>Costs without VAT</source>
+        <target>Затраты безнал без НДС</target>
+      </trans-unit>      
+      <trans-unit>
+        <source>Costs beznalnonnds</source>
+        <target>Затраты безнал без НДС</target>
+      </trans-unit>      
+      <trans-unit>
+        <source>Address</source>
+        <target>Адрес</target>
+      </trans-unit>   
+      <trans-unit>
+        <source>Contacts</source>
+        <target>Контакты</target>
+      </trans-unit>  
+      <trans-unit>
+        <source>is smeta</source>
+        <target>Работают со сметами</target>
+      </trans-unit> 
+      <trans-unit>
+        <source>Creator</source>
+        <target>Кто создал</target>
+      </trans-unit>   
+      <trans-unit>
+        <source>Sell manager</source>
+        <target>Кто продал</target>
+      </trans-unit>  
+            <trans-unit>
+        <source>Total</source>
+        <target>Сумма</target>
+      </trans-unit> 
+      <trans-unit>
+        <source>Prolongation</source>
+        <target>С пролонгацией</target>
+      </trans-unit> 
+      <trans-unit>
+        <source>Number</source>
+        <target>Номер</target>
+      </trans-unit>             
+      <trans-unit>
+        <source>Startdatetime</source>
+        <target>Дата подписания</target>
+      </trans-unit>  
+      <trans-unit>
+        <source>Stopdatetime</source>
+        <target>Дата окончания</target>
+      </trans-unit>  
+      <trans-unit>
+        <source>Companystructure</source>
+        <target>Структура компании</target>
+      </trans-unit>   
+      <trans-unit>
+        <source>City</source>
+        <target>Город</target>
+      </trans-unit> 
+      <trans-unit>
+        <source>Subject</source>
+        <target>Предмет договора</target>
+      </trans-unit>  
+      <trans-unit>
+        <source>Mashtab</source>
+        <target>Масштаб</target>
+      </trans-unit> 
+      <trans-unit>
+        <source>Maturity</source>
+        <target>Срок оплаты</target>
+      </trans-unit> 
+      <trans-unit>
+        <source>Is active</source>
+        <target>Активный</target>
+      </trans-unit>   
+      <trans-unit>
+        <source>General</source>
+        <target>Основное</target>
+      </trans-unit>   
+      <trans-unit>
+        <source>Additional agreements</source>
+        <target>Дополнительные соглашения</target>
+      </trans-unit>    
+      <trans-unit>
+        <source>Dop dogovor</source>
+        <target>Доп. соглаш.</target>
+      </trans-unit>      
+      <trans-unit>
+        <source>Activedatetime</source>
+        <target>Дата актуализации</target>
+      </trans-unit>     
+      <trans-unit>
+        <source>Dop dogovor type</source>
+        <target>Тип дополн. соглашения</target>
+      </trans-unit>    
+      <trans-unit>
+        <source>Dogovor type</source>
+        <target>Тип договора</target>
+      </trans-unit>    
+      <trans-unit>
+        <source>Add dop dogovor</source>
+        <target>Добавить</target>
+      </trans-unit>               
+      <trans-unit>
+        <source>Add department</source>
+        <target>Добавить</target>
+      </trans-unit>   
+      <trans-unit>
+        <source>Dogovor</source>
+        <target>Договор</target>
+      </trans-unit>             
+      <trans-unit>
+        <source>Comment</source>
+        <target>Заметка</target>
+      </trans-unit>        
+            <trans-unit>
+        <source>Department</source>
+        <target>Отделение</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Opened</source>
+        <target>Открыта</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Closed</source>
+        <target>Закрыта</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Condition</source>
+        <target>Состояние</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Open finance claims</source>
+        <target>Открыты финансово</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Bill date</source>
+        <target>Дата счета</target>
+      </trans-unit>
+      <trans-unit>
+        <source>by bill date</source>
+        <target>по дате счета</target>
+      </trans-unit>
+      <trans-unit>
+        <source>invalid bill date</source>
+        <target>недопустимая дата</target>
+      </trans-unit>
+      <trans-unit>
+        <source>bill date cant be in that month</source>
+        <target>в этом месяце дата счета уже не может быть поставленна</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Region</source>
+        <target>Область</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Add people</source>
+        <target>Добавить</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Change</source>
+        <target>Изменить</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Change</source>
+        <target>Изменить</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Total by month</source>
+        <target>Итого за месяц</target>
+      </trans-unit>        
+      <trans-unit>
+        <source>Add</source>
+        <target>Добавить</target>
+      </trans-unit> 	
+      <trans-unit>
+        <source>Grafik</source>
+        <target>График работы</target>
+      </trans-unit>
+      <trans-unit>
+        <source>FIO</source>
+        <target>ФИО</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Salary</source>
+        <target>Оклад</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Position</source>
+        <target>Должность</target>
+      </trans-unit>
+      <trans-unit>
+        <source>From time</source>
+        <target>Со времени</target>
+      </trans-unit>
+      <trans-unit>
+        <source>To time</source>
+        <target>По время</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Is sick</source>
+        <target>Больничный</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Is skip</source>
+        <target>Прогул</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Is fired</source>
+        <target>Уволен</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Until the end of the month</source>
+        <target>Продублировать до конца месяца</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Type</source>
+        <target>Тип</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Copy permanent staff to next month</source>
+        <target>Скопировать постоянных сотрудников на следующий месяц</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Type string</source>
+        <target>На кого замена</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Permanent staff copied</source>
+        <target>Постоянные сотрудники скопированы</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Technical params</source>
+        <target>Технические параметры</target>
+      </trans-unit>
+      <trans-unit>
+        <source>People</source>
+        <target>Ответственные</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Main</source>
+        <target>Главная</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Entity</source>
+        <target>Объекты</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Unread messages</source>
+        <target>Непрочитанные сообщения</target>
+      </trans-unit>
+	     <trans-unit>
+        <source>Global messages</source>
+        <target>Cообщения</target>
+      </trans-unit>
+	  <trans-unit>
+        <source>New message</source>
+        <target>Новое сообщения</target>
+      </trans-unit>
+	  <trans-unit>
+        <source>Departments type</source>
+        <target>Тип объекта</target>
+      </trans-unit>
+	  <trans-unit>
+        <source>Clear filters</source>
+        <target>Очистить  фильтр</target>
+      </trans-unit>  
+	  <trans-unit>
+        <source>Status date</source>
+        <target>Дата статуса</target>
+      </trans-unit>  	
+	  <trans-unit>
+        <source>Is vacation</source>
+        <target>Отпуск</target>
+      </trans-unit>  
+	  <trans-unit>
+        <source>Staff</source>
+        <target>Исполнитель</target>
+      </trans-unit>	  
+	  <trans-unit>
+        <source>There is no documents</source>
+        <target>Документы не найдены</target>
+      </trans-unit>
+	  <trans-unit>
+        <source>Organization type</source>
+        <target>Тип организации</target>
+      </trans-unit>
+	  <trans-unit>
+        <source>Add contact</source>
+        <target>Добавить контакт клиента</target>
+      </trans-unit>	  
+	  <trans-unit>
+        <source>Phone</source>
+        <target>Телефон</target>
+      </trans-unit>		
+	  <trans-unit>
+        <source>Birthday</source>
+        <target>День рождения</target>
+      </trans-unit>	
+	  <trans-unit>
+        <source>Companystructure</source>
+        <target>Структура компании</target>
+      </trans-unit>		 
+	  <trans-unit>
+        <source>Company structure</source>
+        <target>Структура компании</target>
+      </trans-unit>	
+	  <trans-unit>
+        <source>Is fired</source>
+        <target>Уволен</target>
+      </trans-unit>	
+	  <trans-unit>
+        <source>Active</source>
+        <target>Активный</target>
+      </trans-unit>		
+	  <trans-unit>
+        <source>Fired</source>
+        <target>Статус</target>
+      </trans-unit>	
+	  <trans-unit>
+        <source>Mobile</source>
+        <target>Мобильный</target>
+      </trans-unit>	
+	  <trans-unit>
+        <source>New</source>
+        <target>Новый</target>
+      </trans-unit>		  	  
+	  <trans-unit>
+        <source>City</source>
+        <target>Город</target>
+      </trans-unit>	
+	  <trans-unit>
+        <source>Not Fired</source>
+        <target>+</target>
+      </trans-unit>	
+	  <trans-unit>
+        <source>Not Fired</source>
+        <target>+</target>
+      </trans-unit>	
+	  <trans-unit>
+        <source>First</source>
+        <target>Первая</target>
+      </trans-unit>	
+	  <trans-unit>
+        <source>Last</source>
+        <target>Последняя</target>
+      </trans-unit>	
+	  <trans-unit>
+        <source>User intranet</source>
+        <target>Сотрудники компании</target>
+      </trans-unit>	  
+	  <trans-unit>
+        <source>Clear filter</source>
+        <target>Очистить фильтр</target>
+      </trans-unit>	 	  
+	  <trans-unit>
+        <source>Filter</source>
+        <target>Фильтр</target>
+      </trans-unit>		
+	  <trans-unit>
+        <source>First name</source>
+        <target>Имя</target>
+      </trans-unit>		  	  
+	  <trans-unit>
+        <source>Last name</source>
+        <target>Фамилия</target>
+      </trans-unit>	
+	  <trans-unit>
+        <source>Middle name</source>
+        <target>Отчество</target>
+      </trans-unit>		  
+	  <trans-unit>
+        <source>Cancel</source>
+        <target>Отмена</target>
+      </trans-unit>	
+	  <trans-unit>
+        <source>Phone1</source>
+        <target>Телефон</target>
+      </trans-unit>	  
+	  <trans-unit>
+        <source>Phone2</source>
+        <target>Мобильный</target>
+      </trans-unit>	  
+	  <trans-unit>
+        <source>Mailing address</source>
+        <target>Почтовый адрес</target>
+      </trans-unit>	
+	  <trans-unit>
+        <source>Rs</source>
+        <target>Расчетный счет</target>
+      </trans-unit>	
+	  <trans-unit>
+        <source>Edrpou</source>
+        <target>ЕДРПОУ</target>
+      </trans-unit>	
+	  <trans-unit>
+        <source>Inn</source>
+        <target>ИНН</target>
+      </trans-unit>	
+	  <trans-unit>
+        <source>Certificate</source>
+        <target>Номер свидетельства</target>
+      </trans-unit>	
+	  <trans-unit>
+        <source>Short description</source>
+        <target>Краткое описание</target>
+      </trans-unit>	
+	  <trans-unit>
+        <source>Site</source>
+        <target>Сайт</target>
+      </trans-unit>	 
+	  <trans-unit>
+        <source>Scope</source>
+        <target>Сфера деятельности</target>
+      </trans-unit>	
+	  <trans-unit>
+        <source>Client type</source>
+        <target>Тип клиента</target>
+      </trans-unit>
+	  <trans-unit>
+        <source>Create Organization</source>
+        <target>Создать организацию</target>
+      </trans-unit>	  
+	  <trans-unit>
+        <source>Handling List</source>
+        <target>Список обращений</target>
+      </trans-unit>
+	  <trans-unit>
+        <source>New Handling</source>
+        <target>Новое обращение</target>
+      </trans-unit>
+	  <trans-unit>
+        <source>User</source>
+        <target>Пользователь</target>
+      </trans-unit>	 
+	  <trans-unit>
+        <source>Descrition</source>
+        <target>Описание</target>
+      </trans-unit>	
+	  <trans-unit>
+        <source>Add message</source>
+        <target>Добавить сообщение</target>
+      </trans-unit>	  
+	  <trans-unit>
+        <source>Status description</source>
+        <target>Описание статуса</target>
+      </trans-unit>		  
+	  <trans-unit>
+        <source>Service offered</source>
+        <target>Предлагаемые услуги</target>
+      </trans-unit>		  
+	  <trans-unit>
+        <source>Budget</source>
+        <target>Бюджет</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Month budget</source>
+        <target>Сумма в месяц без НДС</target>
+      </trans-unit>
+	  <trans-unit>
+        <source>Square</source>
+        <target>Площадь</target>
+      </trans-unit>	 
+	  <trans-unit>
+        <source>Chance</source>
+        <target>Шанс</target>
+      </trans-unit>	
+	  <trans-unit>
+        <source>Result</source>
+        <target>Результат</target>
+      </trans-unit>		
+	  <trans-unit>
+        <source>Tenders List</source>
+        <target>Тендеры</target>
+      </trans-unit>		
+	  <trans-unit>
+        <source>Tenders List</source>
+        <target>Тендеры</target>
+      </trans-unit>	
+	  <trans-unit>
+        <source>Scope List</source>
+        <target>Сфера деятельности</target>
+      </trans-unit>	  
+	  <trans-unit>
+        <source>Scope List</source>
+        <target>Сфера деятельности</target>
+      </trans-unit>	
+	  <trans-unit>
+        <source>Last handling date</source>
+        <target>Последнее сообщение</target>
+      </trans-unit>	  
+	  <trans-unit>
+        <source>Managers</source>
+        <target>Менеджеры</target>
+      </trans-unit>	 
+	  <trans-unit>
+        <source>Budget client</source>
+        <target>Бюджет клиента</target>
+      </trans-unit>	
+	  <trans-unit>
+        <source>Is closed</source>
+        <target>Закрыто</target>
+      </trans-unit>	
+	  <trans-unit>
+        <source>Client contacts</source>
+        <target>Контакты</target>
+      </trans-unit>	
+	  <trans-unit>
+        <source>Result string</source>
+        <target>Описание результата</target>
+      </trans-unit>	  
+ 	  <trans-unit>
+        <source>New request</source>
+        <target>Новый запрос</target>
+      </trans-unit>	 
+ 	  <trans-unit>
+        <source>Managers activity</source>
+        <target>Активность менеджеров</target>
+      </trans-unit>	   
+ 	  <trans-unit>
+        <source>Add manager</source>
+        <target>Добавить менеджера</target>
+      </trans-unit>		
+ 	  <trans-unit>
+        <source>Launch date</source>
+        <target>Дата запуска</target>
+      </trans-unit>		
+ 	  <trans-unit>
+        <source>Completion notice</source>
+        <target>Уведомление о завершении</target>
+      </trans-unit>	  
+ 	  <trans-unit>
+        <source>Payment deferment</source>
+        <target>Отсрочка платежа</target>
+      </trans-unit>		
+ 	  <trans-unit>
+        <source>Payment deferment </source>
+        <target>Отсрочка платежа</target>
+      </trans-unit>	  
+ 	  <trans-unit>
+        <source>Prolongation term</source>
+        <target>Срок пролонгации</target>
+      </trans-unit>		  
+ 	  <trans-unit>
+        <source>Planned pf1</source>
+        <target>Плановый ПФ1</target>
+      </trans-unit> 
+	  <trans-unit>
+        <source>Planned Pf1</source>
+        <target>Плановый ПФ1, грн</target>
+      </trans-unit>	  
+ 	  <trans-unit>
+        <source>Planned pf1 percent</source>
+        <target>Плановый ПФ1, %</target>
+      </trans-unit>
+	  <trans-unit>
+        <source>Planned Pf1 Percent</source>
+        <target>Плановый ПФ1, %</target>
+      </trans-unit>		  
+ 	  <trans-unit>
+        <source>Summ month vat</source>
+        <target>Сумма в месяц с НДС</target>
+      </trans-unit>
+ 	  <trans-unit>
+        <source>Summ Month Vat</source>
+        <target>Сумма в месяц с НДС</target>
+      </trans-unit>		  	  
+ 	  <trans-unit>
+        <source>Handling with status "SOLED"</source>
+        <target>Связь с обращениями</target>
+      </trans-unit>		
+ 	  <trans-unit>
+        <source>Handling for add list</source>
+        <target>Список не связанных обращений</target>
+      </trans-unit>		 
+ 	  <trans-unit>
+        <source>Handling</source>
+        <target>Обращение</target>
+      </trans-unit>		
+ 	  <trans-unit>
+        <source>Prolongation dogovors</source>
+        <target>Заканчивающиеся договора</target>
+      </trans-unit>	  
+ 	  <trans-unit>
+        <source>Company role</source>
+        <target>Роль ИГГ</target>
+      </trans-unit>	
+ 	  <trans-unit>
+        <source>Part</source>
+        <target>Часть, %</target>
+      </trans-unit>	
+ 	  <trans-unit>
+        <source>Bonus</source>
+        <target>Премия</target>
+      </trans-unit>	  
+ 	  <trans-unit>
+        <source>Fine</source>
+        <target>Удержание</target>
+      </trans-unit>	  
+	  <trans-unit>
+        <source>Employment type</source>
+        <target>Тип занятости</target>
+      </trans-unit>	
+	  <trans-unit>
+        <source>Is clean salary</source>
+        <target>Зарплата без переплат</target>
+      </trans-unit>	
+	  <trans-unit>
+        <source>Time range</source>
+        <target>Диапазон</target>
+      </trans-unit>	
+	  <trans-unit>
+        <source>Total day</source>
+        <target>Дневных</target>
+      </trans-unit>		  
+	  <trans-unit>
+        <source>Total evening</source>
+        <target>Вечерних</target>
+      </trans-unit>	
+	  <trans-unit>
+        <source>Total night</source>
+        <target>Ночных</target>
+      </trans-unit>
+	  <trans-unit>
+        <source>Add grafik data</source>
+        <target>Добавить</target>
+      </trans-unit>		
+	  <trans-unit>
+        <source>Show result</source>
+        <target>Показать результат</target>
+      </trans-unit>		
+	  <trans-unit>
+        <source>Add handling</source>
+        <target>Связать</target>
+      </trans-unit>	
+	  <trans-unit>
+        <source>result</source>
+        <target>Результат</target>
+      </trans-unit>	 
+	  <trans-unit>
+        <source>description</source>
+        <target>Примечание</target>
+      </trans-unit>		  
+	  <trans-unit>
+        <source>Date type</source>
+        <target>Тип даты</target>
+      </trans-unit>		
+	  <trans-unit>
+        <source>Manager</source>
+        <target>Менеджер</target>
+      </trans-unit>	 
+	  <trans-unit>
+		<source>Soled handlings</source>
+        <target>Продажи</target>
+      </trans-unit>		  
+	  <trans-unit>
+		<source>Show more info</source>
+        <target>Показать подробности</target>
+      </trans-unit>	
+	  <trans-unit>
+		<source>Once claims</source>
+        <target>Разовые заявки</target>
+      </trans-unit>	
+	  <trans-unit>
+		<source>Local claims</source>
+        <target>Локальные заявки</target>
+      </trans-unit>	 
+	  <trans-unit>
+		<source>Create once claim</source>
+        <target>Создать разовую заявку</target>
+      </trans-unit>	 
+	  <trans-unit>
+		<source>Organization importance</source>
+        <target>Важность</target>
+      </trans-unit>
+	  <trans-unit>
+		<source>Cancel</source>
+        <target>Отмена</target>
+      </trans-unit>
+	  <trans-unit>
+		<source>Handling more info</source>
+        <target>Поражения</target>
+      </trans-unit>	 
+	  <trans-unit>
+		<source>Is blocked</source>
+        <target>Заблокирован</target>
+      </trans-unit>
+	  <trans-unit>
+		<source>Mobilephone</source>
+        <target>Мобильный</target>
+      </trans-unit>	  
+	  <trans-unit>
+		<source>The selected items have been saved successfully.</source>
+        <target>Выбранные данные успешно сохранены</target>
+      </trans-unit>	 	  
+	  <trans-unit>
+		<source>Username</source>
+        <target>Имя пользователя</target>
+      </trans-unit>	  
+	  <trans-unit>
+		<source>Createdate</source>
+        <target>Дата создания</target>
+      </trans-unit>	  	  
+	  <trans-unit>
+		<source>Days count</source>
+        <target>Кол-во рабочих дней</target>
+      </trans-unit>	 
+	  <trans-unit>
+		<source>Day salary</source>
+        <target>Кол-во норма-часов</target>
+      </trans-unit>	  
+	  <trans-unit>
+		<source>Personnel number</source>
+        <target>Табельный номер</target>
+      </trans-unit>
+	  <trans-unit>
+		<source>Norma days</source>
+        <target>Норма дней</target>
+      </trans-unit>	
+	  <trans-unit>
+		<source>Current date</source>
+        <target>Текущая дата</target>
+      </trans-unit>
+	  <trans-unit>
+		<source>From</source>
+        <target>С</target>
+      </trans-unit>	  
+	  <trans-unit>
+		<source>To</source>
+        <target>По</target>
+      </trans-unit>	 	  
+	  <trans-unit>
+		<source>vacation</source>
+        <target>от</target>
+      </trans-unit>	 	  
+	  <trans-unit>
+		<source>skip</source>
+        <target>пр</target>
+      </trans-unit>
+	  <trans-unit>
+		<source>sick</source>
+        <target>бн</target>
+      </trans-unit>
+	  <trans-unit>
+		<source>fired</source>
+        <target>ув</target>
+      </trans-unit>		 
+	  <trans-unit>
+		<source>Company costs</source>
+        <target>Затраты</target>
+      </trans-unit>	
+	  <trans-unit>
+		<source>Weekends</source>
+        <target>Праздники</target>
+      </trans-unit>
+	  <trans-unit>
+		<source>New idea</source>
+        <target>Новая идея</target>
+      </trans-unit>		
+	  <trans-unit>
+		<source>Result</source>
+        <target>Результат</target>
+      </trans-unit>	
+	  <trans-unit>
+		<source>Goals list</source>
+        <target>Цель Вашей идеи</target>
+      </trans-unit>	 
+	  <trans-unit>
+		<source>Goals</source>
+        <target>Цели идеи</target>
+      </trans-unit>
+	  <trans-unit>
+		<source>Significance</source>
+        <target>Значимость для компании</target>
+      </trans-unit>	
+	  <trans-unit>
+		<source>Financial</source>
+        <target>Финансовая привлекательность идеи</target>
+      </trans-unit>		
+	  <trans-unit>
+		<source>Originality</source>
+        <target>Оригинальность</target>
+      </trans-unit>	
+	  <trans-unit>
+		<source>Readiness</source>
+        <target>Степень готовности к внедрению</target>
+      </trans-unit>	
+	  <trans-unit>
+		<source>Expert description</source>
+        <target>Резюме экспретов</target>
+      </trans-unit>
+	  <trans-unit>
+		<source>Cancel</source>
+        <target>Отмена</target>
+      </trans-unit>
+	  <trans-unit>
+		<source>Ideas fabric</source>
+        <target>Фабрика идей</target>
+      </trans-unit>	
+	  <trans-unit>
+		<source>Idea</source>
+        <target>Идея</target>
+      </trans-unit> 	  
+	  <trans-unit>
+		<source>Staff</source>
+        <target>Сотрудник</target>
+      </trans-unit> 
+	  <trans-unit>
+		<source>Department People</source>
+        <target>Сотрудники</target>
+      </trans-unit> 
+	  <trans-unit>
+		<source>Department people</source>
+        <target>Сотрудник</target>
+      </trans-unit>
+	  <trans-unit>
+		<source>Department people </source>
+        <target>Сотрудник</target>
+      </trans-unit>		  
+	  <trans-unit>
+		<source>Department people replacement</source>
+        <target>Заменяемый сотрудник</target>
+      </trans-unit>	
+	  <trans-unit>
+		<source>Department people replacement </source>
+        <target>Заменяемый сотрудник</target>
+      </trans-unit>		  
+	  <trans-unit>
+		<source>FIO(old)</source>
+        <target>ФИО</target>
+      </trans-unit>	  
+	  <trans-unit>
+		<source>DRFO</source>
+        <target>ДРФО</target>
+      </trans-unit>
+	  <trans-unit>
+		<source>Drfo</source>
+        <target>ДРФО</target>
+      </trans-unit>	  
+	  <trans-unit>
+		<source>Parent person</source>
+        <target>Главная персона</target>
+      </trans-unit>
+	  <trans-unit>
+		<source>Change to other person</source>
+        <target>Изменить на другую персону</target>
+      </trans-unit>	 
+	  <trans-unit>
+		<source>Add department people</source>
+        <target>Добавить сотрудника</target>
+      </trans-unit>	  	  
+	  <trans-unit>
+		<source>excel export salary print</source>
+        <target>Экспорт для печати</target>
+      </trans-unit>	  
+	  <trans-unit>
+		<source>excel export salary</source>
+        <target>Экспорт для 1С</target>
+      </trans-unit>	 
+	  <trans-unit>
+		<source>Created</source>
+        <target>Создано</target>
+      </trans-unit>
+      <trans-unit>
+          <source>Tabel number</source>
+          <target>Табельный номер</target>
+      </trans-unit>
+	  <trans-unit>
+          <source>Tabel number</source>
+          <target>Табельный номер</target>
+      </trans-unit>
+	  <trans-unit>
+          <source>Admission date</source>
+          <target>Дата приема</target>
+      </trans-unit>
+	  <trans-unit>
+          <source>Dismissal date</source>
+          <target>Дата увольнения</target>
+      </trans-unit>
+      <trans-unit>
+          <source>Person code</source>
+          <target>Код 1С</target>
+      </trans-unit>
+      <trans-unit>
+          <source>You can't replace person by himself</source>
+          <target>Вы не можете заменить человека им же</target>
+      </trans-unit>
+        <trans-unit>
+            <source>1c day hours %hours%</source>
+            <target>р %hours%</target>
+        </trans-unit>
+        <trans-unit>
+            <source>1c evening hours %hours%</source>
+            <target>вч %hours%</target>
+        </trans-unit>
+        <trans-unit>
+            <source>1c night hours %hours%</source>
+            <target>рн %hours%</target>
+        </trans-unit>
+        <trans-unit>
+            <source>sick1c</source>
+            <target>тн</target>
+        </trans-unit>
+        <trans-unit>
+            <source>skip1c</source>
+            <target>нз</target>
+        </trans-unit>
+        <trans-unit>
+            <source>fired1c</source>
+            <target></target>
+        </trans-unit>
+        <trans-unit>
+            <source>vacation1c</source>
+            <target>в</target>
+        </trans-unit>
+        <trans-unit>
+            <source>Surcharge</source>
+            <target>Доплата</target>
+        </trans-unit>
+        <trans-unit>
+            <source>Surcharge type</source>
+            <target>Т/Т для доплаты</target>
+        </trans-unit>
+        <trans-unit>
+            <source>Bonus type</source>
+            <target>Т/Т для премии</target>
+        </trans-unit>
+        <trans-unit>
+            <source>Fine type</source>
+            <target>Т/Т для удержания</target>
+        </trans-unit>
+        <trans-unit>
+            <source>Surcharge Surcharge Type required</source>
+            <target>Обязательные поля</target>
+        </trans-unit>
+        <trans-unit>
+            <source>Bonus Bonus Type required</source>
+            <target>Обязательные поля</target>
+        </trans-unit>
+        <trans-unit>
+            <source>Fine Fine Type required</source>
+            <target>Обязательные поля</target>
+        </trans-unit>
+        <trans-unit>
+            <source>show more</source>
+            <target>Показать больше</target>
+        </trans-unit>
+    </body>
+  </file>
+</xliff>

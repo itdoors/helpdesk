@@ -1,0 +1,94 @@
+<?php
+
+/**
+ * dogovor_admin actions.
+ *
+ * @package    helpdesk
+ * @subpackage dogovor_admin
+ * @author     Your name here
+ * @version    SVN: $Id: actions.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
+ */
+class dogovorActions extends sfActions
+{
+  public function preExecute()
+  {
+    $credentials = $this->getUser()->getCredentials();
+    $access_type = '';
+    if (in_array('dogovor',  $credentials))  $access_type = 'Dogovor';
+    if (in_array('pdogovor', $credentials))  $access_type = 'Pdogovor';
+    if (in_array('adogovor', $credentials) || in_array('admin', $credentials))  $access_type = 'Adogovor';
+    if (!$access_type) return $this->renderText('You have no access');
+    $this->table_method = $access_type ? 'get'.$access_type : 'getDogovor';
+    
+    
+  }
+  
+  public function executeIndex(sfWebRequest $request)
+  {
+    $table_method = $this->table_method;
+    $this->dogovors = Doctrine_Core::getTable('Dogovor')->$table_method();
+  }
+
+  public function executeNew(sfWebRequest $request)
+  {
+    if (!$this->getUser()->hasCredential('dogovoradmin')) $this->redirect('dogovor/index');
+    $this->form = new DogovorForm();
+    $this->setTemplate('edit');
+  }
+
+  public function executeCreate(sfWebRequest $request)
+  {
+    $this->forward404Unless($request->isMethod(sfRequest::POST));
+
+    $this->form = new DogovorForm();
+
+    $this->processForm($request, $this->form);
+
+    $this->setTemplate('edit');
+  }
+
+  public function executeEdit(sfWebRequest $request)
+  {
+    $this->forward404Unless($dogovor = Doctrine_Core::getTable('Dogovor')->find(array($request->getParameter('id'))), sprintf('Object dogovor does not exist (%s).', $request->getParameter('id')));
+    $this->form = new DogovorForm($dogovor);
+    $this->setTemplate('edit');
+  }
+
+  public function executeUpdate(sfWebRequest $request)
+  {
+    $this->forward404Unless($request->isMethod(sfRequest::POST) || $request->isMethod(sfRequest::PUT));
+    $this->forward404Unless($dogovor = Doctrine_Core::getTable('Dogovor')->find(array($request->getParameter('id'))), sprintf('Object dogovor does not exist (%s).', $request->getParameter('id')));
+    $this->form = new DogovorForm($dogovor);
+
+    $this->processForm($request, $this->form);
+
+    $this->setTemplate('edit');
+  }
+
+  public function executeDelete(sfWebRequest $request)
+  {
+    $request->checkCSRFProtection();
+
+    $this->forward404Unless($dogovor = Doctrine_Core::getTable('Dogovor')->find(array($request->getParameter('id'))), sprintf('Object dogovor does not exist (%s).', $request->getParameter('id')));
+    $dogovor->delete();
+
+    $this->redirect('dogovor/index');
+  }
+
+  protected function processForm(sfWebRequest $request, sfForm $form)
+  {
+    $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
+    if ($form->isValid())
+    {
+      $dogovor = $form->save();
+
+      $this->redirect('dogovor/edit?id='.$dogovor->getId());
+    }
+  }
+  
+  public function executeDopdogovors(sfWebRequest $request)
+  {
+    if (!$request->isXmlHttpRequest() || !($dogovor_id = $request->getParameter('dogovor_id'))) return sfView::NONE;
+    return $this->renderComponent('dogovor', 'dopdogovors', array('dogovor_id' => $dogovor_id));
+  }
+}

@@ -1,0 +1,232 @@
+Dogovor:
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true
+    prolongation:
+      type: boolean
+      default: false
+    organization_id:
+      type: integer
+      notnull: true
+    name:
+      type: string(255)
+    number:
+      type string(255)
+    startdatetime:
+      type: timestamp
+      notnull: true
+    stopdatetime:
+      type: timestamp
+    companystructure_id:
+      type: integer
+    city_id:
+      type: integer
+    subject:
+      type: string(255)
+    filepath:
+      type: string(255)
+    is_active:
+      type: boolean
+      default: false
+    dogovor_type_id:
+      type: integer
+    company_role_id:
+      type: integer
+    mashtab:
+      type: enum
+      values: [m_global, m_local]
+#    sphere:
+#      type: string(255)
+#    chance:
+#      type: string(255)
+#    contact_date:
+#      type: timestamp
+    stuff_id:
+      type: integer
+    user_id:
+      type: integer
+    total: 
+      type: float
+    maturity:
+      type: string(255)
+    completion_notice:
+      type: boolean
+      default: true
+    payment_deferment:
+      type: integer
+    prolongation_term:
+      type: string(255)
+#    pstatus_id:
+#      type: integer
+#    contact:
+#      type: string(255)
+#    competitors:
+#      type: string(255)
+#    characteristics:
+#      type: string(255)
+    launch_date:
+      type: date
+    summ_month_vat:
+      type: float
+    planned_pf1:
+      type: float
+    planned_pf1_percent:
+      type: float
+  relations:
+    City:
+      class: city
+      foreignAlias: Dogovor
+      local: city_id
+      foreign: id
+    Organization:
+      class: organization
+      foreignAlias: Dogovor
+      local: organization_id
+      foreign: id
+    DogovorType:
+      class: lookup
+      foreignAlias: Dogovor
+      local: dogovor_type_id
+      foreign: id
+    CompanyRole:
+      class: lookup
+      foreignAlias: Dogovor
+      local: company_role_id
+      foreign: id
+    Companystructure:
+      class: companystructure
+      foreignAlias: Dogovor
+      local: companystructure_id
+      foreign: id
+#    Pstatus:
+#      class: lookup
+#      foreignAlias: Dogovor
+#      local: pstatus_id
+#      foreign: id
+    User:
+      class: sfGuardUser
+      foreignAlias: DogovorStuff
+      local: user_id
+      foreign: id
+    Stuff:
+      class: stuff
+      foreignAlias: DogovorStuff
+      local: stuff_id
+      foreign: id
+    
+      
+  
+DopDogovor:
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true
+    dogovor_id:
+      type: integer
+      notnull: true
+    dop_dogovor_type:
+      type: string(255)
+    number:
+      type: string(255)
+    startdatetime:
+      type: timestamp
+      notnull: true
+    activedatetime:
+      type: timestamp
+    subject:
+      type: string(255)
+    is_active:
+      type: boolean
+      default: false
+    total: 
+      type: float
+    filepath:
+      type: string(255)
+    user_id:
+      type: integer
+    stuff_id:
+      type: integer
+  relations: 
+    Dogovor:
+      class: Dogovor
+      foreignAlias: DopDogovor
+      local: dogovor_id
+      foreign: id
+    User:
+      class: sfGuardUser
+      foreignAlias: DogovorUser
+      local: user_id
+      foreign: id
+    Stuff:
+      class: stuff
+      foreignAlias: DogovorStuff
+      local: stuff_id
+      foreign: id
+    
+
+DogovorDepartment:
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true
+    dogovor_id:
+      type: integer
+      notnull: true
+    dop_dogovor_id:
+      type: integer
+    department_id:
+      type: integer
+    user_id:
+      type: integer
+    is_active:
+      type: boolean
+      default: false
+    comment:
+      type: string(255)
+    createdatetime:
+      type: timestamp
+  relations: 
+    Dogovor:
+      class: Dogovor
+      foreignAlias: DogovorDepartment
+      local: dogovor_id
+      foreign: id
+    DopDogovor:
+      class: DopDogovor
+      foreignAlias: DogovorDepartment
+      local: dop_dogovor_id
+      foreign: id
+    User:
+      class: sfGuardUser
+      foreignAlias: DogovorDepartment
+      local: user_id
+      foreign: id
+    Department:
+      class: departments
+      foreignAlias: DogovorDepartment
+      local: department_id
+      foreign: id
+      
+DogovorHandling:
+  columns:
+    dogovor_id:
+      type: integer
+      notnull: true
+    handling_id:
+      type: integer
+      notnull: true
+  relations:
+    Dogovor:
+      class: Dogovor
+      onDelete: CASCADE
+      local: dogovor_id
+      foreign: id
+    Handling:
+      class: Handling
+      onDelete: CASCADE
+      local: handling_id
+      foreign: id

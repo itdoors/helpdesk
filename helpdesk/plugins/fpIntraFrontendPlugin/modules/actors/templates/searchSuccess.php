@@ -1,0 +1,1 @@
+<?php echo get_component('actors', 'actors_list', array('actors' => $actors));?>

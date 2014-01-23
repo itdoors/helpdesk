@@ -1,0 +1,1 @@
+<?php include_partial('newonce', array('form' => $form)) ?>

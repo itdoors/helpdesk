@@ -1,0 +1,26 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           departments
+    theme:                 admin
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          departments
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:  ~
+      list:    
+        #tableMethod:  doSelect
+        display: [id, mpk, contract, organization, region, city, address, added_field]
+        max_per_page: 50
+      filter:  
+        display: [mpk, region_id, city_id, organization_id]
+      form:    
+        display: [mpk, name, city_id, address, organization_id, contract_id, square, added_field]
+      edit:    ~
+      new:     ~

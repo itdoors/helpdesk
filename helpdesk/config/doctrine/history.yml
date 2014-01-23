@@ -1,0 +1,31 @@
+History:
+  package: History.
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true
+    model_name:
+      type: string(255)
+      notnull: true
+    model_id: 
+      type: integer
+    user_id:
+      type: integer
+    field_name:
+      type: string(255)
+    more:
+      type: string(255)
+    old_value:
+      type: string(255)  
+    value:
+      type: string(255)
+    createdatetime:
+      type: timestamp 
+  relations:
+    User:
+      class: sfGuardUser
+      foreignAlias: History
+      local: user_id
+      foreign: id
+        

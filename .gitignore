@@ -1,8 +1,9 @@
 cache/*
 log/*
 web/uploads/*
-config/databases.yml
-config/propel.ini
+helpdesk/config/databases.yml
+helpdesk/config/ProjectConfiguration.class.php
+helpdesk/config/prope.ini
 data/sql/*
 lib/filter/doctrine/base/Base*
 lib/filter/doctrine/*Plugin/base/Base*
@@ -12,4 +13,3 @@ lib/model/doctrine/base/Base*
 lib/model/doctrine/*Plugin/base/Base*
 lib/model/om/*
 lib/model/map/*
-web/*Plugin/*

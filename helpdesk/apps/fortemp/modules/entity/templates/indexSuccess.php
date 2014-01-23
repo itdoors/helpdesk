@@ -1,0 +1,1 @@
+total time : <?php echo $totalTime;?>

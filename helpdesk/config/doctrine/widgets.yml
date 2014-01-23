@@ -1,0 +1,45 @@
+WidgetList:
+  package: WidgetList.
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true
+    name:
+      type: string(255)
+      notnull: true
+    description:
+      type: string(255)
+  relations:
+    Permissions:
+      class: sfGuardPermission
+      refClass: WidgetListPermission
+      local: widget_id
+      foreign: permission_id
+      
+WidgetListPermission:
+  package: WidgetList.
+  actAs:
+    Timestampable: 
+  options:
+    symfony:
+      form: false
+      filter: false
+  columns:
+    widget_id:
+      primary: true
+      type: integer
+    permission_id:
+      primary: true
+      type: integer
+  relations:
+    WidgetList:
+      class: WidgetList
+      onDelete: CASCADE
+      local: widget_id
+      foreign: id
+    Permission:
+      class: sfGuardPermission
+      onDelete: CASCADE
+      local: permission_id
+      foreign: id

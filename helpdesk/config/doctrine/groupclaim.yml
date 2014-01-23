@@ -1,0 +1,142 @@
+Groupclaimwork:
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true
+    name:
+      type: string(255)
+      notnull: true
+  relations:
+    Groupclaim:
+      class: Groupclaim
+      foreignAlias: Groupclaimwork
+      local: id
+      foreign: groupclaimwork_id
+      type: many
+        
+Groupclaim:
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true
+    name:
+      type: string(150)
+      notnull: true
+    claimtype_id:
+      type: integer
+      notnull: true
+    groupclaimwork_id:
+      type: integer
+      notnull: true
+    formula:
+      type: string
+    client_id:
+      type: integer
+      notnull: true
+    contract_importance_id:
+      type: integer
+      notnull: true
+    message:
+      type: string
+    is_deleted:
+      type: boolean
+      default: false
+  relations:
+    Claimtype:
+      class: claimtype
+      foreignAlias: Groupclaim
+      local: claimtype_id
+      foreign: id
+    Groupclaimwork:
+      class: Groupclaimwork
+      foreignAlias: Groupclaim
+      local: groupclaimwork_id
+      foreign: id
+    Departments:
+      class: departments
+      refClass: GroupclaimDepartments
+      local: groupclaim_id
+      foreign: departments_id
+    Client:
+      class: client
+      foreignAlias: Groupclaim
+      local: client_id
+      foreign: id
+    ContractImportance:
+      class: contract_importance
+      foreignAlias: Groupclaim
+      local: contract_importance_id
+      foreign: id
+      
+Groupclaimperiod:
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true
+    groupclaim_id:
+      type: integer
+      notnull: true
+    period_day:
+      type: string(10)
+      notnull: true
+    period_month:
+      type: string(10)
+      notnull: true
+    period_year:
+      type: string(10)
+      notnull: true
+  relations:
+    Groupclaim:
+      class: Groupclaim
+      foreignAlias: Groupclaimperiod
+      local: groupclaim_id
+      foreign: id
+         
+GroupclaimDepartments:
+  columns:
+    groupclaim_id:
+      type: integer
+      notnull: true
+      primary: true
+    departments_id:
+      type: integer
+      notnull: true
+      primary: true
+  relations:
+    Groupclaim:
+      class: Groupclaim
+      foreignAlias: GroupclaimDepartments
+      local: groupclaim_id
+      foreign: id
+    Departments:
+      class: departments
+      foreignAlias: GroupclaimDepartments
+      local: departments_id
+      foreign: id
+  
+GroupclaimClaim:
+  columns:
+    claim_id:
+      type: integer   
+      notnull: true
+    groupclaim_id:
+      type: integer   
+      notnull: true
+    createdatetime:
+      type: timestamp 
+      notnull: true
+  relations:
+    Groupclaim:
+      class: Groupclaim
+      foreignAlias: GroupclaimClaim
+      local: groupclaim_id
+      foreign: id
+    Claim:
+      class: claim
+      foreignAlias: GroupclaimClaim
+      local: claim_id
+      foreign: id
+      

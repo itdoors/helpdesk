@@ -1,0 +1,114 @@
+# You can find more information about this file on the symfony website:
+# http://www.symfony-project.org/reference/1_4/en/10-Routing
+
+
+entity_show:
+  url:   /entity/show/:department_id
+  param: { module: entity, action: show }
+
+entity_excel_1c:
+  url:   /entity/excel1c/:department_id/:year/:month
+  param: { module: entity, action: excel1c }
+
+entity_excel_print:
+  url:   /entity/excel_print/:department_id/:year/:month
+  param: { module: entity, action: excelPrint }
+  
+entity:
+  url:   /entity
+  param: { module: entity, action: index }
+
+entity_organization_excel:
+  url:   /entity/organization_excel
+  param: { module: entity, action: organization_excel }
+  
+entity_sort:
+  url:   /entity/sort/:sort_field/:sort_type
+  param: { module: entity, action: sort }
+
+entity_contacts_excel:
+  url:   /entity/contacts_excel
+  param: { module: entity, action: contacts_excel }
+
+entity_department_people_excel:
+    url:   /entity/department_people_excel
+    param: { module: entity, action: department_people_excel }
+
+entity_export_excel_1c_all:
+    url:   /entity/export_excel_1c_all
+    param: { module: entity, action: exportExcel1cAll }
+
+entity_copy_all:
+  url:   /entity/copy_all
+  param: { module: entity, action: copyAll }
+
+ajax_entity_grafik:
+  url:   /entity/ajax/grafik/:department_id/:can_edit
+  param: { module: entity, action: ajaxGrafik, can_edit: 0 }
+
+ajax_entity_general:
+  url:   /entity/ajax/general/:department_id/:can_edit
+  param: { module: entity, action: ajaxGeneral, can_edit: 0 }
+
+ajax_entity_technical_params:
+  url:   /entity/ajax/technical_params/:department_id/:can_edit
+  param: { module: entity, action: ajaxTechnicalParams, can_edit: 0 }
+
+ajax_entity_documents:
+  url:   /entity/ajax/documents/:department_id/:can_edit
+  param: { module: entity, action: ajaxDocuments, can_edit: 0 }
+
+ajax_entity_people:
+  url:   /entity/ajax/people/:department_id/:can_edit
+  param: { module: entity, action: ajaxPeople, can_edit: 0 }
+
+ajax_entity_department_people:
+  url:   /entity/ajax/department_people/:department_id/:can_edit
+  param: { module: entity, action: ajaxDepartmentPeople, can_edit: 0 }
+
+ajax_entity_department_people_post:
+  url:   /entity/ajax/department_people_post
+  param: { module: entity, action: ajaxDepartmentPeople }
+
+ajax_entity_refresh_grafik_row:
+  url:   /entity/ajax/grafik_row
+  param: { module: entity, action: ajaxGrafikRow }
+
+entity_migration_step_1:
+  url:   /entity/migration_step1/:sort/:department_id/:offset
+  param: { module: entity, action: migrationStep1, sort: mpk, department_id: 0, offset: 0 }
+  sf_method: [get]
+
+entity_migration_step_1_post:
+  url:   /entity/migration_step1_post
+  param: { module: entity, action: migrationStep1 }
+  sf_method: [post]
+
+sf_guard_signin:
+  url:   /login
+  param: { module: sfGuardAuth, action: signin }
+
+sf_guard_signout:
+  url:   /logout
+  param: { module: sfGuardAuth, action: signout }   
+
+sf_guard_password:
+  url:   /request_password
+  param: { module: sfGuardAuth, action: password }
+
+logout:
+  url:   /logout
+  param: { module: sfGuardAuth, action: signout }
+
+homepage:
+  url:   /
+  param: { module: entity, action: index }
+
+# generic rules
+# please, remove them by adding more specific rules
+default_index:
+  url:   /:module
+  param: { action: index }
+
+default:
+  url:   /:module/:action/*

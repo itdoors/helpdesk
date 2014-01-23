@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xliff PUBLIC "-//XLIFF//DTD XLIFF//EN" "http://www.oasis-open.org/committees/xliff/documents/xliff.dtd">
+<xliff version="1.0">
+  <file source-language="EN" datatype="plaintext" original="messages" date="2010-10-26T15:07:58Z" product-name="messages">
+    <header/>
+    <body>
+      <trans-unit>
+        <source>Add work</source>
+        <target>Добавить работу</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Income nds</source>
+        <target>Доход (НДС)</target>
+      </trans-unit> 
+      <trans-unit>
+        <source>Costs n</source>
+        <target>Затраты (нал)</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Costs nds</source>
+        <target>Затраты (НДС)</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Work</source>
+        <target>Работа</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Fc costsn types</source>
+        <target>Статьи затрат</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Value</source>
+        <target>Значение</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Action</source>
+        <target>Действие</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Add costs</source>
+        <target>Добавить затраты</target>
+      </trans-unit>
+
+   </body>
+  </file>
+</xliff>

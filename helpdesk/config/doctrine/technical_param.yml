@@ -1,0 +1,63 @@
+TechnicalParam:
+  package: TechnicalParam.
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true
+    name:
+      type: string(255)
+      notnull: true
+    type_id:
+      type: integer
+    sort:
+      type: integer
+    unit:
+      type: string(10)
+  relations:
+    TechnicalParamType:
+      class: TechnicalParamType
+      foreignAlias: TechnicalParam
+      local: type_id
+      foreign: id
+    
+TechnicalParamType:
+  package: TechnicalParam.
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true    
+    name:
+      type: string(255)
+      notnull: true
+    sort:
+      type: integer
+      
+TechnicalParamDepartments:
+  package: TechnicalParam.
+  columns:
+    department_id:
+      type: integer
+      notnull: true
+      primary: true
+    param_id:
+      type: integer
+      notnull: true
+      primary: true
+    value:
+      type: string(255)
+    date:
+      type: date
+  relations:
+    TechnicalParamType:
+      class: TechnicalParam
+      foreignAlias: TechnicalParamDepartments
+      local: param_id
+      foreign: id
+    Departments:
+      class: departments
+      foreignAlias: TechnicalParamDepartments
+      local: department_id
+      foreign: id
+     

@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <base target="_self" /> 
+    <?php include_http_metas() ?>
+    <?php include_metas() ?>
+    <?php include_title() ?>
+    <link rel="icon" type="image/x-icon" href="/img/favicon.ico" />
+    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" />
+    <?php include_stylesheets() ?>
+    <?php include_javascripts() ?>
+  </head>
+<body>
+<?php  if ($sf_user->isAuthenticated()&&$sf_user->hasCredential('admin')) { 
+        
+         ?>
+    <div id="wrapper">
+        <div id="header">
+            <div id="logo">
+                <a href="" title=""><img src="/img/logo.jpg" alt="" /></a>
+            </div>
+            <div id="links">
+              <a href="http://www.griffin.ua" target="_blank">www.griffin.ua</a> <br />
+              Service-Desk: (067) 404-00<span style="display:none">_</span>-70 <br />
+              <p>Техническая поддержка: (093) 356-36<span style="display:none">_</span>-26</p>  
+            </div>
+            <div id="search">&nbsp;
+            </div>
+            <div id="user">
+                <div class="left">
+                    <a href="#" title=""><?php echo $sf_user?></a> <br />
+                    <em><?php echo $sf_user->getPositionUser()?></em>
+                </div>
+                <div class="right">
+                    <a href="<?php echo url_for('logout')?>" title="" class="red">Выйти</a>
+                </div>
+    
+            </div>
+        </div><!--header-->
+        <div id="menu">
+            <ul class="mainmenu">
+                <li class="active"><a href="#" title="" class="dropdown">Helpdesk</a></li>
+            </ul>
+            <ul class="submenu">
+                <li><a href="<?php echo url_for('userclient')?>">Клиенты</a></li>
+                <li><a href="<?php echo url_for('userstuff')?>">Сотрудники</a></li>
+                <li><a href="<?php echo url_for('contract')?>">Контракты</a></li>
+                <li><a href="<?php echo url_for('contract_importance')?>">Контракты-Важность</a></li>
+                <li><a href="<?php echo url_for('organization')?>">Организации</a></li>
+                <li><a href="<?php echo url_for('departments')?>">Отделения</a></li>
+                <li><a href="<?php echo url_for('stuff_departments')?>">Назначение сотрудников</a></li>
+                
+            </ul>
+        </div><!--menu-->
+        <div class="delimiter"></div>
+        
+        <table width="70%" class="clear">
+            <tbody>
+                <tr>
+                    <td width="70%" valign="top">
+         
+          <?php  echo $sf_content?>                  
+                        
+                        
+                        
+                        
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        
+  
+  
+    <div id="footer">
+        <p>&copy; 1995-2010 Все права защищены ООО &laquo;<a href="http://www.griffin.ua" title="Перейти на корпоративный сайт">Импел Гриффин Груп</a>&raquo;</p>
+    </div>
+    </div>
+<?php } else echo $sf_content;?>    
+</body>
+</html>

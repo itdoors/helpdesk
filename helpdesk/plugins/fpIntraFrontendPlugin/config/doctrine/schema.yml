@@ -1,0 +1,222 @@
+DocDocumentGroup:
+  columns:
+    id:
+      primary: true
+      type: integer
+      notnull: true
+      autoincrement: true
+    name:
+      unique: true
+      type: string(100)
+      notnull: true
+    description:
+      type: string(255)
+    createdatetime:
+      type: timestamp
+    level:
+      type: integer
+    user_id:
+      type: integer
+      notnull: true 
+    parent_id:
+      type: integer
+    isdeleted:
+      default: false
+      type: boolean
+  relations:
+    Users:
+      class: sfGuardUser
+      foreignAlias: DocDocumentGroup
+      local: user_id
+      foreign: id 
+    ParentCategory:
+      class: DocDocumentGroup
+      foreignAlias: DocDocumentGroup
+      local: parent_id
+      foreign: id
+    Childrens:
+      class: DocDocumentGroup
+      foreignAlias: DocDocumentGroup
+      local: id
+      foreign: parent_id
+      type: many
+    sfUsers:
+      class: sfGuardUser
+      type: many
+      refClass: DocDocumentGroupSfUsers
+      local: docdocumentgroup_id
+      foreign: sfguarduser_id
+    sfGroups:
+      class: sfGuardGroup
+      type: many
+      refClass: DocDocumentGroupSfGroups
+      local: docdocumentgroup_id
+      foreign: sfguardgroup_id
+    LogIntranet:
+      class: LogIntranet
+      type: many
+      foreignAlias: DocDocumentGroup
+      local: id
+      foreign: obj_id  
+      
+
+
+DocDocument:
+  columns:
+    id:
+      primary: true
+      type: integer
+      notnull: true
+      autoincrement: true
+    name:
+      type: string(100)
+      notnull: true
+    description:
+      type: string(255)
+    createdatetime:
+      type: timestamp
+    tags:
+      type: string(255)
+    user_id:
+      type: integer
+      notnull: true
+    category_id:
+      type: integer
+      notnull: true
+    isdeleted:
+      default: false
+      type: boolean
+  relations:
+    Users:
+      class: sfGuardUser
+      foreignAlias: DocDocument
+      local: user_id
+      foreign: id
+    Category:
+      class: DocDocumentGroup
+      foreignAlias: DocDocument
+      local: category_id
+      foreign: id
+    LogIntranet:
+      class: LogIntranet
+      type: many
+      foreignAlias: DocDocument
+      local: id
+      foreign: obj_id 
+      
+DocDocumentVersion:
+  columns:
+    id:
+      primary: true
+      type: integer
+      notnull: true
+      autoincrement: true
+    name:
+      type: string(100)
+      notnull: true
+    filepath:
+      type: string(255)
+      notnull: true
+    mime_type:
+      type: string(50)
+    createdatetime:
+      type: timestamp
+    user_id:
+      type: integer
+      notnull: true
+    document_id:
+      type: integer
+      notnull: true
+    isdeleted:
+      default: false
+      type: boolean
+  relations:
+    Users:
+      class: sfGuardUser
+      foreignAlias: DocDocument
+      local: user_id
+      foreign: id
+    DocDocument:
+      class: DocDocument
+      foreignAlias: DocDocumentVersion
+      local: document_id
+      foreign: id
+    LogIntranet:
+      class: LogIntranet
+      type: many
+      foreignAlias: DocDocumentVersion
+      local: id
+      foreign: obj_id 
+      
+DocDocumentGroupSfUsers:
+  columns:
+    sfguarduser_id:
+      primary: true
+      type: integer
+      notnull: true
+    docdocumentgroup_id:
+      primary: true
+      type: integer
+      notnull: true
+    actionkey:
+      type: enum
+      values: [action_show, action_edit, action_all]
+      primary: true    
+  relations:
+    sfUsers:
+      class: sfGuardUser
+      local: sfguarduser_id
+      foreign: id
+    DocGroups:
+      class: DocDocumentGroup
+      local: docdocumentgroup_id
+      foreign: id
+      
+DocDocumentGroupSfGroups:
+  columns:
+    sfguardgroup_id:
+      primary: true
+      type: integer
+      notnull: true
+    docdocumentgroup_id:
+      primary: true
+      type: integer
+      notnull: true
+    actionkey:
+      type: enum
+      values: [action_show, action_edit, action_all]
+      primary: true    
+  relations:
+    sfGroups:
+      class: sfGuardGroup
+      local: sfguardgroup_id
+      foreign: id
+    DocGroups:
+      class: DocDocumentGroup
+      local: docdocumentgroup_id
+      foreign: id
+
+      
+LogIntranet:
+  columns:
+    id:
+      primary: true
+      type: integer
+      notnull: true
+      autoincrement: true
+    user_id:
+      type: integer
+      notnull: true
+    obj_id:
+      type: integer
+      notnull: true
+    createdatetime:
+      type: timestamp
+    description:
+      type: string(255)
+    logkey:
+      type: enum
+      values: [new, edit, delete]
+    logtype:
+      type: enum
+      values: [doc_document_group, doc_document, doc_document_vesion] 

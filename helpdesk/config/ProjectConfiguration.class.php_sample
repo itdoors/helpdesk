@@ -1,0 +1,158 @@
+<?php
+require_once '/var/www/vhosts/symfony-1.4.8/lib/autoload/sfCoreAutoload.class.php';
+sfCoreAutoload::register();
+
+class ProjectConfiguration extends sfProjectConfiguration
+{
+  
+  public function configureDoctrine(Doctrine_Manager $manager)
+  {
+    $manager->setAttribute(
+      Doctrine::ATTR_COLLECTION_CLASS,
+      'DoctrineFunctions'
+    );
+  }  
+  public function setup()
+  {
+    $this->enablePlugins('sfDoctrinePlugin');
+    $this->setWebDir($this->getRootDir().'/../httpdocs/');
+    //$this->setWebDir($this->getRootDir().'/../');
+    sfConfig::set('sf_app_i18n_dir', sfConfig::get('sf_root_dir').DIRECTORY_SEPARATOR.'i18n');
+    sfConfig::set('sf_app_template_dir', sfConfig::get('sf_root_dir').DIRECTORY_SEPARATOR.'templates');
+    $this->enablePlugins('sfDoctrineGuardPlugin');
+    $this->enablePlugins('sfJqueryFormValidationPlugin');
+    $this->enablePlugins('ahDoctrineEasyEmbeddedRelationsPlugin');
+    $this->enablePlugins('sfFormExtraPlugin');
+    $this->enablePlugins('fpLanguagePlugin');
+    $this->enablePlugins('fpDialogPlugin');
+    $this->enablePlugins('fpIntraFrontendPlugin');
+    $this->enablePlugins('fpAppFunctionsPlugin');
+    $this->enablePlugins('fpContentPlugin');
+    $this->enablePlugins('fpTenderFrontendPlugin');
+    
+    
+    sfConfig::set('claim_container','claim_id');
+
+    sfConfig::set('user_dispatcher','dispatcher');
+    sfConfig::set('user_supervisor','supervisor');
+    sfConfig::set('remove_btn','-');
+
+    sfConfig::set('status_lookup_key','sta_');
+    sfConfig::set('status_smeta_key','sta_smeta');
+    //sfConfig::set('status_lookup_key_open','sta_o');
+    sfConfig::set('status_key_open','sta_open');
+    sfConfig::set('nostuff','nonamestuff');
+    sfConfig::set('nokurator','nonamekurator');
+    sfConfig::set('claimuserkey_stuff','stuff'); #claimuser key
+    sfConfig::set('claimuserkey_kurator','kurator');
+    sfConfig::set('claimuserkey_client','client');
+    sfConfig::set('claimuserkey_smeta','smeta');
+    sfConfig::set('claimuserkey_dispatcher','dispatcher');
+    sfConfig::set('claimuserkey_supervisor','supervisor');
+    sfConfig::set('claimuserkey_joined','joined');
+    sfConfig::set('client_permission','client');
+    sfConfig::set('stuff_permission','stuff');
+    sfConfig::set('kurator_permission','stuff');
+
+
+    sfConfig::set('stuffclassstuff','stuff');
+    sfConfig::set('stuffclasskurator','kurator');
+
+    sfConfig::set('kurator_permission','kurator');
+    sfConfig::set('lookup_sex','sex');
+
+    
+    sfConfig::set('email_from', 'noreply@helpdesk.griffin.ua');
+    sfConfig::set('base_company_name', 'http://helpdesk.griffin.ua');
+
+    sfConfig::set('logcliam_newclaim','Заявка создана ');
+    sfConfig::set('logcliam_newdescription','Добавлена стоимость с НДС: ');
+    sfConfig::set('logcliam_newourcosts','Добавлены Наши затраты: ');
+    sfConfig::set('logcliam_newstuffdescription','Добавлен список работ: ');
+    sfConfig::set('logcliam_newclaimtype','Изменен отдел: ');
+    sfConfig::set('logcliam_newstatus','Изменен статус: ');
+    sfConfig::set('logcliam_newimportance','Именена важность: ');
+    sfConfig::set('logcliam_newkurator','Именен(ы) куратор(ы): ');
+    sfConfig::set('logcliam_newstuff','Именен(ы) исполнитель(и): ');
+    sfConfig::set('logcliam_close','Заявка закрыта: ');
+    sfConfig::set('logcliam_open','Заявка перенесена из закрытых в открытые: ');
+    
+    sfConfig::set('logcliam_mpk','Изменен MPK: ');
+    
+    
+    sfConfig::set('logcliam_finance','finance');
+    sfConfig::set('logcliam_income_nds','Добавлен доход(с НДС): ');
+    sfConfig::set('logcliam_income_nonnds','Добавлен доход(без НДС): ');
+    sfConfig::set('logcliam_costs_n','Добавлены затраты(нал): ');
+    sfConfig::set('logcliam_costs_nds','Добавлены затраты(с НДС): ');
+    sfConfig::set('logcliam_status_id','Изменен статус: ');
+    sfConfig::set('logcliam_claimtype_id','Изменен Отдел: ');
+    sfConfig::set('logcliam_contract_importance_id','Изменена Важность: ');
+    sfConfig::set('logcliam_work','Изменена работа: ');
+    sfConfig::set('logcliam_costs_nonnds','Добавлены затраты(без НДС): ');
+    sfConfig::set('logcliam_bill_number','Добавлены номер акта: ');
+    sfConfig::set('logcliam_bill_description','Добавлены формулировка в счете: ');
+    sfConfig::set('logcliam_smeta_number','Добавлен номер сметы: ');
+    sfConfig::set('logcliam_smeta_datetime','Добавлена дата документа: ');
+    sfConfig::set('logcliam_smeta_file','Добавлен документ: '); 
+    sfConfig::set('logcliam_value', 'Изменены затраты нал');
+    sfConfig::set('logcliam_new_value', 'Добавлены затраты нал');
+    sfConfig::set('logcliam_delete_value', 'Удалены затраты нал');
+    
+    sfConfig::set('logcliam_smeta_status_id','Изменен статус сметы: ');
+    sfConfig::set('logcliam_smeta_costs','Изменена предварительная сметная стоимость: ');
+    sfConfig::set('logcliam_smeta_number','Изменен номер сметы: ');
+    
+    sfConfig::set('application_finance','finance'); 
+    sfConfig::set('application_dispatcher','dispatcher'); 
+    
+    
+    sfConfig::set('nds','nds'); 
+    sfConfig::set('obnal','obnal'); 
+    
+    
+    
+    sfConfig::set('dcotype_smeta','smeta'); 
+    sfConfig::set('dcotype_bill','bill'); 
+    sfConfig::set('dcotype_nakl_income','nakl_income'); 
+    sfConfig::set('dcotype_nakl_costs','nakl_costs'); 
+    sfConfig::set('dcotype_akt_income','akt_income'); 
+    sfConfig::set('dcotype_akt_costs','akt_costs');
+    
+    
+    
+    
+    sfConfig::set('logclaimtype_status','status');  
+    sfConfig::set('logclaimtype_finance_status_id','finance_status_id');  
+
+    sfConfig::set('sf_upload_claimfiles', '/uploads/claimfiles');
+    sfConfig::set('sf_upload_documentsfiles', '/uploads/claimfiles/');
+
+
+    $this->enablePlugins('sfImageTransformPlugin');
+    $this->enablePlugins('isicsWidgetFormTinyMCEPlugin');
+    $this->enablePlugins('sfTaskExtraPlugin');
+    $this->enablePlugins('sfDependentSelectPlugin');
+    
+     sfConfig::set('document_mime_types', array(
+       'image/jpeg', 
+       'image/pjpeg', 
+       'image/x-ms-bmp',
+       'image/gif', 
+       'application/vnd.ms-excel', 
+       'application/msword',
+       'application/x-pdf', 
+       'application/acrobat', 
+       'applications/vnd.pdf', 
+       'text/pdf' ,
+       'text/x-pdf',
+       'application/x-rar',
+       'application/x-zip',
+       'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+       'application/pdf',
+       'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+       'application/vnd.ms-powerpoint',
+       'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+    ));
+  }
+}

@@ -1,0 +1,20 @@
+# You can find more information about this file on the symfony website:
+# http://www.symfony-project.org/reference/1_4/en/13-View
+
+default:
+  http_metas:
+    content-type: text/html
+
+  metas:
+    #title:        symfony project
+    #description:  symfony project
+    #keywords:     symfony, project
+    #language:     en
+    #robots:       index, follow
+
+  stylesheets:    [reset.css, style.css, main.css, jquery-ui.css, default.css, /sfFormExtraPlugin/css/jquery.autocompleter.css]
+
+  javascripts:    [jquery.min.js, jquery.ui.min.js, jquery.validate.min.js, jquery.ui.i18n.ru.js, forms.js, helpdesk.js, saveClass/DSaveStatus.js, saveClass/DSaveClaimtype.js, saveClass/DSaveDescription.js, saveClass/DSaveSDescription.js, saveClass/DSaveKurator.js, saveClass/DSaveStuff.js, saveClass/DSaveOurcosts.js, saveClass/DispatcherNew.js, jqprint.js, /js/jquery.dataTables.js, /sfFormExtraPlugin/js/jquery.autocompleter.js, /js/tiny_mce/tiny_mce.js]
+
+  has_layout:     true
+  layout:         layout

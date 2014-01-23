@@ -1,0 +1,24 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           contract
+    theme:                 admin
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          contract
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+    
+
+    config:
+      actions: ~
+      fields:  ~
+      list:    
+        display: [id, name, organization]
+      filter:  ~
+      form:
+        class: contractAdminForm
+      edit:    ~
+      new:     ~

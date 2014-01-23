@@ -1,0 +1,1 @@
+<?php echo get_component('messages',"Dispatcher_add_worklist_button", array('claim'=>$claim, 'app'=>$app))?>

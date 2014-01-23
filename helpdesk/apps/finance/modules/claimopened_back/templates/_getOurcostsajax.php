@@ -1,0 +1,1 @@
+<?php echo $claim->getOurcosts()?><a href="<?php echo url_for('claimopened/editourcostsajax').'/id/'.$claim->id; ?>" id="dispatcher_change_ourcosts_button" class="sf_admin_action_edit"><?php echo __('Change')?></a>

@@ -1,0 +1,1217 @@
+OrganizationType:
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true
+    type:
+      unique: true
+      type: string(20)
+    title:
+      type: string(255)
+      notnull: true
+
+organization:
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true
+    mpk:
+      type: string(20)
+    name:
+      type: string(255)
+      notnull: true
+    address:
+      type: string(255)
+      notnull: true
+    contacts:
+      type: string(255)
+    shortname:
+      type: string(255)
+    is_smeta:
+      type: boolean
+      default: false
+    mailing_address:
+      type: string(255)
+    organization_type_id:
+      type: integer
+    rs:
+      type: string(255)
+    edrpou:
+      type: string(255)
+    inn:
+      type: string(255)
+    certificate:
+      type: string(255)
+    short_description:
+      type: string(255)
+    site:
+      type: string(128)
+    scope_id:
+      type: integer
+    client_type_id:
+      type: integer
+    city_id:
+      type: integer
+
+  relations:
+    OrganizationType:
+      class: OrganizationType
+      foreignAlias: organization
+      local: organization_type_id
+      foreign: id
+    Departments:
+      class: departments
+      foreignAlias: contract
+      local: id
+      foreign: contract_id
+      type: many
+    Scope:
+      class: lookup
+      foreignAlias: organization
+      local: scope_id
+      foreign: id
+    ClientType:
+      class: lookup
+      foreignAlias: organization
+      local: client_type_id
+      foreign: id
+    City:
+      class: city
+      foreignAlias: organization
+      local: city_id
+      foreign: id
+
+OrganizationUser:
+  columns:
+    organization_id:
+      type: integer
+      notnull: true
+      autoincrement: true
+    user_id:
+      type: integer
+      notnull: true
+      autoincrement: true
+  relations:
+    Organization:
+      class: organization
+      onDelete: CASCADE
+      local: organization_id
+      foreign: id
+    User:
+      class: sfGuardUser
+      onDelete: CASCADE
+      local: user_id
+      foreign: id
+
+organization_importance:
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true
+    organization_id:
+      type: integer
+      notnull: true
+    importance_id:
+      type: integer
+      notnull: true
+    duration:
+      type: integer
+  relations:
+    Organization:
+      class: organization
+      onDelete: CASCADE
+      local: organization_id
+      foreign: id
+    Importance:
+      class: importance
+      onDelete: CASCADE
+      local: importance_id
+      foreign: id     
+     
+contract:
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true
+    name:
+      type: string(255)
+      notnull: true
+    fileupload:
+      type: string(255)
+    organization_id:
+      type: integer
+      notnull: true
+    createdate:
+      type: date
+    closedate:
+      type: date
+  relations:
+    organization:
+      class: organization
+      foreignAlias: contract
+      local: organization_id
+      foreign: id
+    Departments:
+      class: departments
+      foreignAlias: contract
+      local: id
+      foreign: contract_id
+      type: many
+    Importance:
+      class: importance
+      refClass: contract_importance
+      local: contract_id
+      foreign: importance_id
+works:
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true
+    name:
+      unique: true
+      type: string(255)
+      notnull: true
+    income_nonnds:
+      type: float
+    costs_n:
+      type: float
+    costs_nonnds:
+      type: float
+    status_id:
+      type: integer
+    workstypes_id:
+      type: integer
+      notnull: false
+  relations:
+    Status:
+      class: status
+      foreignAlias: works
+      local: status_id
+      foreign: id
+    workstypes:
+      local: workstypes_id
+      foreign: id
+    Claim:
+      class: claim
+      refClass: claim_works
+      local: works_id
+      foreign: claim_id
+
+
+      
+departments:
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true
+    mpk:
+      type: string(20)
+      notnull: true
+    name:
+      type: string(255)
+      notnull: true
+    fullname:
+      type: string(255)
+    city_id:
+      type: integer
+    address:
+      type: string(255)
+      notnull: true
+    contract_id:
+      type: integer
+    organization_id:
+      type: integer
+    square:
+      type: float
+    isdeleted:
+      default: false
+      type: boolean
+    added_field:
+      type: string(255)
+    status_id:
+      type: integer
+    status_date:
+      type: date 
+    departments_type_id:
+      type: integer
+    description:
+      type: string
+    coordinates:
+      type: string(255)
+  relations:
+    City:
+      class: city
+      foreignAlias: Departments
+      local: city_id
+      foreign: id
+    contract:
+      class: contract
+      foreignAlias: departments
+      local: contract_id
+      foreign: id
+    Organization:
+      class: organization
+      foreignAlias: departments
+      local: organization_id
+      foreign: id
+    Client:
+      class: client
+      refClass: client_departments
+      local: departments_id
+      foreign: client_id
+    Stuff:
+      class: stuff
+      refClass: stuff_departments
+      local: departments_id
+      foreign: stuff_id
+    DepartmentsType:
+      class: DepartmentsType
+      foreignAlias: Departments
+      local: departments_type_id
+      foreign: id
+    Status:
+      class: DepartmentsStatus
+      foreignAlias: Departments
+      local: status_id
+      foreign: id
+      
+DepartmentsType:
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true
+    name:
+      type: string(255)
+      notnull: true
+    slug:
+      type: string(255)
+    description:
+      type: string(255)
+
+DepartmentsStatus:
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true
+    name:
+      type: string(255)
+      notnull: true
+    slug:
+      type: string(255)
+    description:
+      type: string(255)
+  
+city:
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true
+    name:
+      type: string(255)
+      notnull: true
+    region_id:
+      type: integer
+    district_id:
+      type: integer
+    population:
+      type: float
+    square:
+      type: float
+    density:
+      type: float
+    citytype:
+      type: enum
+      values: [м, смт, с]
+  relations:
+    Region:
+      class: region
+      foreignAlias: City
+      local: region_id
+      foreign: id
+    District:
+      class: District
+      foreignAlias: City
+      local: district_id
+      foreign: id
+    Stuff:
+      class: stuff
+      refClass: sfuff_city
+      local: city_id
+      foreign: stuff_id
+client:
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true
+    phone:
+      type: string(12)
+    mobilephone:
+      type: string(12)
+      notnull: true
+    user_id:
+      unique: true
+      notnull: true
+      type: integer
+    organization_id:
+      type: integer
+    show_added_field:
+      type: boolean
+      default: false
+    is_mailed:
+      type: boolean
+      default: true
+  relations:
+    Users:
+      class: sfGuardUser
+      foreignAlias: Client
+      local: user_id
+      foreign: id
+    Organization:
+      class: organization
+      foreignAlias: Client
+      local: organization_id
+      foreign: id
+    Organizations:
+      class: organization
+      type: many
+      refClass: ClientOrganization
+      local: client_id
+      foreign: organization_id
+    Departments:
+      class: departments
+      refClass: client_departments
+      local: client_id
+      foreign: departments_id
+
+ClientOrganization:
+  actAs:
+    Timestampable:
+  options:
+    symfony:
+      form: false
+      filter: false
+  columns:
+    client_id:
+      primary: true
+      type: integer
+    organization_id:
+      primary: true
+      type: integer
+  relations:
+    Group:
+      class: client
+      onDelete: CASCADE
+      local: client_id
+      foreign: id
+    Permission:
+      class: organization
+      onDelete: CASCADE
+      local: organization_id
+      foreign: id
+
+stuff:
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true
+    companystructure_id:
+      type: integer
+    mobilephone:
+      type: string(12)
+      notnull: true
+    mobilephone_personal:
+      type: string(128)
+    phone_inside:
+      type: string(128)
+    birth_place:
+      type: string(128)
+    hire_date:
+      type: date
+    fire_date:
+      type: date
+    education:
+      type: string(128)
+    issues:
+      type: string
+    description:
+      type: string
+    user_id:
+      unique: true
+      notnull: true
+      type: integer
+    stuffclass:
+      default: stuff
+      type: enum
+      values: [dispatcher,stuff,kurator,smeta]
+  relations:
+    Companystructure:
+      class: companystructure
+      foreignAlias: Stuff
+      local: companystructure_id
+      foreign: id
+    Users:
+      class: sfGuardUser
+      foreignAlias: Stuff
+      local: user_id
+      foreign: id
+    Departments:
+      class: departments
+      refClass: stuff_departments
+      local: stuff_id
+      foreign: departments_id
+    StuffDepartments:
+      class: stuff_departments
+      local: id
+      foreign: stuff_id
+      type: many
+    City:
+      class: city
+      refClass: sfuff_city
+      local: stuff_id
+      foreign: city_id
+    Claimtype:
+      class: claimtype
+      refClass: stuff_departments
+      local: stuff_id
+      foreign: claimtype_id
+companystructure:
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true
+    parent_id:
+      type: integer
+    name:
+      type: string(255)
+      notnull: true
+    mpk:
+      unique: true
+      type: string(10)
+      notnull: true
+    address:
+      type: string(255)
+    phone:
+      type: string(12)
+    stuff_id:
+      type: integer
+  relations:
+    companystructure:
+      local: parent_id
+      foreign: id
+    Region:
+      class: region
+      refClass: companystructure_region
+      local: companystructure_id
+      foreign: region_id
+    Stuff:
+      class: stuff
+      foreignAlias: Companystructure
+      local: stuff_id
+      foreign: id  
+    
+region:
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true
+    name:
+      unique: true
+      type: string(100)
+      notnull: true
+    square:
+      type: float
+    population:
+      type: float
+    flag:
+      type: string(255)
+  relations:
+    Companystructure:
+      class: companystructure
+      refClass: companystructure_region
+      local: region_id
+      foreign: companystructure_id
+claim:
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true
+    mpk:
+      type: string(128)
+    claimtype_id: 
+      type: integer
+      notnull: true
+    departments_id:
+      type: integer
+      notnull: true
+    createdatetime:
+      type: timestamp
+      notnull: true
+    isclosedclient:
+      default: false
+      type: boolean
+    status_id:
+      type: integer
+    smeta_status_id:
+      type: integer
+    closedatetime:
+      type: timestamp
+    contract_importance_id:
+      type: integer
+    organization_importance_id:
+      type: integer
+      notnull: true
+      default: 1
+    description:
+      type: string(255)
+    stuffdescription:
+      type: string(255)
+    ourcosts:
+      type: string(255)
+    isclosedstuff:
+      default: false
+      type: boolean
+    bill_number:
+      type: string(100)
+    bill_description:
+      type: string(100)
+    bill_date:
+      type: timestamp
+    akt_date:
+      type: timestamp
+    smeta_costs:
+      type: string(100)
+    smeta_number:
+      type: string(100)
+    organization_type_id:
+      type: integer
+      
+  relations:
+    Departments:
+      class: departments
+      foreignAlias: Claim
+      local: departments_id
+      foreign: id
+    ContractImportance:
+      class: contract_importance
+      foreignAlias: Claim
+      local: contract_importance_id
+      foreign: id
+    OrganizationImportance:
+      class: organization_importance
+      foreignAlias: Claim
+      local: organization_importance_id
+      foreign: id
+    Claimtype:
+      class: claimtype
+      foreignAlias: Claim
+      local: claimtype_id
+      foreign: id
+    Status:
+      class: status
+      foreignAlias: Claim
+      local: status_id
+      foreign: id
+    SmetaStatus:
+      class: status
+      foreignAlias: Claim
+      local: smeta_status_id
+      foreign: id
+    Documents:
+      class: Documents
+      refClass: DocumentsClaim
+      local: claim_id
+      foreign: documents_id 
+    FinanceClaim:
+      type: many
+      class: finance_claim
+      local: id
+      foreign: claim_id
+    OrganizationType:
+      class: OrganizationType
+      foreignAlias: organization
+      local: organization_type_id
+      foreign: id    
+
+
+finance_claim:      
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true
+    claim_id:
+      type: integer
+      notnull: true
+    mpk:
+      type: string(50)
+    work:
+      type: string(255)
+    costs_n:
+      type: float
+    costs_nds:
+      type: float
+    costs_nonnds:
+      type: float
+    costs_beznalnonnds:
+      type: float
+    income_nds:
+      type: float
+    income_nonnds:
+      type: float
+    bill_number:
+      type: string(100)  
+    profitability:
+      type: float
+    status_id:
+      type: integer  
+    nds:
+      type: float
+    obnal:
+      type: float
+    is_closed:
+      type: boolean
+      default: false
+  relations:
+    Claim:
+      class: Claim
+      foreignAlias: FinanceClaim
+      local: claim_id
+      foreign: id
+    Status:
+      class: status
+      foreignAlias: FinanceClaim
+      local: status_id
+      foreign: id 
+
+FcCostsn:
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true
+    finance_claim_id:
+      type: integer
+      notnull: true
+    fc_costsn_types_id:
+      type: integer
+      notnull: true
+    value:
+      type: float
+      notnull: true
+  relations:
+    FinanceClaim:
+      class: finance_claim
+      foreignAlias: FcCostsn
+      local: finance_claim_id
+      foreign: id
+    FcCostsntypes:
+      class: FcCostsntypes
+      foreignAlias: FcCostsn
+      local: fc_costsn_types_id
+      foreign: id  
+ 
+FcCostsntypes:
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true
+    name:
+      type: string(150)        
+      notnull: true
+      
+      
+Documentstype:
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true
+    name:
+      type: string(100)
+      notnull: true
+    dockey:
+      type: string(20)
+      unique: true
+      notnull: true   
+ 
+ 
+     
+Documents:
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true
+    name:
+      type: string(100)
+      notnull: true
+    datetime:
+      type: timestamp
+    createdatetime:
+      type: timestamp
+    documentstype_id:
+      type: integer
+      notnull: true
+    filepath:
+      type: string(100)
+      notnull: true
+    user_id:
+      type: integer
+      notnull: true
+  relations:
+    Claim:
+      class: claim
+      refClass: DocumentsClaim
+      local: documents_id
+      foreign: claim_id
+    Documentstype:
+      class: Documentstype
+      foreignAlias: Documents
+      local: documentstype_id
+      foreign: id 
+    Users:
+      class: sfGuardUser
+      foreignAlias: Documents
+      local: user_id
+      foreign: id
+       
+DocumentsClaim:
+  columns:
+    claim_id:
+      type: integer
+      primary: true    
+    documents_id:
+      primary: true    
+      type: integer
+  relations:
+    Claim:
+      class: claim
+      onDelete: CASCADE
+      local: claim_id
+      foreign: id
+    Documents:
+      class: Documents
+      onDelete: CASCADE
+      local: documents_id
+      foreign: id
+      
+      
+log_claim:
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true
+    claim_id:
+      type: integer
+      notnull: true
+    description:
+      type: string(255)
+      notnull: true
+    createdatetime:
+      type: timestamp
+      notnull: true
+    user_id:
+      type: integer
+    log_claim_type:
+      type: string(50)
+    finance_claim_id:
+      type: integer
+      notnull: false
+  relations:
+    claim:
+      local: claim_id
+      foreign: id
+    Users:
+      class: sfGuardUser
+      foreignAlias: LogClaim
+      local: user_id
+      foreign: id
+    FinanceClaim:
+      class: finance_claim
+      foreignAlias: LogClaim
+      local: finance_claim_id
+      foreign: id
+      
+comments:
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true
+    claim_id:
+      type: integer
+    user_id:
+      type: integer
+      notnull: true
+    description:
+      type: string
+      notnull: true
+    createdatetime:
+      type: timestamp
+    isvisible:
+      default: 0
+      type: boolean
+  relations:
+    Claim:
+      class: claim
+      foreignAlias: Comment
+      local: claim_id
+      foreign: id
+    Users:
+      class: sfGuardUser
+      foreignAlias: Comments
+      local: user_id
+      foreign: id
+
+      
+    
+attach:
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true
+    filename:
+      type: string(255)
+      notnull: true
+    filepath:
+      type: string(255)
+      notnull: true
+    comments_id:
+      type: integer
+  relations:
+    Comments:
+      class: comments
+      onDelete: CASCADE 
+      foreignAlias: Attach
+      local: comments_id
+      foreign: id
+        
+claim_works:
+  columns:
+    works_id:
+      primary: true
+      type: integer
+      notnull: true
+    claim_id:
+      primary: true
+      type: integer
+      notnull: true
+  relations:
+    works:
+      local: works_id
+      foreign: id
+    claim:
+      local: claim_id
+      foreign: id
+workstypes:
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true
+    parent_id:
+      type: integer
+    name:
+      type: string(255)
+  relations:
+    workstypes:
+      local: parent_id
+      foreign: id
+importance:
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true
+    name:
+      type: string(100)
+      notnull: true
+    color:
+      type: string(255)
+    duration:
+      type: integer
+  relations:
+    Contract:
+      class: contract
+      refClass: contract_importance
+      local: importance_id
+      foreign: contract_id
+
+      
+contract_importance:
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true
+    contract_id:
+      type: integer
+      notnull: true
+    importance_id:
+      type: integer
+      notnull: true
+    organization_id:
+      type: integer
+    duration:
+      type: integer
+      notnull: true
+  relations:
+    contract:
+      local: contract_id
+      foreign: id
+    importance:
+      local: importance_id
+      foreign: id
+    Organization:
+      class: organization
+      foreignAlias: contract_importance
+      local: organization_id
+      foreign: id
+      
+userclient:
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true
+userstuff:
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true
+lookup:
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true
+    lukey:
+      type: string(255)
+      notnull: true
+    name:
+      type: string(255)
+      notnull: true
+client_departments:
+  columns:
+    client_id:
+      primary: true
+      type: integer
+      notnull: true
+    departments_id:
+      primary: true
+      type: integer
+      notnull: true
+  relations:
+    Departments:
+      class: departments
+      foreignAlias: ClientDepartments
+      local: departments_id
+      foreign: id
+    Client:
+      class: client
+      foreignAlias: ClientDepartments
+      local: client_id
+      foreign: id
+claimusers:
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true
+    user_id:
+      type: integer
+      notnull: true
+    claim_id:
+      type: integer
+      notnull: true
+    userkey:
+      type: string(20)
+      notnull: true
+    isread:
+      type: boolean
+      default: false
+  relations:
+    Users:
+      class: sfGuardUser
+      foreignAlias: ClaimUsers
+      local: user_id
+      foreign: id
+    Claim:
+      class: claim
+      foreignAlias: ClaimUsers
+      local: claim_id
+      foreign: id
+claimtype:
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true
+    name:
+      type: string(255)
+      notnull: true
+    description:
+      type: string(255)
+  relations:
+    Stuff:
+      class: stuff
+      refClass: stuff_departments
+      local: claimtype_id
+      foreign: stuff_id
+status:
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true
+    stakey:
+      unique: true
+      type: string(50)
+      notnull: true
+    name:
+      type: string(255)
+      notnull: true
+    timereminder:
+      type: integer
+    color:
+      type: string(7)
+    icon:
+      type: string(20)
+sfuff_city:
+  columns:
+    stuff_id:
+      primary: true
+      type: integer
+      notnull: true
+    city_id:
+      primary: true
+      type: integer
+      notnull: true
+  relations:
+    Stuff:
+      class: city
+      foreignAlias: StuffCity
+      local: city_id
+      foreign: id
+    City:
+      class: stuff
+      foreignAlias: StuffCity
+      local: stuff_id
+      foreign: id
+stuff_departments:
+  columns:
+    id:
+      type: integer
+      autoincrement: true
+    stuff_id:
+      primary: true
+      type: integer
+      notnull: true
+    departments_id:
+      primary: true
+      type: integer
+      notnull: true
+    claimtype_id:
+      primary: true
+      type: integer
+      notnull: true
+    userkey:
+      primary: true
+      type: string(25)
+      notnull: true
+  relations:
+    Departments:
+      class: departments
+      foreignAlias: StuffDepartments
+      local: departments_id
+      foreign: id
+    Stuff:
+      class: stuff
+      foreignAlias: StuffDepartments
+      local: stuff_id
+      foreign: id
+    Claimtype:
+      class: claimtype
+      foreignAlias: StuffDepartmnets
+      local: claimtype_id
+      foreign: id
+companystructure_region:
+  columns:
+    companystructure_id:
+      primary: true
+      type: integer
+      notnull: true
+    region_id:
+      primary: true
+      type: integer
+      notnull: true
+  relations:
+    Companystructure:
+      class: companystructure
+      foreignAlias: CompanystructureRegion
+      local: companystructure_id
+      foreign: id
+    Region:
+      class: region
+      foreignAlias: CompanystructureRegion
+      local: region_id
+      foreign: id
+hdconfig:
+  columns:
+    id:
+      primary: true
+      type: integer
+      notnull: true
+      autoincrement: true
+    name:
+      unique: true
+      type: string(255)
+      notnull: true
+    value:
+      type: string(255)
+      notnull: true
+    description:
+      type: string
+District:
+  columns:
+    id:
+      primary: true
+      type: integer
+      notnull: true
+      autoincrement: true
+    name:
+      type: string(255)
+      notnull: true
+    region_id:
+      type: integer
+    population:
+      type: float
+    square:
+      type: float
+    density:
+      type: float
+  relations:
+    Region:
+      class: region
+      foreignAlias: District
+      local: region_id
+      foreign: id
+   

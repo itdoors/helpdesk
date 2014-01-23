@@ -1,0 +1,315 @@
+sfGuardGroup:
+  actAs:
+    Timestampable: 
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true
+    name:
+      unique: true
+      type: string(255)
+    description:
+      type: string(1000)
+  relations:
+    Permissions:
+      class: sfGuardPermission
+      refClass: sfGuardGroupPermission
+      local: group_id
+      foreign: permission_id
+    Users:
+      class: sfGuardUser
+      refClass: sfGuardUserGroup
+      local: group_id
+      foreign: user_id
+    DocGroups:
+      class: DocDocumentGroup
+      type: many 
+      refClass: DocDocumentGroupSfGroups
+      local: sfguardgroup_id
+      foreign: docdocumentgroup_id
+
+
+sfGuardPermission:
+  actAs:
+    Timestampable: 
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true
+    name:
+      unique: true
+      type: string(255)
+    description:
+      type: string(1000)
+  relations:
+    Groups:
+      class: sfGuardGroup
+      refClass: sfGuardGroupPermission
+      local: permission_id
+      foreign: group_id
+    Users:
+      class: sfGuardUser
+      refClass: sfGuardUserPermission
+      local: permission_id
+      foreign: user_id
+sfGuardGroupPermission:
+  actAs:
+    Timestampable: 
+  options:
+    symfony:
+      form: false
+      filter: false
+  columns:
+    group_id:
+      primary: true
+      type: integer
+    permission_id:
+      primary: true
+      type: integer
+  relations:
+    Group:
+      class: sfGuardGroup
+      onDelete: CASCADE
+      local: group_id
+      foreign: id
+    Permission:
+      class: sfGuardPermission
+      onDelete: CASCADE
+      local: permission_id
+      foreign: id
+      
+sfGuardUser:
+  actAs:
+    Timestampable: 
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true
+    first_name:
+      type: string(255)
+      notnull: true
+    last_name:
+      type: string(255)
+      notnull: true
+    middle_name:
+      type: string(255)
+    position:
+      type: string(255)
+    email_address:
+      unique: true
+      type: string(255)
+      notnull: true
+    username:
+      unique: true
+      type: string(128)
+      notnull: true
+    birthday:
+      type: date
+    algorithm:
+      default: sha1
+      type: string(128)
+      notnull: true
+    salt:
+      type: string(128)
+    password:
+      type: string(128)
+    is_active:
+      default: 1
+      type: boolean
+    is_blocked:
+      default: 0
+      type: boolean
+    is_fired:
+      default: 0
+      type: boolean
+    is_super_admin:
+      default: false
+      type: boolean
+    last_login:
+      type: timestamp
+    sex_id:
+      type: integer
+    photo:
+      type: string(128)
+    about:
+      type: string  
+  indexes:
+    is_active_idx:
+      fields: [is_active]
+  relations:
+    Stuff:
+      class: stuff
+      type: one 
+      local: id
+      foreign: user_id
+    lookup:
+      local: sex_id
+      foreign: id
+    Groups:
+      class: sfGuardGroup
+      refClass: sfGuardUserGroup
+      local: user_id
+      foreign: group_id
+    Permissions:
+      class: sfGuardPermission
+      refClass: sfGuardUserPermission
+      local: user_id
+      foreign: permission_id
+    DocGroups:
+      class: DocDocumentGroup
+      type: many 
+      refClass: DocDocumentGroupSfUsers
+      local: sfguarduser_id
+      foreign: docdocumentgroup_id
+sfGuardUserPermission:
+  actAs:
+    Timestampable: 
+  options:
+    symfony:
+      form: false
+      filter: false
+  columns:
+    user_id:
+      primary: true
+      type: integer
+    permission_id:
+      primary: true
+      type: integer
+  relations:
+    Permission:
+      class: sfGuardPermission
+      onDelete: CASCADE
+      local: permission_id
+      foreign: id
+    User:
+      class: sfGuardUser
+      onDelete: CASCADE
+      local: user_id
+      foreign: id
+sfGuardUserGroup:
+  actAs:
+    Timestampable: 
+  options:
+    symfony:
+      form: false
+      filter: false
+  columns:
+    user_id:
+      primary: true
+      type: integer
+    group_id:
+      primary: true
+      type: integer
+  relations:
+    Group:
+      class: sfGuardGroup
+      onDelete: CASCADE
+      local: group_id
+      foreign: id
+    User:
+      class: sfGuardUser
+      onDelete: CASCADE
+      local: user_id
+      foreign: id
+sfGuardRememberKey:
+  actAs:
+    Timestampable: 
+  options:
+    symfony:
+      form: false
+      filter: false
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true
+    user_id:
+      type: integer
+    remember_key:
+      type: string(32)
+    ip_address:
+      type: string(50)
+  relations:
+    User:
+      class: sfGuardUser
+      foreignAlias: RememberKeys
+      onDelete: CASCADE
+      foreignType: one
+      local: user_id
+      foreign: id
+sfGuardForgotPassword:
+  actAs:
+    Timestampable: 
+  options:
+    symfony:
+      form: false
+      filter: false
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true
+    user_id:
+      type: integer
+      notnull: true
+    unique_key:
+      type: string(255)
+    expires_at:
+      type: timestamp
+      notnull: true
+  relations:
+    User:
+      class: sfGuardUser
+      foreignAlias: ForgotPassword
+      onDelete: CASCADE
+      type: one
+      foreignType: one
+      local: user_id
+      foreign: id
+
+      
+Contactinfo:
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true
+    name:
+      type: string(100)
+      notnull: true
+  relations:
+    Users:
+      class: sfGuardUser
+      refClass: UserContactinfo
+      local:   contactinfo_id
+      foreign: user_id
+
+UserContactinfo:
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true
+    contactinfo_id:
+      type: integer
+      notnull: true
+    user_id:
+      type: integer
+      notnull: true
+    value:
+      type: string(255)
+      notnull: true
+  relations:
+    Contactinfo:
+      class: Contactinfo
+      onDelete: CASCADE
+      local: contactinfo_id
+      foreign: id
+    User:
+      class: sfGuardUser
+      onDelete: CASCADE
+      local: user_id
+      foreign: id

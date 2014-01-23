@@ -1,0 +1,59 @@
+Queue:
+  package: Queue.
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true
+    object_model:
+      type: string(128)
+    object_submodel:
+      type: string(128)
+    object_id:
+      type: string(128)
+    params:
+      type: string(255)
+    createdatetime:
+      type: timestamp
+    status:
+      type: enum
+      values: [new, proceed, done]
+    percent:
+      type: integer
+      default: 0
+  indexes:
+    idx_object_model_status:
+      fields: [object_model, status]
+    idx_status:
+      fields: [status]
+    idx_object_model_object_id:
+      fields: [object_model, object_id]
+
+QueueLog:
+  package: Queue.
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true
+    object_model:
+      type: string(128)
+    object_submodel:
+      type: string(128)
+    params:
+      type: string(255)
+    createdatetime:
+      type: timestamp
+    user_id:
+      type: integer
+    status:
+      type: enum
+      values: [new, proceed, done]
+    persent:
+      type: integer
+  relations:
+    User:
+      class: sfGuardUser
+      onDelete: SET NULL
+      local: user_id
+      foreign: id

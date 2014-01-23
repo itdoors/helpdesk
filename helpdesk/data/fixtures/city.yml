@@ -1,0 +1,109 @@
+# # Populate this file with data to be loaded by your ORM's *:data-load task.
+# # You can create multiple files in this directory (i.e. 010_users.yml,
+# # 020_articles.yml, etc) which will be loaded in alphabetical order.
+# # 
+# # See documentation for your ORM's *:data-load task for more information.
+# 
+# User:
+#   fabien:
+#     username: fabien
+#     password: changeme
+#     name:     Fabien Potencier
+#     email:    fabien.potencier@symfony-project.com
+#   kris:
+#     username: Kris.Wallsmith
+#     password: changeme
+#     name:     Kris Wallsmith
+#     email:    kris.wallsmith@symfony-project.com
+
+city:
+   ci1:
+     name: м. Київ
+     Region: r9
+   ci2:
+     name: м. Ірпінь
+     Region: r9
+   ci3:
+     name: м. Одеса
+     Region: r14
+   ci4:
+     name: м. Б-Дністровський
+     Region: r14
+   ci5:
+     name: м. Котовськ
+     Region: r14
+   ci6:
+     name: м. Черкаси
+     Region: r22
+   ci7:
+     name: м. Шпола
+     Region: r22
+   ci8:
+     name: м. Умань
+     Region: r22
+   ci9:
+     name: м. Дніпропетровськ
+     Region: r4      
+   ci10:
+     name: м. Дніпродзержинськ
+     Region: r4           
+   ci12:
+     name: м. Донецьк  
+     Region: r5     
+   ci13:
+     name: м. Чернівці 
+     Region: r23        
+   ci14:
+     name: м. Ужгород
+     Region: r7
+   ci15:
+     name: м. Мукачево
+     Region: r7
+   ci16:
+     name: м. Львів
+     Region: r12      
+   ci17:
+     name: м. Рівне
+     Region: r16
+   ci18:
+     name: м. Харків
+     Region: r19
+   ci19:
+     name: м. Полтава
+     Region: r15
+   ci20:
+     name: м. Суми 
+     Region: r17
+   ci21:
+     name: м. Вінниця 
+     Region: r2    
+   ci22:
+     name: м. Судак 
+     Region: r1 
+   ci23:
+     name: м. Феодосія 
+     Region: r1 
+   ci24:
+     name: м. Сімферополь 
+     Region: r1
+   ci25:
+     name: м. Алушта 
+     Region: r1   
+   ci26:
+     name: м. Бахчисарай 
+     Region: r1
+   ci27:
+     name: м. Євпаторія 
+     Region: r1
+   ci28:
+     name: м. Керч 
+     Region: r1 
+   ci29:
+     name: м. Севастополь 
+     Region: r1
+   ci29:
+     name: м. Ялта 
+     Region: r1
+   ci30:
+     name: м. Кременчук 
+     Region: r15                                                                                                  

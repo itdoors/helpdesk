@@ -1,0 +1,1 @@
+<?php include_partial("Dispatcher_messages", array('claim'=>$claim, 'form'=>$form, 'app'=>$app, 'comments'=>$comments))?>

@@ -1,0 +1,1 @@
+<?php echo $claim->getClaimtype()?><a href="<?php echo url_for('claimopened/editclaimtypeajax').'/id/'.$claim->id; ?>" id="dispatcher_change_claimtype_button" class="sf_admin_action_edit"><?php echo __('Change')?></a>
