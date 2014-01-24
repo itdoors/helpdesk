@@ -26,7 +26,6 @@ class UserIntranetForm extends sfGuardUserForm
       $this['doc_groups_list'],
       $this['sex_id'],
       $this['password'],
-      $this['photo'],
       $this['contactinfo_list'],
       $this['about']
     );
@@ -35,6 +34,29 @@ class UserIntranetForm extends sfGuardUserForm
     $years = array_combine($years_range, $years_range);
 
     $this->setWidget('birthday', new sfWidgetFormDate(array('years' => $years)));
+
+    if (!$this->isNew())
+    {
+      $this->setWidget('photo', new sfWidgetFormInputFileEditable(array(
+        'file_src'    => 'uploads/userprofiles/'.$this->getObject()->getId(),
+        'edit_mode'   => !$this->isNew(),
+        'is_image'    => true,
+        'with_delete' => false,
+        'template' => '%input%'
+      )),array('class'=>'required'));
+
+
+      $this->setValidator('photo', new sfValidatorFile(array(
+        'mime_types' => 'web_images',
+        'path' => sfConfig::get('sf_upload_dir').'/userprofiles/'.$this->getObject()->getId(),
+        'validated_file_class' => 'sfActorPhotoValidatedFile',
+        'required' => false
+      )));
+    }
+    else
+    {
+      unset($this['photo']);
+    }
     
     $sfUser = $this->getObject()->getStuff();
     $stuffAddForm = new stuffAddForm($sfUser);
@@ -56,13 +78,18 @@ class UserIntranetForm extends sfGuardUserForm
   public function save($con = null)
   {
     $isNew = false;
+
+    $old_photo = $this->getObject()->getPhoto();
     
     if ($this->getObject()->isNew())
     {
       $isNew = true;
     }
     
+    /** @var sfGuardUser $object */
     $object = parent::save();
+
+    $new_photo = $this->getObject()->getPhoto();
     
     if ($isNew)
     {
@@ -91,9 +118,26 @@ class UserIntranetForm extends sfGuardUserForm
         $user_permission->save();
       }
     }
-      
-    
-    
+
+    if (!$isNew)
+    {
+      if ($old_photo && $old_photo != $new_photo)
+      {
+        $imagesSize = sfConfig::get('app_profile_images');
+
+        $userId = $this->getObject()->getId();
+
+        foreach ($imagesSize as $imagePrefix => $imageSize)
+        {
+          $file =  sfConfig::get('sf_upload_dir').'/userprofiles/' . $userId . DIRECTORY_SEPARATOR . $imagePrefix . '_'.$old_photo;
+          if (file_exists($file))
+          {
+            unlink($file);
+          }
+        }
+      }
+    }
+
     return $object;
   }
   
