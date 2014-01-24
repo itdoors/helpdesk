@@ -6,6 +6,16 @@ class sfActorPhotoValidatedFile extends sfValidatedFile
   {
     $file_name = $this->generateFilename();
 
+    /** @var sfImage $img */
+    $img = new sfImage($this->tempName);
+    $img->setQuality(90);
+
+    if (!file_exists($this->path)) {
+      mkdir($this->path, 0777, true);
+    }
+
+    $img->saveAs($this->path . DIRECTORY_SEPARATOR .$file_name);
+
     $imagesSize = sfConfig::get('app_profile_images');
 
     foreach ($imagesSize as $imagePrefix => $imageSize)

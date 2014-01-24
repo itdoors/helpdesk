@@ -60,6 +60,12 @@ class UserIntranetProfileForm extends PluginsfGuardUserForm
 
     if ($old_photo && $old_photo != $new_photo)
     {
+      $file =  sfConfig::get('sf_upload_dir').'/userprofiles/' . $userId . DIRECTORY_SEPARATOR . $old_photo;
+      if (file_exists($file))
+      {
+        unlink($file);
+      }
+
       $imagesSize = sfConfig::get('app_profile_images');
 
       foreach ($imagesSize as $imagePrefix => $imageSize)
