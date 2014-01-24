@@ -1392,6 +1392,10 @@
             <source>show more</source>
             <target>Показать больше</target>
         </trans-unit>
+        <trans-unit>
+            <source>Passport</source>
+            <target>Паспорт</target>
+        </trans-unit>
     </body>
   </file>
 </xliff>
