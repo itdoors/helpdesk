@@ -17,7 +17,7 @@
         $dirPath = sfConfig::get('sf_upload_dir') . DIRECTORY_SEPARATOR . 'userprofiles' . DIRECTORY_SEPARATOR . $userId . DIRECTORY_SEPARATOR;
 
         $filePath = $dirPath . $imagePrefix . '_' . $sf_guard_user->getPhoto();
-        $fileShortPath = sfConfig::get('sf_upload_userplofiles') . DIRECTORY_SEPARATOR . $userId . DIRECTORY_SEPARATOR . $imagePrefix . '_' . $sf_guard_user->getPhoto();
+        $fileShortPath = sfConfig::get('sf_upload_userplofiles') . $userId . DIRECTORY_SEPARATOR . $imagePrefix . '_' . $sf_guard_user->getPhoto();
         ?>
           <?php if (file_exists($filePath)) : ?>
             <img src="<?php echo $fileShortPath?>" />
