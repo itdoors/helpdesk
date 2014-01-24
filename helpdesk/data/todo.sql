@@ -909,3 +909,6 @@ select insert_department_people(individualId, 'departmentMpk');
 // -2 - нет обьекта с таким mpk
 // -3 - нет физ лица стаким individualId
 // -4 - записть individualId departmentMpk - существует
+
+GRANT SELECT ON table departments TO "1c";
+GRANT USAGE, SELECT ON SEQUENCE departments_id_seq TO "1c";

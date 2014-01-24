@@ -26,7 +26,6 @@ class HandlingMessageForm extends BaseHandlingMessageForm
       new isicsWidgetFormTinyMCE(
         array(
           'tiny_options' => sfConfig::get('app_tiny_mce_my_settings', array()),
-
         )
         ,
         array('class'=>'handling_message')

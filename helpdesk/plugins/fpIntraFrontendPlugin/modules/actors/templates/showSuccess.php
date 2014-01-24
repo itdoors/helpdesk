@@ -1,25 +1,28 @@
-
-
 <table>
   <tbody>
     <tr>
       <th>Id:</th>
       <td><?php 
       echo "";
-      echo $sf_guard_user->getId() ?></td>
+      echo $sf_guard_user->getId() ?>
+      </td>
     </tr>
     <tr>
-      <?php 
-      $file_path = sfConfig::get('sf_upload_dir').DIRECTORY_SEPARATOR.'userprofiles'.DIRECTORY_SEPARATOR.'small_'.$sf_guard_user->getPhoto();
-      if (file_exists($file_path))
-      {
-          $path = sfConfig::get('sf_upload_userplofiles').'small_'.$sf_guard_user->getPhoto();
-          $src = "<img src=\"$path\" />";
-      } else $src = __('No photo');
-      
-      ?>
-      
-            <td colspan="2"><?php echo $src?></td>
+      <td colspan="2">
+        <?php
+        $imagePrefix = sfConfig::get('app_profile_main_image_prefix');
+
+        $userId = $sf_guard_user->getId();
+
+        $dirPath = sfConfig::get('sf_upload_dir') . DIRECTORY_SEPARATOR . 'userprofiles' . DIRECTORY_SEPARATOR . $userId . DIRECTORY_SEPARATOR;
+
+        $filePath = $dirPath . $imagePrefix . '_' . $sf_guard_user->getPhoto();
+        $fileShortPath = sfConfig::get('sf_upload_userplofiles') . DIRECTORY_SEPARATOR . $userId . DIRECTORY_SEPARATOR . $imagePrefix . '_' . $sf_guard_user->getPhoto();
+        ?>
+          <?php if (file_exists($filePath)) : ?>
+            <img src="<?php echo $fileShortPath?>" />
+          <?php endif;?>
+      </td>
     </tr>
     <tr>
       <th><?php echo __('First name')?>:</th>
