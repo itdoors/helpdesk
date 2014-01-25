@@ -120,15 +120,13 @@ class entityActions extends sfActions
           break;
         case 'city':
           $query->orderBy('city.name '. $sort_order);
-          $query->addOrderBy('d.id', 'ACS');
           break;
         case 'organization':
           $query->orderBy('organization.name '. $sort_order);
           break;
         case 'region':
           $query->orderBy('region.name '. $sort_order);
-          $query->addOrderBy('d.id', 'ACS');
-          break; 
+          break;
         case 'status':
           $query->orderBy('Status.name '. $sort_order);
           break; 
@@ -136,6 +134,8 @@ class entityActions extends sfActions
           $query->orderBy('DepartmentsType.name '. $sort_order);
           break;
       }
+
+      $query->addOrderBy('d.id', 'ACS');
     }
   }
   
