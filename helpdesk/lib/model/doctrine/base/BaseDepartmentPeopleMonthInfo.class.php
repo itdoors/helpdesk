@@ -14,6 +14,9 @@
  * @property integer $surcharge_type_id
  * @property integer $bonus_type_id
  * @property integer $fine_type_id
+ * @property string $surcharge_type_key
+ * @property string $bonus_type_key
+ * @property string $fine_type_key
  * @property string $salary
  * @property integer $position_id
  * @property integer $type_id
@@ -43,6 +46,9 @@
  * @method integer                   getSurchargeTypeId()                  Returns the current record's "surcharge_type_id" value
  * @method integer                   getBonusTypeId()                      Returns the current record's "bonus_type_id" value
  * @method integer                   getFineTypeId()                       Returns the current record's "fine_type_id" value
+ * @method string                    getSurchargeTypeKey()                 Returns the current record's "surcharge_type_key" value
+ * @method string                    getBonusTypeKey()                     Returns the current record's "bonus_type_key" value
+ * @method string                    getFineTypeKey()                      Returns the current record's "fine_type_key" value
  * @method string                    getSalary()                           Returns the current record's "salary" value
  * @method integer                   getPositionId()                       Returns the current record's "position_id" value
  * @method integer                   getTypeId()                           Returns the current record's "type_id" value
@@ -71,6 +77,9 @@
  * @method DepartmentPeopleMonthInfo setSurchargeTypeId()                  Sets the current record's "surcharge_type_id" value
  * @method DepartmentPeopleMonthInfo setBonusTypeId()                      Sets the current record's "bonus_type_id" value
  * @method DepartmentPeopleMonthInfo setFineTypeId()                       Sets the current record's "fine_type_id" value
+ * @method DepartmentPeopleMonthInfo setSurchargeTypeKey()                 Sets the current record's "surcharge_type_key" value
+ * @method DepartmentPeopleMonthInfo setBonusTypeKey()                     Sets the current record's "bonus_type_key" value
+ * @method DepartmentPeopleMonthInfo setFineTypeKey()                      Sets the current record's "fine_type_key" value
  * @method DepartmentPeopleMonthInfo setSalary()                           Sets the current record's "salary" value
  * @method DepartmentPeopleMonthInfo setPositionId()                       Sets the current record's "position_id" value
  * @method DepartmentPeopleMonthInfo setTypeId()                           Sets the current record's "type_id" value
@@ -130,6 +139,18 @@ abstract class BaseDepartmentPeopleMonthInfo extends sfDoctrineRecord
              ));
         $this->hasColumn('fine_type_id', 'integer', null, array(
              'type' => 'integer',
+             ));
+        $this->hasColumn('surcharge_type_key', 'string', 3, array(
+             'type' => 'string',
+             'length' => 3,
+             ));
+        $this->hasColumn('bonus_type_key', 'string', 3, array(
+             'type' => 'string',
+             'length' => 3,
+             ));
+        $this->hasColumn('fine_type_key', 'string', 3, array(
+             'type' => 'string',
+             'length' => 3,
              ));
         $this->hasColumn('salary', 'string', 128, array(
              'type' => 'string',
