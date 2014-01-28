@@ -832,6 +832,8 @@ class entityActions extends sfActions
   {
     $q = "
       SELECT
+        DISTINCT dp.id,
+        dp.id as id,
         dp.name as name,
         (dp.last_name || ' ' || dp.first_name || ' ' || dp.middle_name) as full_name,
         dp.last_name as last_name,
@@ -866,10 +868,31 @@ class entityActions extends sfActions
         ) as companystructure_name
       FROM
         department_people dp
-      LEFT JOIN departments d on d.id = dp.department_id
+        LEFT JOIN departments d on d.id = dp.department_id
+      ";
+
+    $user = $this->getUser();
+
+    if ($user->hasCredential('oper') && !$user->hasCredential('supervisor'))
+    {
+      $q .= "
+        INNER JOIN stuff_departments sd on sd.departments_id = d.id
+      ";
+    }
+
+    $q .= "
       WHERE
       	dp.parent_id is null
     ";
+
+    if ($user->hasCredential('oper') && !$user->hasCredential('supervisor'))
+    {
+      $stuffId = GlobalFunctions::getStuffId();
+
+      $q .= "
+        AND sd.stuff_id = " .$stuffId . "
+      ";
+    }
 
     $doctrine = Doctrine_Manager::getInstance()->getCurrentConnection()->getDbh();
 

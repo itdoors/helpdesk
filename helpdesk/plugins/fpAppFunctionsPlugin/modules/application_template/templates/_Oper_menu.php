@@ -7,7 +7,7 @@
         <?php echo __('Export to excel')?>
       </a></li>
     <?php endif;?>
-    <?php if ($sf_user->hasCredential('supervisor')) : ?>
+    <?php if ($sf_user->hasCredential('supervisor') || $sf_user->hasCredential('oper')) : ?>
       <li><a href="<?php echo url_for('entity_department_people_excel')?>">
           <?php echo __('Export to excel department people')?>
         </a></li>
