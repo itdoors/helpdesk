@@ -1412,6 +1412,10 @@
             <source>Show department people</source>
             <target>Просмотр сотрудников</target>
         </trans-unit>
+        <trans-unit>
+            <source>show more</source>
+            <target>Показать больше</target>
+        </trans-unit>
     </body>
   </file>
 </xliff>
