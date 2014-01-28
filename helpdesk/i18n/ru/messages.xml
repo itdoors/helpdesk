@@ -1404,6 +1404,15 @@
             <source>Fine type key</source>
             <target>Вид работ</target>
         </trans-unit>
+        <trans-unit>
+            <source>Export to excel department people</source>
+            <target>Экспорт сотрудников</target>
+        </trans-unit>
+        <trans-unit>
+            <source>Show department people</source>
+            <target>Просмотр сотрудников</target>
+        </trans-unit>
+
     </body>
   </file>
 </xliff>
