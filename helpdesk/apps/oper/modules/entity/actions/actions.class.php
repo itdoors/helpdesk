@@ -837,6 +837,9 @@ class entityActions extends sfActions
         dp.last_name as last_name,
         dp.first_name as first_name,
         dp.middle_name as middle_name,
+        dp.admission_date as admission_date,
+        dp.dismissal_date as dismissal_date,
+        dp.passport as passport,
         dp.position_id as position_id,
         dp.salary as salary,
         dp.birthday as birthday,
@@ -883,10 +886,10 @@ class entityActions extends sfActions
     $this->setLayout(false);
     sfConfig::set('sf_web_debug', false);
 
-    $this->getResponse()->setContent('application/vnd.ms-excel; charset=utf-8');
+    /*$this->getResponse()->setContent('application/vnd.ms-excel; charset=utf-8');
     $this->getResponse()->setHttpHeader('Content-Disposition','attachment; filename=department_people-'.time().'.xls');
     $this->getResponse()->setHttpHeader('Pragma','no-cache');
-    $this->getResponse()->setHttpHeader('Expires','0');
+    $this->getResponse()->setHttpHeader('Expires','0');*/
   }
 
   public function executeGrafik_day(sfWebRequest $request)
