@@ -1392,6 +1392,18 @@
             <source>show more</source>
             <target>Показать больше</target>
         </trans-unit>
+        <trans-unit>
+            <source>Surcharge type key</source>
+            <target>Вид работ</target>
+        </trans-unit>
+        <trans-unit>
+            <source>Bonus type key</source>
+            <target>Вид работ</target>
+        </trans-unit>
+        <trans-unit>
+            <source>Fine type key</source>
+            <target>Вид работ</target>
+        </trans-unit>
     </body>
   </file>
 </xliff>
