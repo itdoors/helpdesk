@@ -274,16 +274,22 @@ class DepartmentPeopleMonthInfo extends BaseDepartmentPeopleMonthInfo
 
   public function getSurchargeString()
   {
-    return $this->getSurchargeFloat()  ? $this->getSurchargeFloat() . '(' . $this->getSurchargeTypeChar(). ')' : '';
+    return $this->getSurchargeFloat()  ?
+           $this->getSurchargeFloat() . '(' . $this->getSurchargeTypeChar(). ')' . $this->getSurchargeTypeKey() :
+           '';
   }
 
   public function getBonusString()
   {
-    return $this->getBonusFloat() ? $this->getBonusFloat() . '(' . $this->getBonusTypeChar(). ')' : '';
+    return $this->getBonusFloat() ?
+           $this->getBonusFloat() . '(' . $this->getBonusTypeChar(). ')' . $this->getBonusTypeKey() :
+           '';
   }
 
   public function getFineString()
   {
-    return $this->getFineFloat() ? $this->getFineFloat() . '(' . $this->getFineTypeChar(). ')' : '';
+    return $this->getFineFloat() ?
+           $this->getFineFloat() . '(' . $this->getFineTypeChar(). ')' . $this->getFineTypeKey() :
+           '';
   }
 }

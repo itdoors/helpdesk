@@ -193,7 +193,7 @@
                 'department_people_replacement_id' => $people->getReplacementId()
               ),
               'model' => 'DepartmentPeopleMonthInfo',
-              'field' => 'surcharge,surcharge_type_id',
+              'field' => 'surcharge,surcharge_type_id,surcharge_type_key',
               'withLabel' => 1,
               'toString' =>'getSurchargeString',
               'default' => $people->getSurchargeString(),
@@ -216,7 +216,7 @@
             'department_people_replacement_id' => $people->getReplacementId()
           ),
           'model' => 'DepartmentPeopleMonthInfo',
-          'field' => 'bonus,bonus_type_id',
+          'field' => 'bonus,bonus_type_id,bonus_type_key',
           'withLabel' => 1,
           'toString' =>'getBonusString',
           'default' => $people->getBonusString(),
@@ -239,7 +239,7 @@
                 'department_people_replacement_id' => $people->getReplacementId()
               ),
               'model' => 'DepartmentPeopleMonthInfo',
-              'field' => 'fine,fine_type_id',
+              'field' => 'fine,fine_type_id,fine_type_key',
               'withLabel' => 1,
               'toString' =>'getFineString',
               'default' => $people->getFineString(),

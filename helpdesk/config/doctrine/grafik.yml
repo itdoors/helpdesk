@@ -158,6 +158,12 @@ DepartmentPeopleMonthInfo:
       type: integer
     fine_type_id:
       type: integer
+    surcharge_type_key:
+      type: string(3)
+    bonus_type_key:
+      type: string(3)
+    fine_type_key:
+      type: string(3)
     salary:
       type: string(128)
     position_id:

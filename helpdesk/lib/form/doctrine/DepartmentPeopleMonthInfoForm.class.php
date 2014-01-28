@@ -142,6 +142,31 @@ class DepartmentPeopleMonthInfoForm extends BaseDepartmentPeopleMonthInfoForm
 
     unset($this['salary_type_id']);
 
+    $charChoices = array(
+      'k' => 'k',
+      'd' => 'd'
+    );
+
+    $this->setWidget('surcharge_type_key', new sfWidgetFormChoice(array(
+      'choices' => $charChoices,
+    )));
+    $this->setWidget('bonus_type_key', new sfWidgetFormChoice(array(
+      'choices' => $charChoices,
+    )));
+    $this->setWidget('fine_type_key', new sfWidgetFormChoice(array(
+      'choices' => $charChoices,
+    )));
+
+    $this->setValidator('surcharge_type_key', new sfValidatorChoice(array(
+      'choices' => $charChoices
+    )));
+    $this->setValidator('bonus_type_key', new sfValidatorChoice(array(
+      'choices' => $charChoices
+    )));
+    $this->setValidator('fine_type_key', new sfValidatorChoice(array(
+      'choices' => $charChoices
+    )));
+
     $this->setValidator('department_people_id', new sfValidatorString());
     $this->setValidator('department_people_replacement_id', new sfValidatorInteger(array(
       'required' => false
@@ -280,7 +305,8 @@ class DepartmentPeopleMonthInfoForm extends BaseDepartmentPeopleMonthInfoForm
   public function checkSurchargeBonusFine($validator, $values, $arguments)
   {
     if ( (isset($values['surcharge']) && $values['surcharge']) xor
-         (isset($values['surcharge_type_id']) && $values['surcharge_type_id']))
+         (isset($values['surcharge_type_id']) && $values['surcharge_type_id'] &&
+          isset($values['surcharge_type_key']) && $values['surcharge_type_key']))
     {
       $error = $this->i18n->__('Surcharge Surcharge Type required');
       if (is_array($this->getOptions()))
@@ -291,7 +317,8 @@ class DepartmentPeopleMonthInfoForm extends BaseDepartmentPeopleMonthInfoForm
     }
 
     if ( (isset($values['bonus']) && $values['bonus']) xor
-      (isset($values['bonus_type_id']) && $values['bonus_type_id']))
+      (isset($values['bonus_type_id']) && $values['bonus_type_id'] &&
+       isset($values['bonus_type_key']) && $values['bonus_type_key']))
     {
       $error = $this->i18n->__('Bonus Bonus Type required');
       if (is_array($this->getOptions()))
@@ -302,7 +329,8 @@ class DepartmentPeopleMonthInfoForm extends BaseDepartmentPeopleMonthInfoForm
     }
 
     if ( (isset($values['fine']) && $values['fine']) xor
-      (isset($values['fine_type_id']) && $values['fine_type_id']))
+      (isset($values['fine_type_id']) && $values['fine_type_id'] &&
+       isset($values['fine_type_key']) && $values['fine_type_key']))
     {
       $error = $this->i18n->__('Fine Fine Type required');
       if (is_array($this->getOptions()))

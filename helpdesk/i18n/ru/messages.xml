@@ -1393,8 +1393,16 @@
             <target>Показать больше</target>
         </trans-unit>
         <trans-unit>
-            <source>Passport</source>
-            <target>Паспорт</target>
+            <source>Surcharge type key</source>
+            <target>Вид работ</target>
+        </trans-unit>
+        <trans-unit>
+            <source>Bonus type key</source>
+            <target>Вид работ</target>
+        </trans-unit>
+        <trans-unit>
+            <source>Fine type key</source>
+            <target>Вид работ</target>
         </trans-unit>
     </body>
   </file>
