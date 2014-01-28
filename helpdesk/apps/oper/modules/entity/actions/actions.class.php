@@ -1293,6 +1293,17 @@ class entityActions extends sfActions
         ->andWhere('dp.department_id = ?', $this->departmentId);
     }
 
+    $user = $this->getUser();
+
+    if ($user->hasCredential('oper') && !$user->hasCredential('supervisor'))
+    {
+      $stuffId = GlobalFunctions::getStuffId();
+
+      $query
+        ->leftJoin('d.Stuff stuff')
+        ->addWhere('stuff.id = ?', $stuffId);
+    }
+
     switch ($this->sort)
     {
       case 'mpk':

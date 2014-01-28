@@ -12,6 +12,11 @@
           <?php echo __('Export to excel department people')?>
         </a></li>
     <?php endif;?>
+    <?php if ($sf_user->hasCredential('supervisor') || $sf_user->hasCredential('oper')) : ?>
+      <li><a href="<?php echo url_for('entity_migration_step_1')?>">
+          <?php echo __('Show department people')?>
+        </a></li>
+    <?php endif;?>
     <?php if ($sf_user->hasCredential('supervisor')) : ?>
       <li><a href="<?php echo url_for('entity_organization_excel')?>">
           <?php echo __('Export to excel organization')?>

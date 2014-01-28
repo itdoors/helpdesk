@@ -912,3 +912,34 @@ select insert_department_people(individualId, 'departmentMpk');
 
 GRANT SELECT ON table departments TO "1c";
 GRANT USAGE, SELECT ON SEQUENCE departments_id_seq TO "1c";
+
++++++++
+
+CREATE OR REPLACE FUNCTION stuff_to_region(userId int, regionId int, userKeyParam varchar(10)) RETURNS int AS $$
+DECLARE
+    claimTypeId int;
+    departmentId int;
+    totalCount int;
+    stuffId int;
+BEGIN
+    totalCount = 0;
+    SELECT id INTO stuffId from stuff where user_id = userId LIMIT 1;
+    FOR claimTypeId IN SELECT id FROM claimtype LOOP
+	FOR departmentId IN SELECT d.id FROM departments d INNER JOIN city c on d.city_id = c.id WHERE c.region_id = regionId
+	    LOOP
+	        IF NOT EXISTS (SELECT id FROM stuff_departments WHERE stuff_id = stuffId and departments_id = departmentId and claimtype_id = claimTypeId and userkey = userKeyParam) THEN
+		    raise notice '%', departmentId;
+		    INSERT INTO stuff_departments (stuff_id, departments_id, claimtype_id, userkey) VALUES (stuffId, departmentId, claimTypeId, userKeyParam);
+		    totalCount = totalCount + 1;
+	        END IF;
+	END LOOP;
+    END LOOP;
+
+    RETURN totalCount;
+END
+$$
+LANGUAGE 'plpgsql';
+
+select stuff_to_region(252, 5, 'kurator');
+
+++++++++++++++++++++++++
