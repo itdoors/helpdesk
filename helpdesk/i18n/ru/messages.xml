@@ -1420,6 +1420,10 @@
             <source>Department status</source>
             <target>Статус отделения</target>
         </trans-unit>
+        <trans-unit>
+            <source>Passport</source>
+            <target>Паспорт</target>
+        </trans-unit>
     </body>
   </file>
 </xliff>
