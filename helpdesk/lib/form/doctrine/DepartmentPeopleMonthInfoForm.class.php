@@ -158,13 +158,16 @@ class DepartmentPeopleMonthInfoForm extends BaseDepartmentPeopleMonthInfoForm
     )));
 
     $this->setValidator('surcharge_type_key', new sfValidatorChoice(array(
-      'choices' => $charChoices
+      'choices' => $charChoices,
+      'required' => false
     )));
     $this->setValidator('bonus_type_key', new sfValidatorChoice(array(
-      'choices' => $charChoices
+      'choices' => $charChoices,
+      'required' => false
     )));
     $this->setValidator('fine_type_key', new sfValidatorChoice(array(
-      'choices' => $charChoices
+      'choices' => $charChoices,
+      'required' => false
     )));
 
     $this->setValidator('department_people_id', new sfValidatorString());
@@ -305,8 +308,7 @@ class DepartmentPeopleMonthInfoForm extends BaseDepartmentPeopleMonthInfoForm
   public function checkSurchargeBonusFine($validator, $values, $arguments)
   {
     if ( (isset($values['surcharge']) && $values['surcharge']) xor
-         (isset($values['surcharge_type_id']) && $values['surcharge_type_id'] &&
-          isset($values['surcharge_type_key']) && $values['surcharge_type_key']))
+         (isset($values['surcharge_type_id']) && $values['surcharge_type_id']))
     {
       $error = $this->i18n->__('Surcharge Surcharge Type required');
       if (is_array($this->getOptions()))
@@ -317,8 +319,7 @@ class DepartmentPeopleMonthInfoForm extends BaseDepartmentPeopleMonthInfoForm
     }
 
     if ( (isset($values['bonus']) && $values['bonus']) xor
-      (isset($values['bonus_type_id']) && $values['bonus_type_id'] &&
-       isset($values['bonus_type_key']) && $values['bonus_type_key']))
+      (isset($values['bonus_type_id']) && $values['bonus_type_id']))
     {
       $error = $this->i18n->__('Bonus Bonus Type required');
       if (is_array($this->getOptions()))
@@ -329,8 +330,7 @@ class DepartmentPeopleMonthInfoForm extends BaseDepartmentPeopleMonthInfoForm
     }
 
     if ( (isset($values['fine']) && $values['fine']) xor
-      (isset($values['fine_type_id']) && $values['fine_type_id'] &&
-       isset($values['fine_type_key']) && $values['fine_type_key']))
+      (isset($values['fine_type_id']) && $values['fine_type_id']))
     {
       $error = $this->i18n->__('Fine Fine Type required');
       if (is_array($this->getOptions()))
