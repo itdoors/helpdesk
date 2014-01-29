@@ -54,35 +54,45 @@
   echo $peopleMonthInfoForm['employment_type_id']->renderRow();
   //echo $peopleMonthInfoForm['salary_type_id']->renderRow();?>
 
-  <?php if ($surchargeError):?>
-    <ul class="error_list">
-      <li><?php echo $surchargeError?></li>
-    </ul>
-  <?php endif;?>
-  <?php
-  echo $peopleMonthInfoForm['surcharge']->renderRow();
-  echo $peopleMonthInfoForm['surcharge_type_id']->renderRow();?>
+  <div style="display: block; border: solid 1px #000; margin: 2px; padding: 5px;">
+    <?php if ($surchargeError):?>
+      <ul class="error_list">
+        <li><?php echo $surchargeError?></li>
+      </ul>
+    <?php endif;?>
+    <?php
+      echo $peopleMonthInfoForm['surcharge']->renderRow();
+      echo $peopleMonthInfoForm['surcharge_type_id']->renderRow();
+      echo $peopleMonthInfoForm['surcharge_type_key']->renderRow();
+    ?>
+  </div>
 
-  <?php if ($bonusError):?>
-    <ul class="error_list">
-      <li><?php echo $bonusError?></li>
-    </ul>
-  <?php endif;?>
+  <div style="display: block; border: solid 1px #000; margin: 2px; padding: 5px;">
+    <?php if ($bonusError):?>
+      <ul class="error_list">
+        <li><?php echo $bonusError?></li>
+      </ul>
+    <?php endif;?>
+    <?php
+      echo $peopleMonthInfoForm['bonus']->renderRow();
+      echo $peopleMonthInfoForm['bonus_type_id']->renderRow();
+      echo $peopleMonthInfoForm['bonus_type_key']->renderRow();
+    ?>
+  </div>
 
-  <?php
-  echo $peopleMonthInfoForm['bonus']->renderRow();
-  echo $peopleMonthInfoForm['bonus_type_id']->renderRow();?>
+  <div style="display: block; border: solid 1px #000; margin: 2px; padding: 5px;">
+    <?php if ($fineError):?>
+      <ul class="error_list">
+        <li><?php echo $fineError?></li>
+      </ul>
+    <?php endif;?>
 
-  <?php if ($fineError):?>
-    <ul class="error_list">
-      <li><?php echo $fineError?></li>
-    </ul>
-  <?php endif;?>
-
-  <?php
-  echo $peopleMonthInfoForm['fine']->renderRow();
-  echo $peopleMonthInfoForm['fine_type_id']->renderRow();
-  ?>
+    <?php
+      echo $peopleMonthInfoForm['fine']->renderRow();
+      echo $peopleMonthInfoForm['fine_type_id']->renderRow();
+      echo $peopleMonthInfoForm['fine_type_key']->renderRow();
+    ?>
+  </div>
   <?php
   $display = 'none';
 
