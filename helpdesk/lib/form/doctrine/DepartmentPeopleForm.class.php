@@ -46,6 +46,14 @@ class DepartmentPeopleForm extends BaseDepartmentPeopleForm
     $this->setValidator('last_name', new sfValidatorString(array('max_length' => 128, 'required' => true)));
     // $this->setValidator('number', new sfValidatorString(array('max_length' => 128, 'required' => true)));
 
+    $this->setWidget('employment_type_id' , new sfWidgetFormDoctrineChoice(
+      array(
+        'model' => 'lookup',
+        'table_method' => 'getOnlyEmploymentType',
+        'add_empty' => true
+      )
+    ));
+
     $useFields = array(
       'last_name',
       'first_name',
@@ -60,6 +68,8 @@ class DepartmentPeopleForm extends BaseDepartmentPeopleForm
       'department_id',
       'admission_date',
       'dismissal_date',
+      'employment_type_id',
+      'salary'
     );
 
     if (!$isNew)

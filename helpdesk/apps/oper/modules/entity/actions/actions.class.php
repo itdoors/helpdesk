@@ -1284,6 +1284,7 @@ class entityActions extends sfActions
       ->createQuery('dp')
       ->where('dp.parent_id is null')
       ->leftJoin('dp.Department d')
+      ->leftJoin('d.Status s')
       ->leftJoin('d.Organization o')
       ->addWhere('d.status_id = 1');
 
@@ -1329,7 +1330,6 @@ class entityActions extends sfActions
     {
       $this->setLayout(false);
     }
-
 
     if (!$this->isAjax)
     {
