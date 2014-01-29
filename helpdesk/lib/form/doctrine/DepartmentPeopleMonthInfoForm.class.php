@@ -144,7 +144,8 @@ class DepartmentPeopleMonthInfoForm extends BaseDepartmentPeopleMonthInfoForm
 
     $charChoices = array(
       'k' => 'k',
-      'd' => 'd'
+      'd' => 'd',
+      'r' => 'r'
     );
 
     $this->setWidget('surcharge_type_key', new sfWidgetFormChoice(array(
