@@ -894,8 +894,6 @@ class entityActions extends sfActions
       ";
     }
 
-    $q .= ' LIMIT 100';
-
     $doctrine = Doctrine_Manager::getInstance()->getCurrentConnection()->getDbh();
 
     $result = $doctrine->query($q);
@@ -911,10 +909,10 @@ class entityActions extends sfActions
     $this->setLayout(false);
     sfConfig::set('sf_web_debug', false);
 
-    /*$this->getResponse()->setContent('application/vnd.ms-excel; charset=utf-8');
+    $this->getResponse()->setContent('application/vnd.ms-excel; charset=utf-8');
     $this->getResponse()->setHttpHeader('Content-Disposition','attachment; filename=department_people-'.time().'.xls');
     $this->getResponse()->setHttpHeader('Pragma','no-cache');
-    $this->getResponse()->setHttpHeader('Expires','0');*/
+    $this->getResponse()->setHttpHeader('Expires','0');
   }
 
   public function executeGrafik_day(sfWebRequest $request)
