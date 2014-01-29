@@ -831,7 +831,7 @@ class DepartmentPeople extends BaseDepartmentPeople
 
   public function getBaseEmploymentTypeChar()
   {
-    $employment_type_lukey = $this->getBaseEmploymentTypeId();
+    $employment_type_lukey = $this->getBaseEmploymentTypeLukey();
 
     $char = '';
 
@@ -855,6 +855,14 @@ class DepartmentPeople extends BaseDepartmentPeople
     }
 
     return $char;
+  }
+
+  /**
+   * Get base salary from department_people table
+   */
+  public function getBaseSalary()
+  {
+    return $this->_data['salary'];
   }
 }
 

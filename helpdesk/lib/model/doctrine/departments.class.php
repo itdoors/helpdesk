@@ -160,6 +160,10 @@ class departments extends Basedepartments
     $history->save();
     
     //$history->set
-  } 
+  }
 
+  public function getStatusString()
+  {
+    return $this->getStatus() . ' ';
+  }
 }

@@ -12,7 +12,10 @@
           <th><?php echo __('Last name')?></th>
           <th><?php echo __('First name')?></th>
           <th><?php echo __('Middle name')?></th>
-          <th><?php echo __('Department id')?></th>
+          <th><?php echo __('Department')?></th>
+          <th><?php echo __('Department status')?></th>
+          <th><?php echo __('Employment type')?></th>
+          <th><?php echo __('Salary')?></th>
           <th><?php echo __('Birthday')?></th>
           <th><?php echo __('Admission date')?></th>
           <th><?php echo __('Dismissal date')?></th>
@@ -162,6 +165,45 @@
         include_component('Fmodel', 'ajax_field_change',
           array(
             'where' => array(
+              'id' => $person->getDepartmentId(),
+            ),
+            'model' => 'departments',
+            'field' => 'status_id',
+            'toString' => 'getStatusString',
+            'default'  =>  $person->getDepartment()->getStatusString(),
+          )
+        );
+        ?></td>
+      <td><?php
+        include_component('Fmodel', 'ajax_field_change',
+          array(
+            'where' => array(
+              'id' => $person->getId(),
+            ),
+            'model' => 'DepartmentPeople',
+            'field' => 'employment_type_id',
+            'toString' => 'getBaseEmploymentTypeChar',
+            'default'  =>  $person->getBaseEmploymentTypeChar(),
+          )
+        );
+        ?></td>
+      <td><?php
+        include_component('Fmodel', 'ajax_field_change',
+          array(
+            'where' => array(
+              'id' => $person->getId(),
+            ),
+            'model' => 'DepartmentPeople',
+            'field' => 'salary',
+            'toString' => 'getBaseSalary',
+            'default'  =>  $person->getBaseSalary(),
+          )
+        );
+        ?></td>
+      <td><?php
+        include_component('Fmodel', 'ajax_field_change',
+          array(
+            'where' => array(
               'id' => $person->getId(),
             ),
             'model' => 'DepartmentPeople',
@@ -240,7 +282,7 @@
     </tr>
   <?php endforeach;?>
     <tr class="show-more" data-last-dapartment-id="<?php echo $lastDepartmentId?>">
-      <td colspan="16"><a href="#" style="display: block">show more</a></td>
+      <td colspan="19"><a href="#" style="display: block"><?php echo __('show more')?></a></td>
     </tr>
   <?php if (!$isAjax) : ?>
     </table>
