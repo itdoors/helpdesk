@@ -55,8 +55,8 @@
         ),
         'model' => 'departments',
         'field' => 'status_id',
-        'toString' =>'getStatus',
-        'default' => $department->getStatus(),
+        'toString' =>'getStatusString',
+        'default' => $department->getStatusString(),
         )
      )?></td>
   </tr>
