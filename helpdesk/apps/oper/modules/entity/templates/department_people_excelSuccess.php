@@ -6,13 +6,13 @@
     <td><?php echo __('Mpk')?></td>
     <td><?php echo __('Number')?></td>
     <td><?php echo __('Name')?></td>
-    <td><?php echo __('LastName')?></td>
-    <td><?php echo __('FirstName')?></td>
-    <td><?php echo __('MiddleName')?></td>
+    <td><?php echo __('Last name')?></td>
+    <td><?php echo __('First name')?></td>
+    <td><?php echo __('Middle name')?></td>
     <td><?php echo __('Drfo')?></td>
     <td><?php echo __('Passport')?></td>
     <td><?php echo __('Type')?></td>
-    <td><?php echo __('Employment Type')?></td>
+    <td><?php echo __('Employment type')?></td>
     <td><?php echo __('Salary')?></td>
     <td><?php echo __('Admission date')?></td>
     <td><?php echo __('Dismissal date')?></td>
