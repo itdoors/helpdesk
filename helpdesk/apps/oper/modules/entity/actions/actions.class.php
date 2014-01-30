@@ -851,11 +851,21 @@ class entityActions extends sfActions
           month = " . date('n'). " AND
           year = " . date('Y'). " AND
           department_people_id = dp.id AND
-          type_id = dp.type_id
+          type_id = 18
         limit 1
         ) as salary,
         dp.birthday as birthday,
-        dp.type_string as type_string,
+        (select
+          dpmi2.type_string
+        from
+          department_people_month_info dpmi2
+        where
+          month = " . date('n'). " AND
+          year = " . date('Y'). " AND
+          department_people_id = dp.id AND
+          type_id = 18
+        limit 1
+        ) as type_string,
         (select
           dpmi.employment_type_id
         from
