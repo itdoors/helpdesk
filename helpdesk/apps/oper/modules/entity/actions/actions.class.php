@@ -864,7 +864,7 @@ class entityActions extends sfActions
           month = " . date('n'). " AND
           year = " . date('Y'). " AND
           department_people_id = dp.id AND
-          type_id = dp.type_id
+          type_id = 18
         limit 1
         ) as employment_type_id,
         dp.drfo as drfo,
@@ -914,7 +914,7 @@ class entityActions extends sfActions
       ";
     }
 
-    $q .= ' limit 10';
+    //$q .= ' limit 10';
 
     $doctrine = Doctrine_Manager::getInstance()->getCurrentConnection()->getDbh();
 
