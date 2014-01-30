@@ -846,7 +846,17 @@ class entityActions extends sfActions
         dp.salary as salary,
         dp.birthday as birthday,
         dp.type_string as type_string,
-        dp.employment_type_id as employment_type_id,
+        (select
+          dpmi.employment_type_id
+        from
+          department_people_month_info dpmi
+        where
+          month = " . date('n'). " AND
+          year = " . date('Y'). " AND
+          department_people_id = dp.id AND
+          type_id = dp.type_id
+        limit 1
+        ) as employment_type_id,
         dp.drfo as drfo,
         dp.person_code as person_code,
         dp.number as number,
@@ -894,6 +904,8 @@ class entityActions extends sfActions
       ";
     }
 
+    $q .= ' limit 10';
+
     $doctrine = Doctrine_Manager::getInstance()->getCurrentConnection()->getDbh();
 
     $result = $doctrine->query($q);
@@ -909,10 +921,10 @@ class entityActions extends sfActions
     $this->setLayout(false);
     sfConfig::set('sf_web_debug', false);
 
-    $this->getResponse()->setContent('application/vnd.ms-excel; charset=utf-8');
+    /*$this->getResponse()->setContent('application/vnd.ms-excel; charset=utf-8');
     $this->getResponse()->setHttpHeader('Content-Disposition','attachment; filename=department_people-'.time().'.xls');
     $this->getResponse()->setHttpHeader('Pragma','no-cache');
-    $this->getResponse()->setHttpHeader('Expires','0');
+    $this->getResponse()->setHttpHeader('Expires','0');*/
   }
 
   public function executeGrafik_day(sfWebRequest $request)
