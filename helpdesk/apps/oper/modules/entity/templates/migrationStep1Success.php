@@ -29,6 +29,10 @@
     /** @var DepartmentPeople[] $departmentPeople */
     foreach ($departmentPeople as $person): ?>
     <?php
+      $person->setYearMonthReplacement(date('Y'), date('n'), 0);
+      $monthInfo = $person->getMonthInfo();
+      ?>
+    <?php
       if ($lastDepartmentId != $person->getDepartmentId()) :
       $lastDepartmentId = $person->getDepartmentId();
     ?>
@@ -175,30 +179,52 @@
         );
         ?></td>
       <td><?php
-        include_component('Fmodel', 'ajax_field_change',
-          array(
-            'where' => array(
-              'id' => $person->getId(),
-            ),
-            'model' => 'DepartmentPeople',
-            'field' => 'employment_type_id',
-            'toString' => 'getBaseEmploymentTypeChar',
-            'default'  =>  $person->getBaseEmploymentTypeChar(),
-          )
-        );
+
+        if ($monthInfo)
+        {
+          include_component('Fmodel', 'ajax_field_change',
+            array(
+              'where'=> array(
+                'department_people_id'=> $person->getId(),
+                'year' => date('Y'),
+                'month' => date('n'),
+                'department_people_replacement_id' => $person->getReplacementId()
+              ),
+              'model' => 'DepartmentPeopleMonthInfo',
+              'field' => 'employment_type_id',
+              'toString' => 'getEmploymentTypeChar',
+              'default'  =>  $person->getEmploymentTypeChar(),
+            )
+          );
+        }
+        else
+        {
+          echo 'Не добален в этот месяц';
+        }
         ?></td>
       <td><?php
-        include_component('Fmodel', 'ajax_field_change',
-          array(
-            'where' => array(
-              'id' => $person->getId(),
-            ),
-            'model' => 'DepartmentPeople',
-            'field' => 'salary',
-            'toString' => 'getBaseSalary',
-            'default'  =>  $person->getBaseSalary(),
-          )
-        );
+
+        if ($monthInfo)
+        {
+          include_component('Fmodel', 'ajax_field_change',
+            array(
+              'where'=> array(
+                'department_people_id'=> $person->getId(),
+                'year' => date('Y'),
+                'month' => date('n'),
+                'department_people_replacement_id' => $person->getReplacementId()
+              ),
+              'model' => 'DepartmentPeopleMonthInfo',
+              'field' => 'salary',
+              'toString' => 'getSalary',
+              'default'  =>  $person->getSalary(),
+            )
+          );
+        }
+        else
+        {
+          echo 'Не добален в этот месяц';
+        }
         ?></td>
       <td><?php
         include_component('Fmodel', 'ajax_field_change',
