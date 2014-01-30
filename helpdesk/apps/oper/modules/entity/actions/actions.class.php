@@ -843,7 +843,17 @@ class entityActions extends sfActions
         dp.dismissal_date as dismissal_date,
         dp.passport as passport,
         dp.position_id as position_id,
-        dp.salary as salary,
+        (select
+          dpmi1.salary
+        from
+          department_people_month_info dpmi1
+        where
+          month = " . date('n'). " AND
+          year = " . date('Y'). " AND
+          department_people_id = dp.id AND
+          type_id = dp.type_id
+        limit 1
+        ) as salary,
         dp.birthday as birthday,
         dp.type_string as type_string,
         (select
@@ -921,10 +931,10 @@ class entityActions extends sfActions
     $this->setLayout(false);
     sfConfig::set('sf_web_debug', false);
 
-    /*$this->getResponse()->setContent('application/vnd.ms-excel; charset=utf-8');
+    $this->getResponse()->setContent('application/vnd.ms-excel; charset=utf-8');
     $this->getResponse()->setHttpHeader('Content-Disposition','attachment; filename=department_people-'.time().'.xls');
     $this->getResponse()->setHttpHeader('Pragma','no-cache');
-    $this->getResponse()->setHttpHeader('Expires','0');*/
+    $this->getResponse()->setHttpHeader('Expires','0');
   }
 
   public function executeGrafik_day(sfWebRequest $request)
