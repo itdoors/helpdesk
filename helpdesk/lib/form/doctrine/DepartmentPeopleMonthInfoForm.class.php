@@ -340,7 +340,6 @@ class DepartmentPeopleMonthInfoForm extends BaseDepartmentPeopleMonthInfoForm
       }
       throw new sfValidatorError($validator, $error);
     }
-
     return $values;
   }
 }
