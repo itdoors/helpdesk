@@ -848,8 +848,8 @@ class entityActions extends sfActions
         from
           department_people_month_info dpmi1
         where
-          month = " . date('n'). " AND
-          year = " . date('Y'). " AND
+          month = 1 AND
+          year = 2014 AND
           department_people_id = dp.id AND
           type_id = 18
         limit 1
@@ -860,8 +860,8 @@ class entityActions extends sfActions
         from
           department_people_month_info dpmi2
         where
-          month = " . date('n'). " AND
-          year = " . date('Y'). " AND
+          month = 1 AND
+          year = 2014 AND
           department_people_id = dp.id AND
           type_id = 18
         limit 1
@@ -871,8 +871,8 @@ class entityActions extends sfActions
         from
           department_people_month_info dpmi
         where
-          month = " . date('n'). " AND
-          year = " . date('Y'). " AND
+          month = 1 AND
+          year = 2014 AND
           department_people_id = dp.id AND
           type_id = 18
         limit 1
@@ -912,7 +912,9 @@ class entityActions extends sfActions
 
     $q .= "
       WHERE
-      	dp.parent_id is null
+      	dp.parent_id is null and
+      	d.id = 2785
+
     ";
 
     if ($user->hasCredential('oper') && !$user->hasCredential('supervisor'))
@@ -941,10 +943,10 @@ class entityActions extends sfActions
     $this->setLayout(false);
     sfConfig::set('sf_web_debug', false);
 
-    $this->getResponse()->setContent('application/vnd.ms-excel; charset=utf-8');
+    /*$this->getResponse()->setContent('application/vnd.ms-excel; charset=utf-8');
     $this->getResponse()->setHttpHeader('Content-Disposition','attachment; filename=department_people-'.time().'.xls');
     $this->getResponse()->setHttpHeader('Pragma','no-cache');
-    $this->getResponse()->setHttpHeader('Expires','0');
+    $this->getResponse()->setHttpHeader('Expires','0');*/
   }
 
   public function executeGrafik_day(sfWebRequest $request)
