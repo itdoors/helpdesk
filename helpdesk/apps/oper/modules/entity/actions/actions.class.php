@@ -912,10 +912,7 @@ class entityActions extends sfActions
 
     $q .= "
       WHERE
-      	dp.parent_id is null and
-      	d.id = 2785
-
-    ";
+      	dp.parent_id is null";
 
     if ($user->hasCredential('oper') && !$user->hasCredential('supervisor'))
     {
