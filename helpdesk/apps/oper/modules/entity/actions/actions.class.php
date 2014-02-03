@@ -842,7 +842,17 @@ class entityActions extends sfActions
         dp.admission_date as admission_date,
         dp.dismissal_date as dismissal_date,
         dp.passport as passport,
-        dp.position_id as position_id,
+        (select
+          dpmi2.position_id
+        from
+          department_people_month_info dpmi2
+        where
+          month = 1 AND
+          year = 2014 AND
+          department_people_id = dp.id AND
+          type_id = 18
+        limit 1
+        ) as position_id,
         (select
           dpmi1.salary
         from
@@ -923,6 +933,7 @@ class entityActions extends sfActions
       ";
     }
 
+    //$q .= ' AND dp.department_id = 60';
     //$q .= ' limit 10';
 
     $doctrine = Doctrine_Manager::getInstance()->getCurrentConnection()->getDbh();
