@@ -1424,6 +1424,10 @@
             <source>Passport</source>
             <target>Паспорт</target>
         </trans-unit>
+        <trans-unit>
+            <source>With weekends</source>
+            <target>Включая выходные</target>
+        </trans-unit>
     </body>
   </file>
 </xliff>
