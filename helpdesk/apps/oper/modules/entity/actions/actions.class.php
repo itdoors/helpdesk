@@ -905,7 +905,18 @@ class entityActions extends sfActions
             WHERE
               d.id = dp.department_id
           ), ', '
-        ) as companystructure_name
+        ) as companystructure_name,
+        (select
+          dpmi4.department_people_id
+        from
+          department_people_month_info dpmi4
+        where
+          month = 1 AND
+          year = 2014 AND
+          department_people_id = dp.id AND
+          type_id = 18
+        limit 1
+        ) as existsInJan
       FROM
         department_people dp
         LEFT JOIN departments d on d.id = dp.department_id
