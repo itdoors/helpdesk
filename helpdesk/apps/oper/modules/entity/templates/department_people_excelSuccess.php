@@ -45,6 +45,7 @@
     <td><?php echo format_date($people['birthday'], 'dd.MM.yyyy', 'ru')?></td>
     <td><?php echo $people['person_code']?></td>
     <td><?php echo $people['companystructure_name']?></td>
+    <td><?php echo $people['exists_in_jan'] ? 'Да' : 'Нет'?></td>
   </tr>
   <?php endif;?>
   <?php endforeach;?>

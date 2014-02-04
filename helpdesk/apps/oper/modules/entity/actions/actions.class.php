@@ -916,7 +916,7 @@ class entityActions extends sfActions
           department_people_id = dp.id AND
           type_id = 18
         limit 1
-        ) as existsInJan
+        ) as exists_in_jan
       FROM
         department_people dp
         LEFT JOIN departments d on d.id = dp.department_id
@@ -945,7 +945,7 @@ class entityActions extends sfActions
     }
 
     //$q .= ' AND dp.department_id = 60';
-    //$q .= ' limit 10';
+    //$q .= ' limit 1000';
 
     $doctrine = Doctrine_Manager::getInstance()->getCurrentConnection()->getDbh();
 
