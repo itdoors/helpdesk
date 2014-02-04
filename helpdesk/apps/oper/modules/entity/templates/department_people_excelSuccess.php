@@ -20,6 +20,7 @@
     <td><?php echo __('Birthday')?></td>
     <td><?php echo __('Person code')?></td>
     <td><?php echo __('Companystructure')?></td>
+    <td><?php echo __('Exists in january')?></td>
   </tr>
   <?php $i = 0; foreach ($peoples as $people): ?>
   <?php if ($people['full_name'] || $people['name']) : ?>
