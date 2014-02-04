@@ -1,4 +1,4 @@
-<?php if (!$isShowMore && !$lastRecord): ?>
+<?php /*if (!$isShowMore && !$lastRecord): ?>
   <div id="department_people_form_holder" style="display: none;"></div>
   <?php
   include_component('Fmodel','form_add',
@@ -18,7 +18,7 @@
         )
     )
   );?>
-<?php endif;?>
+<?php endif;*/?>
 
 
 
@@ -80,8 +80,8 @@
         );
         ?></td>
       <td>
-        <?php
-        include_component('Fmodel', 'ajax_field_change',
+        <?php echo $person->getDrfo() ?>
+        <?php /*include_component('Fmodel', 'ajax_field_change',
           array(
             'where' => array(
               'id' => $person->getId(),
@@ -91,11 +91,12 @@
             'toString' => 'getDrfo',
             'default'  =>  $person->getDrfo(),
           )
-        );
+        );*/
         ?>
       </td>
       <td>
-        <?php
+        <?php echo $person->getPassport() ?>
+        <?php /*
         include_component('Fmodel', 'ajax_field_change',
           array(
             'where' => array(
@@ -106,7 +107,7 @@
             'toString' => 'getPassport',
             'default'  =>  $person->getPassport(),
           )
-        );
+        );*/
         ?>
       </td>
       <td>
@@ -124,7 +125,7 @@
         );
         ?>
       </td>
-      <td><?php
+      <td><?php echo $person->getLastName() ?> <?php /*
         include_component('Fmodel', 'ajax_field_change',
           array(
             'where' => array(
@@ -135,9 +136,9 @@
             'toString' => 'getLastName',
             'default'  =>  $person->getLastName(),
           )
-        );
+        );*/
         ?></td>
-      <td><?php
+      <td><?php echo $person->getFirstName() ?> <?php /*
         include_component('Fmodel', 'ajax_field_change',
           array(
             'where' => array(
@@ -148,9 +149,9 @@
             'toString' => 'getFirstName',
             'default'  =>  $person->getFirstName(),
           )
-        );
+        );*/
         ?></td>
-      <td><?php
+      <td><?php echo $person->getMiddleName() ?> <?php /*
         include_component('Fmodel', 'ajax_field_change',
           array(
             'where' => array(
@@ -161,9 +162,9 @@
             'toString' => 'getMiddleName',
             'default'  =>  $person->getMiddleName(),
           )
-        );
+        );*/
         ?></td>
-      <td><?php
+      <td><?php echo $person->getBirthday() ?> <?php /*
         include_component('Fmodel', 'ajax_field_change',
           array(
             'where' => array(
@@ -174,7 +175,7 @@
             'toString' => 'getBirthday',
             'default'  =>  $person->getBirthday(),
           )
-        );
+        );*/
         ?></td>
       <td><?php
         include_component('Fmodel', 'ajax_field_change',
@@ -202,7 +203,7 @@
           )
         );
         ?></td>
-      <td><?php
+      <td><?php echo $person->getPhone() ?> <?php /*
         include_component('Fmodel', 'ajax_field_change',
           array(
             'where' => array(
@@ -213,9 +214,9 @@
             'toString' => 'getPhone',
             'default'  =>  $person->getPhone(),
           )
-        );
+        );*/
         ?></td>
-      <td><?php
+      <td><?php echo $person->getAddress() ?> <?php /*
         include_component('Fmodel', 'ajax_field_change',
           array(
             'where' => array(
@@ -226,7 +227,7 @@
             'toString' => 'getAddress',
             'default'  =>  $person->getAddress(),
           )
-        );
+        );*/
         ?>
       </td>
       <td><?php

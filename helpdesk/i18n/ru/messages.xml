@@ -1424,6 +1424,10 @@
             <source>Passport</source>
             <target>Паспорт</target>
         </trans-unit>
+        <trans-unit>
+            <source>Exists in january</source>
+            <target>Работал в январе</target>
+        </trans-unit>
     </body>
   </file>
 </xliff>

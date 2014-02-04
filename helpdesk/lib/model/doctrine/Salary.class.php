@@ -131,6 +131,7 @@ class Salary extends BaseSalary
 
         $stavka = $oklad /  $daysCount * $totalDays;
 
+        // summ = ((оклад / норма дней * всего дней) + (оклад/ 29.58 * всего отпускных дней) - удержание + бонус) * коеф + больчный_меньше_5 + больничный_больше_5;
         $summary = ($stavka + $totalVacation - $fine + $bonus) * $summaryCoef + $totalHospitalTill5 + $totalHospitalAfter5;
 
         if ($people->getIsCleanSalary() && $people->getNormaDays())

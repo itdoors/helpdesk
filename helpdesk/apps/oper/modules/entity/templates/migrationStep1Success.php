@@ -77,7 +77,7 @@
         );
         ?></td>
       <td>
-        <?php
+        <?php echo $person->getDrfo() ?> <?php /*
         include_component('Fmodel', 'ajax_field_change',
           array(
             'where' => array(
@@ -88,11 +88,11 @@
             'toString' => 'getDrfo',
             'default'  =>  $person->getDrfo(),
           )
-        );
+        );*/
         ?>
       </td>
       <td>
-        <?php
+        <?php echo $person->getPassport() ?> <?php /*
         include_component('Fmodel', 'ajax_field_change',
           array(
             'where' => array(
@@ -103,7 +103,7 @@
             'toString' => 'getPassport',
             'default'  =>  $person->getPassport(),
           )
-        );
+        );*/
         ?>
       </td>
       <td>
@@ -121,7 +121,7 @@
         );
         ?>
       </td>
-      <td><?php
+      <td><?php echo $person->getLastName() ?><?php /*
         include_component('Fmodel', 'ajax_field_change',
           array(
             'where' => array(
@@ -132,9 +132,9 @@
             'toString' => 'getLastName',
             'default'  =>  $person->getLastName(),
           )
-        );
+        );*/
         ?></td>
-      <td><?php
+      <td><?php echo $person->getFirstName() ?><?php /*
         include_component('Fmodel', 'ajax_field_change',
           array(
             'where' => array(
@@ -145,9 +145,9 @@
             'toString' => 'getFirstName',
             'default'  =>  $person->getFirstName(),
           )
-        );
+        );*/
         ?></td>
-      <td><?php
+      <td><?php echo $person->getMiddleName() ?><?php /*
         include_component('Fmodel', 'ajax_field_change',
           array(
             'where' => array(
@@ -158,7 +158,7 @@
             'toString' => 'getMiddleName',
             'default'  =>  $person->getMiddleName(),
           )
-        );
+        );*/
         ?></td>
       <td>
         <a href="<?php echo url_for('entity_show', array('department_id' => $person->getDepartmentId()))?>#ui-tabs-6" target="_blank">
@@ -226,7 +226,7 @@
           echo 'Не добален в этот месяц';
         }
         ?></td>
-      <td><?php
+      <td><?php echo $person->getBirthday() ?><?php /*
         include_component('Fmodel', 'ajax_field_change',
           array(
             'where' => array(
@@ -237,7 +237,7 @@
             'toString' => 'getBirthday',
             'default'  =>  $person->getBirthday(),
           )
-        );
+        );*/
         ?></td>
       <td><?php
         include_component('Fmodel', 'ajax_field_change',
@@ -265,7 +265,7 @@
           )
         );
         ?></td>
-      <td><?php
+      <td><?php echo $person->getPhone() ?><?php /*
         include_component('Fmodel', 'ajax_field_change',
           array(
             'where' => array(
@@ -276,9 +276,9 @@
             'toString' => 'getPhone',
             'default'  =>  $person->getPhone(),
           )
-        );
+        );*/
         ?></td>
-      <td><?php
+      <td><?php echo $person->getAddress() ?><?php /*
         include_component('Fmodel', 'ajax_field_change',
           array(
             'where' => array(
@@ -289,7 +289,7 @@
             'toString' => 'getAddress',
             'default'  =>  $person->getAddress(),
           )
-        );
+        );*/
         ?>
       </td>
       <td><?php

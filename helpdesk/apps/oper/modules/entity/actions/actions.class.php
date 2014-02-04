@@ -905,7 +905,18 @@ class entityActions extends sfActions
             WHERE
               d.id = dp.department_id
           ), ', '
-        ) as companystructure_name
+        ) as companystructure_name,
+        (select
+          dpmi4.department_people_id
+        from
+          department_people_month_info dpmi4
+        where
+          month = 1 AND
+          year = 2014 AND
+          department_people_id = dp.id AND
+          type_id = 18
+        limit 1
+        ) as existsInJan
       FROM
         department_people dp
         LEFT JOIN departments d on d.id = dp.department_id
@@ -934,7 +945,7 @@ class entityActions extends sfActions
     }
 
     //$q .= ' AND dp.department_id = 60';
-    //$q .= ' limit 10';
+    $q .= ' limit 10';
 
     $doctrine = Doctrine_Manager::getInstance()->getCurrentConnection()->getDbh();
 
@@ -951,10 +962,10 @@ class entityActions extends sfActions
     $this->setLayout(false);
     sfConfig::set('sf_web_debug', false);
 
-    $this->getResponse()->setContent('application/vnd.ms-excel; charset=utf-8');
+    /*$this->getResponse()->setContent('application/vnd.ms-excel; charset=utf-8');
     $this->getResponse()->setHttpHeader('Content-Disposition','attachment; filename=department_people-'.time().'.xls');
     $this->getResponse()->setHttpHeader('Pragma','no-cache');
-    $this->getResponse()->setHttpHeader('Expires','0');
+    $this->getResponse()->setHttpHeader('Expires','0');*/
   }
 
   public function executeGrafik_day(sfWebRequest $request)

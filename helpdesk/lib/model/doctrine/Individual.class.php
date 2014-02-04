@@ -12,4 +12,13 @@
  */
 class Individual extends BaseIndividual
 {
+  /**
+   * Returns self instance
+   *
+   * @return Individual
+   */
+  public function getItself()
+  {
+    return $this;
+  }
 }

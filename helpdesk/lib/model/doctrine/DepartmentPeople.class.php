@@ -12,6 +12,9 @@
  */
 class DepartmentPeople extends BaseDepartmentPeople
 {
+  /** @var Individual $individualInfo */
+  public $individualInfo;
+
   /** @var DepartmentPeopleMonthInfo $monthInfo */
   public $monthInfo;
 
@@ -61,16 +64,141 @@ class DepartmentPeople extends BaseDepartmentPeople
   }
 
   /**
+   * Sets individualInfo record
+   *
+   * @param Individual $individualInfo
+   */
+  public function setIndividualInfo($individualInfo)
+  {
+    $this->individualInfo = $individualInfo;
+  }
+
+  /**
+   * Returns individualInfo record
+   *
+   * @return Individual
+   */
+  public function getIndividualInfo()
+  {
+    if ($this->individualInfo)
+    {
+      return $this->individualInfo;
+    }
+
+    $this->individualInfo = $this->getIndividual();
+
+    return $this->individualInfo;
+  }
+
+  /**
    * Get full name
    */
   public function getFullName()
   {
-    if ($this->getLastName() || $this->getFirstName() || $this->getMiddleName())
+    $individualInfo = $this->getIndividualInfo();
+
+    if ($individualInfo->getLastName() || $individualInfo->getFirstName() || $individualInfo->getMiddleName())
     {
-      return $this->getLastName() . ' ' . $this->getFirstName() . ' ' . $this->getMiddleName();
+      return $individualInfo->getLastName() . ' ' . $individualInfo->getFirstName() . ' ' . $individualInfo->getMiddleName();
     }
 
-    return $this->getName();
+    return __('No individual data');
+  }
+
+  /**
+   * Get full name
+   */
+  public function getDrfo()
+  {
+    $individualInfo = $this->getIndividualInfo();
+
+    $data = $individualInfo->getTin();
+
+    return $data ? $data : 'No individual data';
+  }
+
+  /**
+   * Get full name
+   */
+  public function getTin()
+  {
+    $individualInfo = $this->getIndividualInfo();
+
+    $data = $individualInfo->getTin();
+
+    return $data ? $data : 'No individual data';
+  }
+
+  /**
+   * Get first name
+   */
+  public function getFirstName()
+  {
+    $individualInfo = $this->getIndividualInfo();
+
+    $data = $individualInfo->getFirstName();
+
+    return $data ? $data : 'No individual data';
+  }
+
+  /**
+   * Get first name
+   */
+  public function getLastName()
+  {
+    $individualInfo = $this->getIndividualInfo();
+
+    $data = $individualInfo->getLastName();
+
+    return $data ? $data : 'No individual data';
+  }
+
+  /**
+   * Get middle name
+   */
+  public function getMiddleName()
+  {
+    $individualInfo = $this->getIndividualInfo();
+
+    $data = $individualInfo->getMiddleName();
+
+    return $data ? $data : 'No individual data';
+  }
+
+  /**
+   * Get birthday
+   */
+  public function getBirthday()
+  {
+    $individualInfo = $this->getIndividualInfo();
+
+    $data = $individualInfo->getBirthday();
+
+    return $data ? $data : 'No individual data';
+  }
+
+  /**
+   * Get passport
+   */
+  public function getPassport()
+  {
+    $individualInfo = $this->getIndividualInfo();
+
+    $data = $individualInfo->getPassport();
+
+    return $data ? $data : 'No individual data';
+  }
+
+  /**
+   * Get address
+   */
+  public function getAddress()
+  {
+    $individualInfo = $this->getIndividualInfo();
+
+    $data = $individualInfo->getAddress();
+
+    return $data ? $data : 'No individual data';
   }
 
   /**

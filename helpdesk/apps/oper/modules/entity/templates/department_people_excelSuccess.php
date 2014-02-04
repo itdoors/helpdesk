@@ -20,6 +20,7 @@
     <td><?php echo __('Birthday')?></td>
     <td><?php echo __('Person code')?></td>
     <td><?php echo __('Companystructure')?></td>
+    <td><?php echo __('Exists in january')?></td>
   </tr>
   <?php $i = 0; foreach ($peoples as $people): ?>
   <?php if ($people['full_name'] || $people['name']) : ?>
@@ -44,6 +45,7 @@
     <td><?php echo format_date($people['birthday'], 'dd.MM.yyyy', 'ru')?></td>
     <td><?php echo $people['person_code']?></td>
     <td><?php echo $people['companystructure_name']?></td>
+    <td><?php echo $people['existsInJan'] ? 'Да' : 'Нет'?></td>
   </tr>
   <?php endif;?>
   <?php endforeach;?>

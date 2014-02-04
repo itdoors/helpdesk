@@ -21,6 +21,8 @@ class DepartmentPeopleTable extends Doctrine_Table
   {
     $peopleIds = GrafikTable::getPeopleIds($departmentIds, $year, $month, $departmentPeopleId, $departmentPeopleReplacementId);
 
+    $individualIds = DepartmentPeopleTable::getIndividualIds($peopleIds);
+
     if (!sizeof($peopleIds))
     {
       return array();
@@ -37,6 +39,21 @@ class DepartmentPeopleTable extends Doctrine_Table
     if (!sizeof($query))
     {
       return array();
+    }
+
+    $individuals = array();
+
+    if (sizeof($individualIds))
+    {
+      $individuals = Doctrine::getTable('Individual')
+        ->createQuery('i')
+        ->whereIn('id', $individualIds)
+        ->execute();
+
+      if (sizeof($individuals))
+      {
+        $individuals = $individuals->toKeyValueArray('id', 'itself');
+      }
     }
 
     /** @var Doctrine_Collection $monthInfoCollection */
@@ -82,6 +99,11 @@ class DepartmentPeopleTable extends Doctrine_Table
 
       $person->setYearMonthReplacement($year, $month, $replacementId);
 
+      if (isset($individuals[$person->getIndividualId()]))
+      {
+        $person->setIndividualInfo($individuals[$person->getIndividualId()]);
+      }
+
       $result[] = $person;
     }
 
@@ -110,6 +132,33 @@ class DepartmentPeopleTable extends Doctrine_Table
       }
 
       $result[$person->getDepartmentId()][] = $person;
+    }
+
+    return $result;
+  }
+
+  /**
+   * Get individuals ids depending on $departmentPeopleIds
+   *
+   * @param int[] departmentPeopleIds
+   *
+   * @return int[]
+   */
+  public static function getIndividualIds($departmentPeopleIds)
+  {
+    $query = Doctrine::getTable('DepartmentPeople')
+      ->createQuery('dp')
+      ->select('DISTINCT(dp.individual_id) AS individual_id')
+      ->whereIn('dp.id', $departmentPeopleIds)
+      ->andWhere('dp.individual_id IS NOT NULL');
+
+    $individuals = $query->fetchArray();
+
+    $result = array();
+
+    foreach ($individuals as $individual)
+    {
+      $result[$individual['individual_id']] = $individual['individual_id'];
     }
 
     return $result;
