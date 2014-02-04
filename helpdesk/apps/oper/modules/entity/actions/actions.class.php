@@ -1410,65 +1410,12 @@ class entityActions extends sfActions
   {
     $q = "
       SELECT
-        DISTINCT dp.id,
-        dp.id as id,
-        dp.name as name,
-        (dp.last_name || ' ' || dp.first_name || ' ' || dp.middle_name) as full_name,
-        dp.last_name as last_name,
-        dp.first_name as first_name,
-        dp.middle_name as middle_name,
-        dp.admission_date as admission_date,
-        dp.dismissal_date as dismissal_date,
-        dp.passport as passport,
-        (select
-          dpmi2.position_id
-        from
-          department_people_month_info dpmi2
-        where
-          month = 1 AND
-          year = 2014 AND
-          department_people_id = dp.id AND
-          type_id = 18
-        limit 1
-        ) as position_id,
-        (select
-          dpmi1.salary
-        from
-          department_people_month_info dpmi1
-        where
-          month = 1 AND
-          year = 2014 AND
-          department_people_id = dp.id AND
-          type_id = 18
-        limit 1
-        ) as salary,
-        dp.birthday as birthday,
-        (select
-          dpmi2.type_string
-        from
-          department_people_month_info dpmi2
-        where
-          month = 1 AND
-          year = 2014 AND
-          department_people_id = dp.id AND
-          type_id = 18
-        limit 1
-        ) as type_string,
-        (select
-          dpmi.employment_type_id
-        from
-          department_people_month_info dpmi
-        where
-          month = 1 AND
-          year = 2014 AND
-          department_people_id = dp.id AND
-          type_id = 18
-        limit 1
-        ) as employment_type_id,
-        dp.drfo as drfo,
-        dp.person_code as person_code,
-        dp.number as number,
+        d.id as id,
         d.mpk as mpk,
+        o.name as organization_name,
+        reg.name as region_name,
+        cit.name as city_name,
+        d.address as address,
         d.status_id as status_id,
         array_to_string(
           ARRAY(
@@ -1477,27 +1424,14 @@ class entityActions extends sfActions
             FROM
               companystructure cs
             LEFT JOIN companystructure_region csr ON csr.companystructure_id = cs.id
-            LEFT JOIN region reg ON reg.id = csr.region_id
-            LEFT JOIN city cit ON cit.region_id = reg.id
-            LEFT JOIN departments d ON d.city_id = cit.id
-            WHERE
-              d.id = dp.department_id
+            WHERE csr.region_id = reg.id
           ), ', '
-        ) as companystructure_name,
-        (select
-          dpmi4.department_people_id
-        from
-          department_people_month_info dpmi4
-        where
-          month = 1 AND
-          year = 2014 AND
-          department_people_id = dp.id AND
-          type_id = 18
-        limit 1
-        ) as exists_in_jan
+        ) as companystructure_name
       FROM
-        department_people dp
-        LEFT JOIN departments d on d.id = dp.department_id
+        departments d
+      LEFT JOIN organization o on d.organization_id = o.id
+      LEFT JOIN city cit on d.city_id = cit.id
+      LEFT JOIN region reg on cit.region_id = reg.id
       ";
 
     $user = $this->getUser();
@@ -1510,16 +1444,10 @@ class entityActions extends sfActions
     }
 
     $q .= "
-      WHERE
-      	dp.parent_id is null";
-
-    $q .= "
-      AND d.mpk in (SELECT
+      WHERE d.mpk in (SELECT
           mpk
         FROM
           departments d
-        WHERE
-          d.mpk IS NOT NULL AND d.mpk <> ''
         GROUP BY
           mpk
         HAVING
@@ -1533,7 +1461,7 @@ class entityActions extends sfActions
         AND sd.stuff_id = " .$stuffId . "
       ";
     }
-
+    $q .= ' ORDER BY d.mpk ASC';
     //$q .= ' AND dp.department_id = 60';
     //$q .= ' limit 100';
 
@@ -1550,7 +1478,6 @@ class entityActions extends sfActions
     $this->lookup = $lookup->toKeyValueArray('id', 'name');
 
     $this->setLayout(false);
-    $this->setTemplate('department_people_excel');
     sfConfig::set('sf_web_debug', false);
 
     $this->getResponse()->setContent('application/vnd.ms-excel; charset=utf-8');
