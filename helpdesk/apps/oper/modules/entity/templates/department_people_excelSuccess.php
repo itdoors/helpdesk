@@ -19,6 +19,8 @@
     <td><?php echo __('Position')?></td>
     <td><?php echo __('Birthday')?></td>
     <td><?php echo __('Person code')?></td>
+    <td><?php echo __('Region')?></td>
+    <td><?php echo __('City')?></td>
     <td><?php echo __('Companystructure')?></td>
     <td><?php echo __('Exists in january')?></td>
   </tr>
@@ -44,6 +46,8 @@
     <td><?php echo isset($positionList[$people['position_id']]) ? $positionList[$people['position_id']] : ''?></td>
     <td><?php echo format_date($people['birthday'], 'dd.MM.yyyy', 'ru')?></td>
     <td><?php echo $people['person_code']?></td>
+    <td><?php echo $people['region_name']?></td>
+    <td><?php echo $people['city_name']?></td>
     <td><?php echo $people['companystructure_name']?></td>
     <td><?php echo $people['exists_in_jan'] ? 'Да' : 'Нет'?></td>
   </tr>

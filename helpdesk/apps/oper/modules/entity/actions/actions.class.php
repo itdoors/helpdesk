@@ -842,6 +842,8 @@ class entityActions extends sfActions
         dp.admission_date as admission_date,
         dp.dismissal_date as dismissal_date,
         dp.passport as passport,
+        cit1.name as city_name,
+        reg1.name as region_name,
         (select
           dpmi2.position_id
         from
@@ -920,6 +922,8 @@ class entityActions extends sfActions
       FROM
         department_people dp
         LEFT JOIN departments d on d.id = dp.department_id
+        LEFT JOIN city cit1 ON cit1.id = d.city_id
+        LEFT JOIN region reg1 ON reg1.id = cit1.region_id
       ";
 
     $user = $this->getUser();
@@ -945,7 +949,7 @@ class entityActions extends sfActions
     }
 
     //$q .= ' AND dp.department_id = 60';
-    //$q .= ' limit 1000';
+    //$q .= ' limit 100';
 
     $doctrine = Doctrine_Manager::getInstance()->getCurrentConnection()->getDbh();
 
