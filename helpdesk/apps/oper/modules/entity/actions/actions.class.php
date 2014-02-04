@@ -1402,4 +1402,160 @@ class entityActions extends sfActions
 
     return $this->renderComponent('entity', 'people_list', $params);
   }
+
+  /**
+   * Exports departments with same mpk
+   */
+  public function executeSameMpkExcel(sfWebRequest $request)
+  {
+    $q = "
+      SELECT
+        DISTINCT dp.id,
+        dp.id as id,
+        dp.name as name,
+        (dp.last_name || ' ' || dp.first_name || ' ' || dp.middle_name) as full_name,
+        dp.last_name as last_name,
+        dp.first_name as first_name,
+        dp.middle_name as middle_name,
+        dp.admission_date as admission_date,
+        dp.dismissal_date as dismissal_date,
+        dp.passport as passport,
+        (select
+          dpmi2.position_id
+        from
+          department_people_month_info dpmi2
+        where
+          month = 1 AND
+          year = 2014 AND
+          department_people_id = dp.id AND
+          type_id = 18
+        limit 1
+        ) as position_id,
+        (select
+          dpmi1.salary
+        from
+          department_people_month_info dpmi1
+        where
+          month = 1 AND
+          year = 2014 AND
+          department_people_id = dp.id AND
+          type_id = 18
+        limit 1
+        ) as salary,
+        dp.birthday as birthday,
+        (select
+          dpmi2.type_string
+        from
+          department_people_month_info dpmi2
+        where
+          month = 1 AND
+          year = 2014 AND
+          department_people_id = dp.id AND
+          type_id = 18
+        limit 1
+        ) as type_string,
+        (select
+          dpmi.employment_type_id
+        from
+          department_people_month_info dpmi
+        where
+          month = 1 AND
+          year = 2014 AND
+          department_people_id = dp.id AND
+          type_id = 18
+        limit 1
+        ) as employment_type_id,
+        dp.drfo as drfo,
+        dp.person_code as person_code,
+        dp.number as number,
+        d.mpk as mpk,
+        d.status_id as status_id,
+        array_to_string(
+          ARRAY(
+            SELECT
+              cs.name
+            FROM
+              companystructure cs
+            LEFT JOIN companystructure_region csr ON csr.companystructure_id = cs.id
+            LEFT JOIN region reg ON reg.id = csr.region_id
+            LEFT JOIN city cit ON cit.region_id = reg.id
+            LEFT JOIN departments d ON d.city_id = cit.id
+            WHERE
+              d.id = dp.department_id
+          ), ', '
+        ) as companystructure_name,
+        (select
+          dpmi4.department_people_id
+        from
+          department_people_month_info dpmi4
+        where
+          month = 1 AND
+          year = 2014 AND
+          department_people_id = dp.id AND
+          type_id = 18
+        limit 1
+        ) as exists_in_jan
+      FROM
+        department_people dp
+        LEFT JOIN departments d on d.id = dp.department_id
+      ";
+
+    $user = $this->getUser();
+
+    if ($user->hasCredential('oper') && !$user->hasCredential('supervisor'))
+    {
+      $q .= "
+        INNER JOIN stuff_departments sd on sd.departments_id = d.id
+      ";
+    }
+
+    $q .= "
+      WHERE
+      	dp.parent_id is null";
+
+    $q .= "
+      AND d.mpk in (SELECT
+          mpk
+        FROM
+          departments d
+        WHERE
+          d.mpk IS NOT NULL AND d.mpk <> ''
+        GROUP BY
+          mpk
+        HAVING
+          count(d.id) > 1)";
+
+    if ($user->hasCredential('oper') && !$user->hasCredential('supervisor'))
+    {
+      $stuffId = GlobalFunctions::getStuffId();
+
+      $q .= "
+        AND sd.stuff_id = " .$stuffId . "
+      ";
+    }
+
+    //$q .= ' AND dp.department_id = 60';
+    //$q .= ' limit 100';
+
+    $doctrine = Doctrine_Manager::getInstance()->getCurrentConnection()->getDbh();
+
+    $result = $doctrine->query($q);
+
+    $this->peoples = $result->fetchAll();
+
+    $lookup = Doctrine::getTable('lookup')
+      ->createQuery('l')
+      ->execute();
+
+    $this->lookup = $lookup->toKeyValueArray('id', 'name');
+
+    $this->setLayout(false);
+    $this->setTemplate('department_people_excel');
+    sfConfig::set('sf_web_debug', false);
+
+    $this->getResponse()->setContent('application/vnd.ms-excel; charset=utf-8');
+    $this->getResponse()->setHttpHeader('Content-Disposition','attachment; filename=department_people-'.time().'.xls');
+    $this->getResponse()->setHttpHeader('Pragma','no-cache');
+    $this->getResponse()->setHttpHeader('Expires','0');
+  }
 }
