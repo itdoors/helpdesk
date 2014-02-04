@@ -839,12 +839,12 @@ ALTER TABLE stuff ADD COLUMN issues character varying(255);
 
 CREATE TABLE individual (id BIGSERIAL, guid VARCHAR(32), first_name VARCHAR(128), middle_name VARCHAR(128), last_name VARCHAR(128), birthday DATE, tin VARCHAR(12), passport VARCHAR(8), phone VARCHAR(32), address VARCHAR(128), PRIMARY KEY(id));
 
-truncate individual;
+//truncate individual;
 
-insert into individual (id, first_name, last_name, middle_name, birthday, tin, phone, address)
-  select id, first_name, last_name, middle_name, birthday, drfo, phone, address from department_people dp
+insert into individual (id, first_name, last_name, middle_name, birthday, tin, phone, address, passport)
+  select id, first_name, last_name, middle_name, birthday, drfo, phone, address, passport from department_people dp
     where dp.parent_id is null and
-    NOT EXISTS (select id from individual where individual.id = dp.id)
+    NOT EXISTS (select id from individual where individual.id = dp.id);
 
 ++++++++++++++++++++++++
 
@@ -950,3 +950,56 @@ GRANT ALL ON table department_people TO "1c";
 GRANT USAGE, SELECT ON SEQUENCE department_people_id_seq TO "1c";
 GRANT SELECT ON table departments TO "1c";
 GRANT USAGE, SELECT ON SEQUENCE departments_id_seq TO "1c";
+++++++++
+
+TRUNCATE individual;
+SELECT setval('individual_id_seq', 1);
+
+CREATE OR REPLACE FUNCTION process_individual()
+  RETURNS integer AS
+$BODY$
+DECLARE
+	dpRow department_people%ROWTYPE;
+	totalCount int;
+	individualId int;
+BEGIN
+	totalCount = 0;
+	individualId = null;
+	FOR dpRow IN SELECT * FROM department_people WHERE parent_id IS NULL AND (passport IS NOT NULL or drfo IS NOT NULL)
+	LOOP
+		IF ((dpRow.drfo IS NOT NULL AND dpRow.drfo <> '') OR (dpRow.passport IS NOT NULL AND dpRow.passport <> ''))
+		THEN
+			SELECT id INTO individualId from individual where tin = dpRow.drfo OR passport = dpRow.passport limit 1;
+			IF (individualId IS NULL)
+			THEN
+				INSERT INTO individual (first_name, last_name, middle_name, birthday, tin, phone, address, passport)
+				SELECT first_name, last_name, middle_name, birthday, drfo, phone, address, passport FROM department_people dp
+				WHERE dp.id = dpRow.id RETURNING id INTO individualId;
+			END IF;
+			UPDATE department_people set individual_id = individualId where id = dpRow.id;
+			totalCount = totalCount + 1;
+		ELSE
+			individualId = NULL;
+		END IF;
+	END LOOP;
+	RETURN totalCount;
+END$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
+
+ select process_individual();
+ SELECT setval('individual_id_seq', (SELECT MAX(id) FROM individual));
+
+-------------------------------------------------------
+
+SELECT
+	dp.*
+FROM
+	department_people dp
+INNER JOIN
+	department_people_month_info dpmi ON dpmi.department_people_id = dp.id
+WHERE
+	dp.parent_id IS NULL AND
+	((dp.drfo IS NULL OR dp.drfo = '') AND (dp.passport IS NULL OR dp.passport = '')) AND
+	dpmi.year = 2014 AND
+	dpmi.month = 1;

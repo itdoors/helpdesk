@@ -87,6 +87,12 @@ class GrafikForm extends BaseGrafikForm
         ))
     );
 
+    // Copy to next month with weekends
+    $this->setWidget('copy_with_weekends', new sfWidgetFormInputCheckbox());
+    $this->getWidget('copy_with_weekends')->setLabel('With weekends');
+    $this->setValidator('copy_with_weekends', new sfValidatorString(array('required' => false)));
+    // Eof Copy to next month with weekends
+
     $this->setValidator('department_people_replacement_id', new sfValidatorInteger(array(
       'required' => false
     )));
@@ -99,6 +105,7 @@ class GrafikForm extends BaseGrafikForm
 
   public function save($con = null)
   {
+    /** @var Grafik $object */
     $object = parent::save();
 
     if ($this->getObject()->personDoesntWork())
@@ -116,7 +123,9 @@ class GrafikForm extends BaseGrafikForm
       $fromDay = isset($fromDayArray['day']) ? $fromDayArray['day'] : null;
       $toDay = isset($toDayArray['day']) ? $toDayArray['day'] : null;
 
-      $object->toEndOfTheMonth($fromDay, $toDay);
+      $withWeekends = $this->getValue('copy_with_weekends') ? true : false;
+
+      $object->toEndOfTheMonth($fromDay, $toDay, $withWeekends);
     }
 
     return $object;

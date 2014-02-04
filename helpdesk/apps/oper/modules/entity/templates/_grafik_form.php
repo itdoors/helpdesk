@@ -30,6 +30,9 @@
         echo $grafik_form['to_not_work']->renderError();
         echo $grafik_form['to_not_work']->render();
       ?><br />
+      <?php echo __('With weekends')?>:
+      <?php echo $grafik_form['copy_with_weekends']->renderError();?>
+      <?php echo $grafik_form['copy_with_weekends']->render();?>
     </div>
   </td>
 </tr>

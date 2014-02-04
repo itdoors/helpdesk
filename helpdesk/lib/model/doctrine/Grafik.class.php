@@ -786,7 +786,7 @@ class Grafik extends BaseGrafik
     return $resultArray;
   }
   
-  public function toEndOfTheMonth($from_day = null, $to_day = null)
+  public function toEndOfTheMonth($from_day = null, $to_day = null, $withWeekends = false)
   {
     $year = $this->getYear();
     $month = $this->getMonth();
@@ -810,7 +810,7 @@ class Grafik extends BaseGrafik
       
     for($i = $day; $i <= $days_count; $i++)
     {
-      if (Grafik::isWeekend($year, $month, $i, $holidays))
+      if (Grafik::isWeekend($year, $month, $i, $holidays) && !$withWeekends)
       {
         continue;
       }
