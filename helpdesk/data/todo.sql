@@ -990,6 +990,13 @@ END$BODY$
  select process_individual();
  SELECT setval('individual_id_seq', (SELECT MAX(id) FROM individual));
 
+--------------------------
+
+ ALTER TABLE department_people
+  ADD CONSTRAINT department_people_individual_id_individual_id FOREIGN KEY (individual_id)
+      REFERENCES individual (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION;
+
 -------------------------------------------------------
 
 SELECT
