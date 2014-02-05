@@ -1003,3 +1003,83 @@ WHERE
 	((dp.drfo IS NULL OR dp.drfo = '') AND (dp.passport IS NULL OR dp.passport = '')) AND
 	dpmi.year = 2014 AND
 	dpmi.month = 1;
+
+
+-------------------------------------
+
+CREATE OR REPLACE FUNCTION delete_department(oldId int, newId int)
+  RETURNS void AS
+$BODY$
+DECLARE
+
+BEGIN
+	UPDATE claim SET departments_id = newId WHERE departments_id = oldId;
+
+	UPDATE
+		groupclaim_departments
+	SET
+		departments_id = newId
+	WHERE
+		NOT EXISTS (
+			SELECT * FROM groupclaim_departments dg
+			WHERE dg.departments_id = newId AND
+			dg.groupclaim_id = groupclaim_departments.groupclaim_id
+			)
+		AND
+		departments_id = oldId;
+
+	DELETE FROM groupclaim_departments WHERE departments_id = oldId;
+
+	UPDATE
+		technical_param_departments
+	SET
+		department_id = newId
+	WHERE
+		NOT EXISTS (
+			SELECT * FROM technical_param_departments tpd
+			WHERE tpd.department_id = newId AND
+			tpd.param_id = technical_param_departments.param_id
+			)
+		AND
+		department_id = oldId;
+
+	DELETE FROM technical_param_departments WHERE department_id = oldId;
+
+	UPDATE
+		dogovor_department
+	SET
+		department_id = newId
+	WHERE
+		NOT EXISTS (
+			SELECT * FROM dogovor_department dd
+			WHERE dd.department_id = newId AND
+			dd.dogovor_id = dogovor_department.dogovor_id
+			)
+		AND
+		department_id = oldId;
+
+	DELETE FROM dogovor_department WHERE department_id = oldId;
+
+	UPDATE model_contact SET model_id = newId WHERE model_id = oldId AND model_name = 'departments';
+
+	DELETE FROM stuff_departments WHERE departments_id = oldId;
+	DELETE FROM client_departments WHERE departments_id = oldId;
+	DELETE FROM grafik WHERE department_id = oldId;
+	DELETE FROM grafik_time WHERE department_id = oldId;
+	DELETE FROM department_people_month_info WHERE department_people_id in (
+		SELECT
+			id
+		FROM
+			department_people
+		WHERE
+			department_id = oldId
+		);
+	DELETE FROM department_people WHERE department_id = oldId;
+	DELETE FROM departments where id = oldId;
+END$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
+
+BEGIN;
+	select delete_department(606, 646);
+COMMIT;

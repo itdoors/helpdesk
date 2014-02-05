@@ -87,18 +87,18 @@ class PHPExcelHelpdesk
   protected static $uploadYearCell = 'B1';
 
   protected static $uploadDepartmentPeopleNumberColIndex = 0;
-  protected static $uploadDepartmentPeopleLastNameColIndex = 2;
-  protected static $uploadDepartmentPeopleFirstNameColIndex = 3;
-  protected static $uploadDepartmentPeopleMiddleNameColIndex = 4;
-  protected static $uploadDepartmentPeopleCodeColIndex = 5;
-  protected static $uploadDepartmentPeopleDRFOColIndex = 6;
-  protected static $uploadDepartmentPeopleBirthdayColIndex = 7;
+  protected static $uploadDepartmentMpkColIndex = 1;
+  protected static $uploadDepartmentPeopleLastNameColIndex = 3;
+  protected static $uploadDepartmentPeopleFirstNameColIndex =4;
+  protected static $uploadDepartmentPeopleMiddleNameColIndex = 5;
 
+  protected static $uploadDepartmentPeopleDRFOColIndex = 10;
+  protected static $uploadDepartmentPeopleBirthdayColIndex = 11;
+  protected static $uploadDepartmentPeopleCodeColIndex = 12;
+  protected static $uploadDepartmentPeoplePhoneColIndex = 13;
+  protected static $uploadDepartmentPeopleWorkPhoneColIndex = 14;
+  protected static $uploadDepartmentPeopleAddressColIndex = 15;
 
-  protected static $uploadDepartmentMpkColIndex = 10;
-  protected static $uploadDepartmentPeopleAddressColIndex = 11;
-  protected static $uploadDepartmentPeoplePhoneColIndex = 12;
-  protected static $uploadDepartmentPeopleWorkPhoneColIndex = 13;
 
   protected static $uploadSalaryStartRow = 4;
   protected static $uploadSalaryColIndex = 10;
