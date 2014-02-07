@@ -954,29 +954,71 @@ GRANT USAGE, SELECT ON SEQUENCE departments_id_seq TO "1c";
 
 TRUNCATE individual;
 SELECT setval('individual_id_seq', 1);
-
 CREATE OR REPLACE FUNCTION process_individual()
   RETURNS integer AS
 $BODY$
 DECLARE
 	dpRow department_people%ROWTYPE;
+	individualRow individual%ROWTYPE;
 	totalCount int;
 	individualId int;
+	isNew boolean;
 BEGIN
 	totalCount = 0;
 	individualId = null;
+	isNew = TRUE;
 	FOR dpRow IN SELECT * FROM department_people WHERE parent_id IS NULL AND (passport IS NOT NULL or drfo IS NOT NULL)
 	LOOP
 		IF ((dpRow.drfo IS NOT NULL AND dpRow.drfo <> '') OR (dpRow.passport IS NOT NULL AND dpRow.passport <> ''))
 		THEN
-			SELECT id INTO individualId from individual where tin = dpRow.drfo OR passport = dpRow.passport limit 1;
+			SELECT * INTO individualRow from individual where tin = dpRow.drfo OR passport = dpRow.passport limit 1;
+
+			individualId = individualRow.id;
+
 			IF (individualId IS NULL)
+			THEN
+				isNew = TRUE;
+			ELSE
+				isNew = FALSE;
+			END IF;
+
+			IF (isNew)
 			THEN
 				INSERT INTO individual (first_name, last_name, middle_name, birthday, tin, phone, address, passport)
 				SELECT first_name, last_name, middle_name, birthday, drfo, phone, address, passport FROM department_people dp
 				WHERE dp.id = dpRow.id RETURNING id INTO individualId;
 			END IF;
+
 			UPDATE department_people set individual_id = individualId where id = dpRow.id;
+
+			IF (isNew is FALSE AND individualRow.id IS NOT NULL)
+			THEN
+				IF ((dpRow.drfo IS NOT NULL AND dpRow.drfo <> '') AND (individualRow.tin IS NULL OR individualRow.tin = ''))
+				THEN
+					UPDATE individual SET tin = dpRow.drfo WHERE id = individualRow.id;
+				END IF;
+
+				IF ((dpRow.passport IS NOT NULL AND dpRow.passport <> '') AND (individualRow.passport IS NULL OR individualRow.passport = ''))
+				THEN
+					UPDATE individual SET passport = dpRow.passport WHERE id = individualRow.id;
+				END IF;
+
+				IF ((dpRow.phone IS NOT NULL AND dpRow.phone <> '') AND (individualRow.phone IS NULL OR individualRow.phone = ''))
+				THEN
+					UPDATE individual SET phone = dpRow.phone WHERE id = individualRow.id;
+				END IF;
+
+				IF ((dpRow.address IS NOT NULL AND dpRow.address <> '') AND (individualRow.address IS NULL OR individualRow.address = ''))
+				THEN
+					UPDATE individual SET address = dpRow.address WHERE id = individualRow.id;
+				END IF;
+
+				IF ((dpRow.birthday IS NOT NULL) AND (individualRow.birthday IS NULL))
+				THEN
+					UPDATE individual SET birthday = dpRow.birthday WHERE id = individualRow.id;
+				END IF;
+			END IF;
+
 			totalCount = totalCount + 1;
 		ELSE
 			individualId = NULL;
@@ -987,6 +1029,9 @@ END$BODY$
   LANGUAGE plpgsql VOLATILE
   COST 100;
 
+
+ TRUNCATE individual;
+SELECT setval('individual_id_seq', 1);
  select process_individual();
  SELECT setval('individual_id_seq', (SELECT MAX(id) FROM individual));
 
@@ -1090,3 +1135,109 @@ END$BODY$
 BEGIN;
 	select delete_department(606, 646);
 COMMIT;
+
+
+
+----------------------------------------------------------------
+
+CREATE OR REPLACE FUNCTION update_department_people_by_month_info(paramYear int, paramMonth int)
+  RETURNS void AS
+$BODY$
+DECLARE
+
+BEGIN
+	UPDATE department_people SET position_id =
+		(
+			SELECT
+				position_id
+			FROM
+				department_people_month_info
+			WHERE
+				year = paramYear AND
+				month = paramMonth AND
+				type_id = 18 AND
+				department_people_replacement_id = 0 AND
+				department_people_id = department_people.id
+			LIMIT 1
+		)
+	WHERE
+		EXISTS
+		(
+			SELECT
+				position_id
+			FROM
+				department_people_month_info
+			WHERE
+				year = paramYear AND
+				month = paramMonth AND
+				type_id = 18 AND
+				department_people_replacement_id = 0 AND
+				department_people_id = department_people.id
+			LIMIT 1
+		);
+
+	UPDATE department_people SET employment_type_id =
+		(
+			SELECT
+				employment_type_id
+			FROM
+				department_people_month_info
+			WHERE
+				year = paramYear AND
+				month = paramMonth AND
+				type_id = 18 AND
+				department_people_replacement_id = 0 AND
+				department_people_id = department_people.id
+			LIMIT 1
+		)
+	WHERE
+		EXISTS
+		(
+			SELECT
+				employment_type_id
+			FROM
+				department_people_month_info
+			WHERE
+				year = paramYear AND
+				month = paramMonth AND
+				type_id = 18 AND
+				department_people_replacement_id = 0 AND
+				department_people_id = department_people.id
+			LIMIT 1
+		);
+
+	UPDATE department_people SET salary =
+		(
+			SELECT
+				salary
+			FROM
+				department_people_month_info
+			WHERE
+				year = paramYear AND
+				month = paramMonth AND
+				type_id = 18 AND
+				department_people_replacement_id = 0 AND
+				department_people_id = department_people.id
+			LIMIT 1
+		)
+	WHERE
+		EXISTS
+		(
+			SELECT
+				salary
+			FROM
+				department_people_month_info
+			WHERE
+				year = paramYear AND
+				month = paramMonth AND
+				type_id = 18 AND
+				department_people_replacement_id = 0 AND
+				department_people_id = department_people.id
+			LIMIT 1
+		);
+
+END$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
+
+select update_department_people_by_month_info(2014, 2);

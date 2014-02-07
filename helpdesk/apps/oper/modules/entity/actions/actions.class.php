@@ -889,6 +889,105 @@ class entityActions extends sfActions
           type_id = 18
         limit 1
         ) as employment_type_id,
+        (select
+          dpmi.surcharge
+        from
+          department_people_month_info dpmi
+        where
+          month = 1 AND
+          year = 2014 AND
+          department_people_id = dp.id AND
+          type_id = 18
+        limit 1
+        ) as surcharge,
+        (select
+          dpmi.surcharge_type_id
+        from
+          department_people_month_info dpmi
+        where
+          month = 1 AND
+          year = 2014 AND
+          department_people_id = dp.id AND
+          type_id = 18
+        limit 1
+        ) as surcharge_type_id,
+        (select
+          dpmi.surcharge_type_key
+        from
+          department_people_month_info dpmi
+        where
+          month = 1 AND
+          year = 2014 AND
+          department_people_id = dp.id AND
+          type_id = 18
+        limit 1
+        ) as surcharge_type_key,
+        (select
+          dpmi.bonus
+        from
+          department_people_month_info dpmi
+        where
+          month = 1 AND
+          year = 2014 AND
+          department_people_id = dp.id AND
+          type_id = 18
+        limit 1
+        ) as bonus,
+        (select
+          dpmi.bonus_type_id
+        from
+          department_people_month_info dpmi
+        where
+          month = 1 AND
+          year = 2014 AND
+          department_people_id = dp.id AND
+          type_id = 18
+        limit 1
+        ) as bonus_type_id,
+        (select
+          dpmi.bonus_type_key
+        from
+          department_people_month_info dpmi
+        where
+          month = 1 AND
+          year = 2014 AND
+          department_people_id = dp.id AND
+          type_id = 18
+        limit 1
+        ) as bonus_type_key,
+        (select
+          dpmi.fine
+        from
+          department_people_month_info dpmi
+        where
+          month = 1 AND
+          year = 2014 AND
+          department_people_id = dp.id AND
+          type_id = 18
+        limit 1
+        ) as fine,
+        (select
+          dpmi.fine_type_id
+        from
+          department_people_month_info dpmi
+        where
+          month = 1 AND
+          year = 2014 AND
+          department_people_id = dp.id AND
+          type_id = 18
+        limit 1
+        ) as fine_type_id,
+        (select
+          dpmi.fine_type_key
+        from
+          department_people_month_info dpmi
+        where
+          month = 1 AND
+          year = 2014 AND
+          department_people_id = dp.id AND
+          type_id = 18
+        limit 1
+        ) as fine_type_key,
         dp.drfo as drfo,
         dp.person_code as person_code,
         dp.number as number,
