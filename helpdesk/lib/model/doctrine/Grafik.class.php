@@ -31,7 +31,6 @@ class Grafik extends BaseGrafik
       ->where('g.year =? ', $year)
       ->addWhere('g.month =? ', $month)
       ->andWhereIn('g.department_id', $departmentIds)
-      ->andWhereIn('g.department_people_id', array(14218,14275,12831,14216,13017))
     ;
 
     if ($departmentPeopleId)

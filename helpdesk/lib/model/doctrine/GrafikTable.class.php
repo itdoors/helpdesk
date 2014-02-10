@@ -45,9 +45,7 @@ class GrafikTable extends Doctrine_Table
        d.year = :year AND
        d.month = :month AND
        d2.parent_id is null AND
-       d2.department_id IN (:department_id)
-       AND department_people_id in (14218,14275,12831,14216,13017)
-     ";
+       d2.department_id IN (:department_id)";
 
     $params = array(
       ':year' => $year,
