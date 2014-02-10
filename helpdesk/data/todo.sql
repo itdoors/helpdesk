@@ -1235,3 +1235,56 @@ END$BODY$
   COST 100;
 
 select update_department_people_by_month_info(2014, 2);
+
+------------------------------------
+
+ALTER TABLE department_people_month_info DROP CONSTRAINT dddi_1;
+ALTER TABLE grafik DROP CONSTRAINT grafik_department_people_id_department_people_id;
+ALTER TABLE grafik DROP CONSTRAINT grafik_department_people_replacement_id_department_people_id;
+ALTER TABLE grafik_time DROP CONSTRAINT gddi;
+ALTER TABLE grafik_time DROP CONSTRAINT grafik_time_department_people_id_department_people_id;
+
+----------------------------------------------
+delete from department_people_month_info
+	where
+		department_people_id in (select id from department_people where parent_id is not null) or
+		department_people_replacement_id in (select id from department_people where parent_id is not null);
+
+delete from
+	grafik_time where department_people_id in (select id from department_people where parent_id is not null)
+	or
+	department_people_replacement_id in (select id from department_people where parent_id is not null);
+delete from
+	grafik where department_people_id in (select id from department_people where parent_id is not null)
+	or
+	department_people_replacement_id in (select id from department_people where parent_id is not null);
+
+
+delete from department_people where parent_id is not null;
+
+------------------------------------------------------------------------------
+ALTER TABLE department_people_month_info
+  ADD CONSTRAINT dddi_1 FOREIGN KEY (department_people_replacement_id)
+      REFERENCES department_people (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION;
+
+
+ALTER TABLE grafik
+  ADD CONSTRAINT grafik_department_people_id_department_people_id FOREIGN KEY (department_people_id)
+      REFERENCES department_people (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION;
+
+ALTER TABLE grafik
+  ADD CONSTRAINT grafik_department_people_replacement_id_department_people_id FOREIGN KEY (department_people_replacement_id)
+      REFERENCES department_people (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION;
+
+ALTER TABLE grafik_time
+  ADD CONSTRAINT gddi FOREIGN KEY (department_people_replacement_id)
+      REFERENCES department_people (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION;
+
+ALTER TABLE grafik_time
+  ADD CONSTRAINT grafik_time_department_people_id_department_people_id FOREIGN KEY (department_people_id)
+      REFERENCES department_people (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION;

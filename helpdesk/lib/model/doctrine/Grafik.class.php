@@ -326,6 +326,51 @@ class Grafik extends BaseGrafik
     return true;
   }
 
+  static public function copyToPrevMonth($departmentId, $year, $month, Queue $queue = null)
+  {
+/*    if (!self::canCopyToNextMonth($year, $month))
+    {
+      return false;
+    }*/
+
+    $prevMonth = $month > 1 ?  $month - 1 : 12 ;
+    $prevYear = $month > 1 ? $year : $year - 1;
+
+    $type_id = DepartmentPeople::getPermanentStaffTypeId();
+
+    /** @var Doctrine_Collection $departmentPeopleMonthInfos */
+    $departmentPeopleMonthInfos = Doctrine::getTable('DepartmentPeopleMonthInfo')
+      ->createQuery('dpmi')
+      ->addWhere('dpmi.year = ?', $year)
+      ->addWhere('dpmi.month = ?', $month)
+      ->addWhere('dpmi.type_id = ?', $type_id)
+      ->leftJoin('dpmi.DepartmentPeople dp')
+      ->andWhere('dp.department_id = ? ', $departmentId)
+      ->andWhere('dp.parent_id is null')
+      ->execute();
+
+    /** @var Salary $salaryInfo*/
+    $salaryInfo = Salary::getMonthInfo($year, $month);
+    $holidays = $salaryInfo ? $salaryInfo->getAllWeekends() : array();
+
+    /** @var Salary $salaryInfo*/
+    $salaryInfoNext = Salary::getMonthInfo($prevYear, $prevMonth);
+    $holidaysNext = $salaryInfoNext ? $salaryInfoNext->getAllWeekends() : array();
+
+    $firstWorkDayThisMonth = Grafik::getFirstWorkDay($year, $month, $holidays);
+    $firstWorkDayNextMonth = Grafik::getFirstWorkDay($prevYear, $prevMonth, $holidaysNext);
+
+    foreach ($departmentPeopleMonthInfos as $info) /**@var DepartmentPeopleMonthInfo $info*/
+    {
+      $personId = $info->getDepartmentPeopleId();
+      $replacementId = $info->getDepartmentPeopleReplacementId();
+
+      self::copyPersonToPrevMonth($personId, $replacementId, $departmentId, $year, $month, $holidaysNext, $firstWorkDayThisMonth, $firstWorkDayNextMonth);
+    }
+
+    return true;
+  }
+
   /**
    * Generate insert string for Grafik Model
    *
@@ -545,6 +590,199 @@ class Grafik extends BaseGrafik
 
       $nextYearString = 'year + 1';
       $nextMonthString = 'month - 11';
+    }
+
+    if (!$firstWorkDayThisMonth || !$firstWorkDayNextMonth)
+    {
+      $firstWorkDayThisMonth = Grafik::getFirstWorkDay($year, $month);
+      $firstWorkDayNextMonth = Grafik::getFirstWorkDay($nextYear, $nextMonth);
+    }
+
+    // Department People Month Info Copy
+    $conn = Doctrine_Manager::getInstance()->connection();
+
+    // @todo people ids must count from DepartmentPeopleMonthInfo
+    $query = "
+     insert
+       into department_people_month_info
+       (
+         year,
+         month,
+         department_people_id,
+         surcharge,
+         surcharge_type_id,
+         bonus,
+         bonus_type_id,
+         fine,
+         fine_type_id,
+         salary,
+         position_id,
+         type_id,
+         type_string,
+         employment_type_id,
+         salary_type_id,
+         is_clean_salary,
+         norma_days,
+         department_people_replacement_id
+       )
+       (
+         select
+           dpmi.".$nextYearString." as year,
+           dpmi.".$nextMonthString." as month,
+           dpmi.department_people_id,
+           dpmi.surcharge,
+           dpmi.surcharge_type_id,
+           dpmi.bonus,
+           dpmi.bonus_type_id,
+           dpmi.fine,
+           dpmi.fine_type_id,
+           dpmi.salary,
+           dpmi.position_id,
+           dpmi.type_id,
+           dpmi.type_string,
+           dpmi.employment_type_id,
+           dpmi.salary_type_id,
+           dpmi.is_clean_salary,
+           dpmi.norma_days,
+           dpmi.department_people_replacement_id
+         from
+           department_people_month_info dpmi
+         where
+           dpmi.year = :year and
+           dpmi.month = :month and
+           dpmi.department_people_id = :personId and
+           dpmi.department_people_replacement_id = :replacementId and
+           not exists
+             (
+               select
+                 1
+               from
+                 department_people_month_info dpmi1
+               where
+                 dpmi1.year = :nextYear and
+                 dpmi1.month = :nextMonth and
+                 dpmi1.department_people_id = :personId and
+                 dpmi1.department_people_replacement_id = :replacementId
+             )
+        )";
+
+    $stmt = $conn->prepare($query);
+
+    $params = array(
+      ':year' => $year,
+      ':month' => $month,
+      ':nextYear' => $nextYear,
+      ':nextMonth' => $nextMonth,
+      ':personId' => $personId,
+      ':replacementId' => $replacementId,
+    );
+
+    $stmt->execute($params);
+
+    $insertGrafikString = self::generateInsertStringGrafik($personId, $replacementId, $departmentId, $year, $month, $nextYear, $nextMonth);
+
+    if ($insertGrafikString)
+    {
+      // Copy grafik
+      $conn = Doctrine_Manager::getInstance()->connection();
+
+      // @todo people ids must count from DepartmentPeopleMonthInfo
+
+      $query = "
+      insert
+        into grafik
+        (
+          year,
+          month,
+          department_id,
+          department_people_id,
+          department_people_replacement_id,
+          day,
+          total,
+          is_sick,
+          is_skip,
+          is_fired,
+          is_vacation,
+          total_day,
+          total_evening,
+          total_night
+        )
+        VALUES ";
+
+      $query .= $insertGrafikString;
+
+      $stmt = $conn->prepare($query);
+
+      $stmt->execute(array());
+    }
+
+    $insertGrafikTimeString = self::generateInsertStringGrafikTime($personId, $replacementId, $departmentId, $year, $month, $nextYear, $nextMonth);
+
+    if ($insertGrafikTimeString)
+    {
+      // Copy grafik time
+
+      // @todo people ids must count from DepartmentPeopleMonthInfo
+      $query = "
+      insert
+        into grafik_time
+        (
+          year,
+          month,
+          department_id,
+          department_people_id,
+          department_people_replacement_id,
+          day,
+          from_time,
+          to_time,
+          total,
+          total_day,
+          total_evening,
+          total_night
+        )
+        VALUES ";
+
+      $query .= $insertGrafikTimeString;
+
+      $stmt = $conn->prepare($query);
+
+      $stmt->execute(array());
+    }
+  }
+
+  /**
+   * Copy one person to prev month
+   *
+   * @param int $personId
+   * @param int $replacementId
+   * @param int $departmentId
+   * @param int $year current year
+   * @param int $month current month
+   * @param string $holidays weekends of next month in 1,2,6,20 etc
+   * @param int $firstWorkDayThisMonth
+   * @param int $firstWorkDayNextMonth
+   * @param string $daysToCopyString
+   */
+  public static function copyPersonToPrevMonth($personId, $replacementId, $departmentId, $year, $month, $holidays = '', $firstWorkDayThisMonth = null, $firstWorkDayNextMonth = null, $daysToCopyString = '')
+  {
+    //$prevMonth = $month > 1 ?  $month - 1 : 12 ;
+    //$prevYear = $month > 1 ? $year : $year - 1;
+
+    if ($month > 1)
+    {
+      $nextYear = $year;
+      $nextMonth = $month - 1;
+
+      $nextYearString = 'year';
+      $nextMonthString = 'month - 1';
+    }
+    else
+    {
+      $nextYear = $year - 1;
+      $nextMonth =  12;
+
+      $nextYearString = 'year - 1';
+      $nextMonthString = '12';
     }
 
     if (!$firstWorkDayThisMonth || !$firstWorkDayNextMonth)
