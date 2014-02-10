@@ -830,6 +830,9 @@ class entityActions extends sfActions
 
   public function executeDepartment_people_excel(sfWebRequest $request)
   {
+    set_time_limit(0);
+    ini_set('memory_limit', '2048M');
+
     $q = "
       SELECT
         DISTINCT dp.id,
@@ -1073,6 +1076,7 @@ class entityActions extends sfActions
 
   public function executeGrafik_day(sfWebRequest $request)
   {
+    if (!$request->isXmlHttpRequest())
     if (!$request->isXmlHttpRequest())
     {
       return sfView::NONE;

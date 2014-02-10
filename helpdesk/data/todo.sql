@@ -873,21 +873,15 @@ END$$ LANGUAGE 'plpgsql';
 
 select insert_individual('firstName', 'lastNAme');
 
-DROP FUNCTION IF EXISTS insert_department_people(individualId int, departmentMpk varchar(128));
-CREATE OR REPLACE FUNCTION insert_department_people(individualId int, departmentMpk varchar(128)) RETURNS int AS $$
+DROP FUNCTION IF EXISTS insert_department_people(individualId int, departmentId int);
+CREATE OR REPLACE FUNCTION insert_department_people(individualId int, departmentId int) RETURNS int AS $$
 DECLARE
 	return_id int;
-	departmentId int;
 BEGIN
-	IF departmentMpk = ''
-	THEN
-		RETURN -1;
-	END IF;
-	IF NOT EXISTS (SELECT id from departments where mpk = departmentMpk limit 1)
+	IF NOT EXISTS (SELECT id from departments where id = departmentId limit 1)
 	THEN
 		RETURN -2;
 	END IF;
-	SELECT id INTO departmentId from departments where mpk = departmentMpk limit 1;
 	IF NOT EXISTS (SELECT id from individual where id = individualId)
 	THEN
 		RETURN -3;
@@ -901,7 +895,7 @@ BEGIN
 END$$ LANGUAGE 'plpgsql';
 
 select insert_department_people(10, '1200223');
-select insert_department_people(individualId, 'departmentMpk');
+select insert_department_people(individualId, departmentId);
 
 Коды ошибок
 // -1 - пустой mpk
