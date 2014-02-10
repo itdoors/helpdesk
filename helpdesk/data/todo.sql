@@ -942,6 +942,7 @@ GRANT USAGE, SELECT ON SEQUENCE individual_id_seq TO "1c";
 GRANT USAGE, SELECT ON SEQUENCE individual_id_seq TO "1c";
 GRANT ALL ON table department_people TO "1c";
 GRANT USAGE, SELECT ON SEQUENCE department_people_id_seq TO "1c";
+GRANT ALL ON table department_people_month_info TO "1c";
 GRANT SELECT ON table departments TO "1c";
 GRANT USAGE, SELECT ON SEQUENCE departments_id_seq TO "1c";
 ++++++++

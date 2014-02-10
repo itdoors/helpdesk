@@ -1077,7 +1077,6 @@ class entityActions extends sfActions
   public function executeGrafik_day(sfWebRequest $request)
   {
     if (!$request->isXmlHttpRequest())
-    if (!$request->isXmlHttpRequest())
     {
       return sfView::NONE;
     }

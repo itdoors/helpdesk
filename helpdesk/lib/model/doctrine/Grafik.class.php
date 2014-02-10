@@ -30,7 +30,9 @@ class Grafik extends BaseGrafik
       ->createQuery('g')
       ->where('g.year =? ', $year)
       ->addWhere('g.month =? ', $month)
-      ->andWhereIn('g.department_id', $departmentIds);
+      ->andWhereIn('g.department_id', $departmentIds)
+      ->andWhereIn('g.department_people_id', array(14218,14275,12831,14216,13017))
+    ;
 
     if ($departmentPeopleId)
     {
@@ -407,7 +409,7 @@ class Grafik extends BaseGrafik
           total_evening,
           total_night)'*/
 
-    $pattern = '(%d, %d, %d, %d, %d, %d, %d, %s, %s, %s, %s, %d, %d, %d)';
+    $pattern = '(%d, %d, %d, %d, %d, %d, %f, %s, %s, %s, %s, %f, %f, %f)';
 
     $workDaysInNextMonth = self::getWorkDaysInTheMonth($nextYear, $nextMonth);
 
@@ -500,7 +502,7 @@ class Grafik extends BaseGrafik
           total_evening,
           total_night)'*/
 
-    $pattern = "(%d, %d, %d, %d, %d, %d, '%s', '%s', %d, %d, %d, %d)";
+    $pattern = "(%d, %d, %d, %d, %d, %d, '%s', '%s', %f, %f, %f, %f)";
 
     $workDaysInNextMonth = self::getWorkDaysInTheMonth($nextYear, $nextMonth);
 

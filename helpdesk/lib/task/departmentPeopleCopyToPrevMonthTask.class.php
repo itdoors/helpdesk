@@ -44,7 +44,7 @@ EOF;
 
     set_time_limit(0);
 
-    ini_set('memory_limit', '768M');
+    ini_set('memory_limit', '2048M');
 
     $this->logSection('Start: ','copyToPreviousMonth');
 
