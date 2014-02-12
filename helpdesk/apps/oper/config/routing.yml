@@ -34,6 +34,10 @@ entity_department_people_excel:
     url:   /entity/department_people_excel
     param: { module: entity, action: department_people_excel }
 
+entity_same_mpk_excel:
+    url:   /entity/same_mpk_excel
+    param: { module: entity, action: sameMpkExcel }
+
 entity_export_excel_1c_all:
     url:   /entity/export_excel_1c_all
     param: { module: entity, action: exportExcel1cAll }

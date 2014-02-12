@@ -873,21 +873,15 @@ END$$ LANGUAGE 'plpgsql';
 
 select insert_individual('firstName', 'lastNAme');
 
-DROP FUNCTION IF EXISTS insert_department_people(individualId int, departmentMpk varchar(128));
-CREATE OR REPLACE FUNCTION insert_department_people(individualId int, departmentMpk varchar(128)) RETURNS int AS $$
+DROP FUNCTION IF EXISTS insert_department_people(individualId int, departmentId int);
+CREATE OR REPLACE FUNCTION insert_department_people(individualId int, departmentId int) RETURNS int AS $$
 DECLARE
 	return_id int;
-	departmentId int;
 BEGIN
-	IF departmentMpk = ''
-	THEN
-		RETURN -1;
-	END IF;
-	IF NOT EXISTS (SELECT id from departments where mpk = departmentMpk limit 1)
+	IF NOT EXISTS (SELECT id from departments where id = departmentId limit 1)
 	THEN
 		RETURN -2;
 	END IF;
-	SELECT id INTO departmentId from departments where mpk = departmentMpk limit 1;
 	IF NOT EXISTS (SELECT id from individual where id = individualId)
 	THEN
 		RETURN -3;
@@ -901,7 +895,7 @@ BEGIN
 END$$ LANGUAGE 'plpgsql';
 
 select insert_department_people(10, '1200223');
-select insert_department_people(individualId, 'departmentMpk');
+select insert_department_people(individualId, departmentId);
 
 Коды ошибок
 // -1 - пустой mpk
@@ -948,35 +942,76 @@ GRANT USAGE, SELECT ON SEQUENCE individual_id_seq TO "1c";
 GRANT USAGE, SELECT ON SEQUENCE individual_id_seq TO "1c";
 GRANT ALL ON table department_people TO "1c";
 GRANT USAGE, SELECT ON SEQUENCE department_people_id_seq TO "1c";
+GRANT ALL ON table department_people_month_info TO "1c";
 GRANT SELECT ON table departments TO "1c";
 GRANT USAGE, SELECT ON SEQUENCE departments_id_seq TO "1c";
 ++++++++
-
-TRUNCATE individual;
-SELECT setval('individual_id_seq', 1);
 
 CREATE OR REPLACE FUNCTION process_individual()
   RETURNS integer AS
 $BODY$
 DECLARE
 	dpRow department_people%ROWTYPE;
+	individualRow individual%ROWTYPE;
 	totalCount int;
 	individualId int;
+	isNew boolean;
 BEGIN
 	totalCount = 0;
 	individualId = null;
+	isNew = TRUE;
 	FOR dpRow IN SELECT * FROM department_people WHERE parent_id IS NULL AND (passport IS NOT NULL or drfo IS NOT NULL)
 	LOOP
 		IF ((dpRow.drfo IS NOT NULL AND dpRow.drfo <> '') OR (dpRow.passport IS NOT NULL AND dpRow.passport <> ''))
 		THEN
-			SELECT id INTO individualId from individual where tin = dpRow.drfo OR passport = dpRow.passport limit 1;
+			SELECT * INTO individualRow from individual where (tin = dpRow.drfo AND tin <> '') OR (passport = dpRow.passport AND passport <> '') limit 1;
+
+			individualId = individualRow.id;
+
 			IF (individualId IS NULL)
+			THEN
+				isNew = TRUE;
+			ELSE
+				isNew = FALSE;
+			END IF;
+
+			IF (isNew)
 			THEN
 				INSERT INTO individual (first_name, last_name, middle_name, birthday, tin, phone, address, passport)
 				SELECT first_name, last_name, middle_name, birthday, drfo, phone, address, passport FROM department_people dp
 				WHERE dp.id = dpRow.id RETURNING id INTO individualId;
 			END IF;
+
 			UPDATE department_people set individual_id = individualId where id = dpRow.id;
+
+			IF (isNew is FALSE AND individualRow.id IS NOT NULL)
+			THEN
+				IF ((dpRow.drfo IS NOT NULL AND dpRow.drfo <> '') AND (individualRow.tin IS NULL OR individualRow.tin = ''))
+				THEN
+					UPDATE individual SET tin = dpRow.drfo WHERE id = individualRow.id;
+				END IF;
+
+				IF ((dpRow.passport IS NOT NULL AND dpRow.passport <> '') AND (individualRow.passport IS NULL OR individualRow.passport = ''))
+				THEN
+					UPDATE individual SET passport = dpRow.passport WHERE id = individualRow.id;
+				END IF;
+
+				IF ((dpRow.phone IS NOT NULL AND dpRow.phone <> '') AND (individualRow.phone IS NULL OR individualRow.phone = ''))
+				THEN
+					UPDATE individual SET phone = dpRow.phone WHERE id = individualRow.id;
+				END IF;
+
+				IF ((dpRow.address IS NOT NULL AND dpRow.address <> '') AND (individualRow.address IS NULL OR individualRow.address = ''))
+				THEN
+					UPDATE individual SET address = dpRow.address WHERE id = individualRow.id;
+				END IF;
+
+				IF ((dpRow.birthday IS NOT NULL) AND (individualRow.birthday IS NULL))
+				THEN
+					UPDATE individual SET birthday = dpRow.birthday WHERE id = individualRow.id;
+				END IF;
+			END IF;
+
 			totalCount = totalCount + 1;
 		ELSE
 			individualId = NULL;
@@ -987,8 +1022,17 @@ END$BODY$
   LANGUAGE plpgsql VOLATILE
   COST 100;
 
- select process_individual();
- SELECT setval('individual_id_seq', (SELECT MAX(id) FROM individual));
+UPDATE department_people SET individual_id = null;
+ALTER TABLE department_people DROP CONSTRAINT department_people_individual_id_individual_id;
+TRUNCATE individual;
+SELECT setval('individual_id_seq', 1);
+select process_individual();
+SELECT setval('individual_id_seq', (SELECT MAX(id) FROM individual));
+
+ALTER TABLE department_people
+  ADD CONSTRAINT department_people_individual_id_individual_id FOREIGN KEY (individual_id)
+      REFERENCES individual (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION;
 
 -------------------------------------------------------
 
@@ -1003,3 +1047,279 @@ WHERE
 	((dp.drfo IS NULL OR dp.drfo = '') AND (dp.passport IS NULL OR dp.passport = '')) AND
 	dpmi.year = 2014 AND
 	dpmi.month = 1;
+
+
+-------------------------------------
+
+CREATE OR REPLACE FUNCTION delete_department(oldId int, newId int)
+  RETURNS void AS
+$BODY$
+DECLARE
+
+BEGIN
+	UPDATE claim SET departments_id = newId WHERE departments_id = oldId;
+
+	UPDATE
+		groupclaim_departments
+	SET
+		departments_id = newId
+	WHERE
+		NOT EXISTS (
+			SELECT * FROM groupclaim_departments dg
+			WHERE dg.departments_id = newId AND
+			dg.groupclaim_id = groupclaim_departments.groupclaim_id
+			)
+		AND
+		departments_id = oldId;
+
+	DELETE FROM groupclaim_departments WHERE departments_id = oldId;
+
+	UPDATE
+		technical_param_departments
+	SET
+		department_id = newId
+	WHERE
+		NOT EXISTS (
+			SELECT * FROM technical_param_departments tpd
+			WHERE tpd.department_id = newId AND
+			tpd.param_id = technical_param_departments.param_id
+			)
+		AND
+		department_id = oldId;
+
+	DELETE FROM technical_param_departments WHERE department_id = oldId;
+
+	UPDATE
+		dogovor_department
+	SET
+		department_id = newId
+	WHERE
+		NOT EXISTS (
+			SELECT * FROM dogovor_department dd
+			WHERE dd.department_id = newId AND
+			dd.dogovor_id = dogovor_department.dogovor_id
+			)
+		AND
+		department_id = oldId;
+
+	DELETE FROM dogovor_department WHERE department_id = oldId;
+
+	UPDATE model_contact SET model_id = newId WHERE model_id = oldId AND model_name = 'departments';
+
+	DELETE FROM stuff_departments WHERE departments_id = oldId;
+	DELETE FROM client_departments WHERE departments_id = oldId;
+	DELETE FROM grafik WHERE department_id = oldId;
+	DELETE FROM grafik_time WHERE department_id = oldId;
+	DELETE FROM department_people_month_info WHERE department_people_id in (
+		SELECT
+			id
+		FROM
+			department_people
+		WHERE
+			department_id = oldId
+		);
+	DELETE FROM department_people WHERE department_id = oldId;
+	DELETE FROM departments where id = oldId;
+END$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
+
+BEGIN;
+	select delete_department(606, 646);
+COMMIT;
+
+
+
+----------------------------------------------------------------
+
+CREATE OR REPLACE FUNCTION update_department_people_by_month_info(paramYear int, paramMonth int)
+  RETURNS void AS
+$BODY$
+DECLARE
+
+BEGIN
+	UPDATE department_people SET position_id =
+		(
+			SELECT
+				position_id
+			FROM
+				department_people_month_info
+			WHERE
+				year = paramYear AND
+				month = paramMonth AND
+				type_id = 18 AND
+				department_people_replacement_id = 0 AND
+				department_people_id = department_people.id
+			LIMIT 1
+		)
+	WHERE
+		EXISTS
+		(
+			SELECT
+				position_id
+			FROM
+				department_people_month_info
+			WHERE
+				year = paramYear AND
+				month = paramMonth AND
+				type_id = 18 AND
+				department_people_replacement_id = 0 AND
+				department_people_id = department_people.id
+			LIMIT 1
+		);
+
+	UPDATE department_people SET employment_type_id =
+		(
+			SELECT
+				employment_type_id
+			FROM
+				department_people_month_info
+			WHERE
+				year = paramYear AND
+				month = paramMonth AND
+				type_id = 18 AND
+				department_people_replacement_id = 0 AND
+				department_people_id = department_people.id
+			LIMIT 1
+		)
+	WHERE
+		EXISTS
+		(
+			SELECT
+				employment_type_id
+			FROM
+				department_people_month_info
+			WHERE
+				year = paramYear AND
+				month = paramMonth AND
+				type_id = 18 AND
+				department_people_replacement_id = 0 AND
+				department_people_id = department_people.id
+			LIMIT 1
+		);
+
+	UPDATE department_people SET salary =
+		(
+			SELECT
+				salary
+			FROM
+				department_people_month_info
+			WHERE
+				year = paramYear AND
+				month = paramMonth AND
+				type_id = 18 AND
+				department_people_replacement_id = 0 AND
+				department_people_id = department_people.id
+			LIMIT 1
+		)
+	WHERE
+		EXISTS
+		(
+			SELECT
+				salary
+			FROM
+				department_people_month_info
+			WHERE
+				year = paramYear AND
+				month = paramMonth AND
+				type_id = 18 AND
+				department_people_replacement_id = 0 AND
+				department_people_id = department_people.id
+			LIMIT 1
+		);
+
+END$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
+
+select update_department_people_by_month_info(2014, 2);
+
+------------------------------------
+
+ALTER TABLE department_people_month_info DROP CONSTRAINT dddi_1;
+ALTER TABLE grafik DROP CONSTRAINT grafik_department_people_id_department_people_id;
+ALTER TABLE grafik DROP CONSTRAINT grafik_department_people_replacement_id_department_people_id;
+ALTER TABLE grafik_time DROP CONSTRAINT gddi;
+ALTER TABLE grafik_time DROP CONSTRAINT grafik_time_department_people_id_department_people_id;
+
+----------------------------------------------
+delete from department_people_month_info
+	where
+		department_people_id in (select id from department_people where parent_id is not null) or
+		department_people_replacement_id in (select id from department_people where parent_id is not null);
+
+delete from
+	grafik_time where department_people_id in (select id from department_people where parent_id is not null)
+	or
+	department_people_replacement_id in (select id from department_people where parent_id is not null);
+delete from
+	grafik where department_people_id in (select id from department_people where parent_id is not null)
+	or
+	department_people_replacement_id in (select id from department_people where parent_id is not null);
+
+
+delete from department_people where parent_id is not null;
+
+------------------------------------------------------------------------------
+ALTER TABLE department_people_month_info
+  ADD CONSTRAINT dddi_1 FOREIGN KEY (department_people_replacement_id)
+      REFERENCES department_people (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION;
+
+
+ALTER TABLE grafik
+  ADD CONSTRAINT grafik_department_people_id_department_people_id FOREIGN KEY (department_people_id)
+      REFERENCES department_people (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION;
+
+ALTER TABLE grafik
+  ADD CONSTRAINT grafik_department_people_replacement_id_department_people_id FOREIGN KEY (department_people_replacement_id)
+      REFERENCES department_people (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION;
+
+ALTER TABLE grafik_time
+  ADD CONSTRAINT gddi FOREIGN KEY (department_people_replacement_id)
+      REFERENCES department_people (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION;
+
+ALTER TABLE grafik_time
+  ADD CONSTRAINT grafik_time_department_people_id_department_people_id FOREIGN KEY (department_people_id)
+      REFERENCES department_people (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION;
+
+
+---------------------------------------------------------------
+
+CREATE OR REPLACE FUNCTION department_people_to_other_department(slaveId int, masterId int)
+  RETURNS void AS
+$BODY$
+DECLARE
+
+BEGIN
+	UPDATE
+		department_people
+	SET
+		department_id = masterId
+	WHERE
+		department_id = slaveId;
+
+	UPDATE
+		grafik
+	SET
+		department_id = masterId
+	WHERE
+		department_id = slaveId;
+
+	UPDATE
+		grafik_time
+	SET
+		department_id = masterId
+	WHERE
+		department_id = slaveId;
+END$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
+
+BEGIN;
+	select department_people_to_other_department(606, 646);
+COMMIT;

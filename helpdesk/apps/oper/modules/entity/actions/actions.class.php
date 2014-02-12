@@ -830,6 +830,9 @@ class entityActions extends sfActions
 
   public function executeDepartment_people_excel(sfWebRequest $request)
   {
+    set_time_limit(0);
+    ini_set('memory_limit', '2048M');
+
     $q = "
       SELECT
         DISTINCT dp.id,
@@ -842,6 +845,8 @@ class entityActions extends sfActions
         dp.admission_date as admission_date,
         dp.dismissal_date as dismissal_date,
         dp.passport as passport,
+        cit1.name as city_name,
+        reg1.name as region_name,
         (select
           dpmi2.position_id
         from
@@ -887,6 +892,105 @@ class entityActions extends sfActions
           type_id = 18
         limit 1
         ) as employment_type_id,
+        (select
+          dpmi.surcharge
+        from
+          department_people_month_info dpmi
+        where
+          month = 1 AND
+          year = 2014 AND
+          department_people_id = dp.id AND
+          type_id = 18
+        limit 1
+        ) as surcharge,
+        (select
+          dpmi.surcharge_type_id
+        from
+          department_people_month_info dpmi
+        where
+          month = 1 AND
+          year = 2014 AND
+          department_people_id = dp.id AND
+          type_id = 18
+        limit 1
+        ) as surcharge_type_id,
+        (select
+          dpmi.surcharge_type_key
+        from
+          department_people_month_info dpmi
+        where
+          month = 1 AND
+          year = 2014 AND
+          department_people_id = dp.id AND
+          type_id = 18
+        limit 1
+        ) as surcharge_type_key,
+        (select
+          dpmi.bonus
+        from
+          department_people_month_info dpmi
+        where
+          month = 1 AND
+          year = 2014 AND
+          department_people_id = dp.id AND
+          type_id = 18
+        limit 1
+        ) as bonus,
+        (select
+          dpmi.bonus_type_id
+        from
+          department_people_month_info dpmi
+        where
+          month = 1 AND
+          year = 2014 AND
+          department_people_id = dp.id AND
+          type_id = 18
+        limit 1
+        ) as bonus_type_id,
+        (select
+          dpmi.bonus_type_key
+        from
+          department_people_month_info dpmi
+        where
+          month = 1 AND
+          year = 2014 AND
+          department_people_id = dp.id AND
+          type_id = 18
+        limit 1
+        ) as bonus_type_key,
+        (select
+          dpmi.fine
+        from
+          department_people_month_info dpmi
+        where
+          month = 1 AND
+          year = 2014 AND
+          department_people_id = dp.id AND
+          type_id = 18
+        limit 1
+        ) as fine,
+        (select
+          dpmi.fine_type_id
+        from
+          department_people_month_info dpmi
+        where
+          month = 1 AND
+          year = 2014 AND
+          department_people_id = dp.id AND
+          type_id = 18
+        limit 1
+        ) as fine_type_id,
+        (select
+          dpmi.fine_type_key
+        from
+          department_people_month_info dpmi
+        where
+          month = 1 AND
+          year = 2014 AND
+          department_people_id = dp.id AND
+          type_id = 18
+        limit 1
+        ) as fine_type_key,
         dp.drfo as drfo,
         dp.person_code as person_code,
         dp.number as number,
@@ -916,10 +1020,12 @@ class entityActions extends sfActions
           department_people_id = dp.id AND
           type_id = 18
         limit 1
-        ) as existsInJan
+        ) as exists_in_jan
       FROM
         department_people dp
         LEFT JOIN departments d on d.id = dp.department_id
+        LEFT JOIN city cit1 ON cit1.id = d.city_id
+        LEFT JOIN region reg1 ON reg1.id = cit1.region_id
       ";
 
     $user = $this->getUser();
@@ -945,7 +1051,7 @@ class entityActions extends sfActions
     }
 
     //$q .= ' AND dp.department_id = 60';
-    $q .= ' limit 10';
+    //$q .= ' limit 100';
 
     $doctrine = Doctrine_Manager::getInstance()->getCurrentConnection()->getDbh();
 
@@ -962,10 +1068,10 @@ class entityActions extends sfActions
     $this->setLayout(false);
     sfConfig::set('sf_web_debug', false);
 
-    /*$this->getResponse()->setContent('application/vnd.ms-excel; charset=utf-8');
+    $this->getResponse()->setContent('application/vnd.ms-excel; charset=utf-8');
     $this->getResponse()->setHttpHeader('Content-Disposition','attachment; filename=department_people-'.time().'.xls');
     $this->getResponse()->setHttpHeader('Pragma','no-cache');
-    $this->getResponse()->setHttpHeader('Expires','0');*/
+    $this->getResponse()->setHttpHeader('Expires','0');
   }
 
   public function executeGrafik_day(sfWebRequest $request)
@@ -1401,5 +1507,88 @@ class entityActions extends sfActions
     $params = $request->getPostParameters();
 
     return $this->renderComponent('entity', 'people_list', $params);
+  }
+
+  /**
+   * Exports departments with same mpk
+   */
+  public function executeSameMpkExcel(sfWebRequest $request)
+  {
+    $q = "
+      SELECT
+        d.id as id,
+        d.mpk as mpk,
+        o.name as organization_name,
+        reg.name as region_name,
+        cit.name as city_name,
+        d.address as address,
+        d.status_id as status_id,
+        array_to_string(
+          ARRAY(
+            SELECT
+              cs.name
+            FROM
+              companystructure cs
+            LEFT JOIN companystructure_region csr ON csr.companystructure_id = cs.id
+            WHERE csr.region_id = reg.id
+          ), ', '
+        ) as companystructure_name
+      FROM
+        departments d
+      LEFT JOIN organization o on d.organization_id = o.id
+      LEFT JOIN city cit on d.city_id = cit.id
+      LEFT JOIN region reg on cit.region_id = reg.id
+      ";
+
+    $user = $this->getUser();
+
+    if ($user->hasCredential('oper') && !$user->hasCredential('supervisor'))
+    {
+      $q .= "
+        INNER JOIN stuff_departments sd on sd.departments_id = d.id
+      ";
+    }
+
+    $q .= "
+      WHERE d.mpk in (SELECT
+          mpk
+        FROM
+          departments d
+        GROUP BY
+          mpk
+        HAVING
+          count(d.id) > 1)";
+
+    if ($user->hasCredential('oper') && !$user->hasCredential('supervisor'))
+    {
+      $stuffId = GlobalFunctions::getStuffId();
+
+      $q .= "
+        AND sd.stuff_id = " .$stuffId . "
+      ";
+    }
+    $q .= ' ORDER BY d.mpk ASC';
+    //$q .= ' AND dp.department_id = 60';
+    //$q .= ' limit 100';
+
+    $doctrine = Doctrine_Manager::getInstance()->getCurrentConnection()->getDbh();
+
+    $result = $doctrine->query($q);
+
+    $this->peoples = $result->fetchAll();
+
+    $lookup = Doctrine::getTable('lookup')
+      ->createQuery('l')
+      ->execute();
+
+    $this->lookup = $lookup->toKeyValueArray('id', 'name');
+
+    $this->setLayout(false);
+    sfConfig::set('sf_web_debug', false);
+
+    $this->getResponse()->setContent('application/vnd.ms-excel; charset=utf-8');
+    $this->getResponse()->setHttpHeader('Content-Disposition','attachment; filename=department_people-'.time().'.xls');
+    $this->getResponse()->setHttpHeader('Pragma','no-cache');
+    $this->getResponse()->setHttpHeader('Expires','0');
   }
 }

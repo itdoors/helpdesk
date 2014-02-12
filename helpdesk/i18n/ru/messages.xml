@@ -1425,8 +1425,12 @@
             <target>Паспорт</target>
         </trans-unit>
         <trans-unit>
-            <source>Exists in january</source>
-            <target>Работал в январе</target>
+            <source>With weekends</source>
+            <target>Включая выходные</target>
+        </trans-unit>
+        <trans-unit>
+            <source>Export same mpk</source>
+            <target>Экспорт по одинаковым МПК</target>
         </trans-unit>
     </body>
   </file>

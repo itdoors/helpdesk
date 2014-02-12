@@ -2,6 +2,9 @@
 require_once '/var/www/vhosts/symfony-1.4.8/lib/autoload/sfCoreAutoload.class.php';
 sfCoreAutoload::register();
 
+define('PHPExcelPath', '/var/www/vhosts/helpdesk.griffin.ua/helpdesk_git/helpdesk/lib/PHPExcel/Classes');
+define('ProjectPath', '/var/www/vhosts/helpdesk.griffin.ua/helpdesk_git');
+
 class ProjectConfiguration extends sfProjectConfiguration
 {
   

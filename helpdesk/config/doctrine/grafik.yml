@@ -15,7 +15,7 @@ Individual:
     birthday:
       type: date
     tin:
-      type: string(12)
+      type: string(24)
     passport:
       type: string(8)
     phone:
