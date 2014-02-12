@@ -122,18 +122,21 @@ class entityComponents extends sfComponents
   {
     $this->month = isset($this->month) ? $this->month : date('n');
     $this->year = isset($this->year) ? $this->year : date('Y');
-    
+
     $this->last_day_of_the_month = Grafik::getDaysInMonth($this->year, $this->month);
 
     $this->canCopyToNetxtMonth = Grafik::canCopyToNextMonth($this->year, $this->month);
   }
   
-  public function executePeople_list()
+  /*public function executePeople_list()
   {
     if (!$this->department_id)
     {
       return sfView::NONE;
     }
+
+    $this->offset = 0;
+    $this->limit = 5;
 
     $this->isRowRefresh = $this->department_people_id && !is_null($this->department_people_replacement_id);
     
@@ -184,6 +187,69 @@ class entityComponents extends sfComponents
     //add salary
 
     $this->salaryInfo = Salary::getMonthInfo($this->year, $this->month);
+  }*/
+
+  public function executePeople_list()
+  {
+    if (!$this->department_id)
+    {
+      return sfView::NONE;
+    }
+
+    $departmentIds = array($this->department_id);
+
+    $this->offset = $this->offset ? $this->offset : 0;
+
+    $this->limit = sfConfig::get('app_grafik_people_limit');
+
+    $this->isRowRefresh = ($this->department_people_id && !is_null($this->department_people_replacement_id)) || $this->offset;
+    $this->isOneRowRefresh = $this->department_people_id && !is_null($this->department_people_replacement_id);
+
+    $app = sfContext::getInstance()->getConfiguration()->getApplication();
+    $this->canEdit = $this->getUser()->hasCredential($app);
+    $this->year = isset($this->year) ? $this->year : date('Y');
+    $this->month = isset($this->month) ? $this->month : date('n');
+    $yearSession = GlobalFunctions::getSessionVariable('year', GlobalFunctions::SESSION_NAMESACE__GRAFIK_ENTITY . $this->department_id);
+    $monthSession = GlobalFunctions::getSessionVariable('month', GlobalFunctions::SESSION_NAMESACE__GRAFIK_ENTITY . $this->department_id);
+    $this->year = $yearSession ? $yearSession : $this->year;
+    $this->month = $monthSession ? $monthSession : $this->month;
+    $this->days_count = date('t', mktime(0, 0, 0, $this->month, 1, $this->year));
+
+    $peopleIds = GrafikTable::getPeopleIds(
+      $departmentIds,
+      $this->year,
+      $this->month,
+      $this->department_people_id,
+      $this->department_people_replacement_id,
+      $this->offset,
+      $this->limit
+    );
+
+    $this->peoples = Grafik::getPeopleByIds(
+      $peopleIds,
+      $this->year,
+      $this->month,
+      $this->department_people_id,
+      $this->department_people_replacement_id
+    );
+
+    $this->canCopyToNetxtMonth = sizeof($this->peoples) && Grafik::canCopyToNextMonth($this->year, $this->month);
+
+    // eof check if queue exist
+
+    $this->grafik = Grafik::getFormattedData(
+      $this->year,
+      $this->month,
+      $this->department_id,
+      $this->department_people_id,
+      $this->department_people_replacement_id,
+      $peopleIds
+    );
+
+    //add salary
+
+    $this->salaryInfo = Salary::getMonthInfo($this->year, $this->month);
+    $this->queue = null;
   }
   
   public function executeMonth_holder()

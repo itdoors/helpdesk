@@ -17,12 +17,23 @@ class Grafik extends BaseGrafik
     return DepartmentPeopleTable::getPeople($departmentIds, $year, $month, $departmentPeopleId, $departmentPeopleReplacementId);
   }
 
+  static public function getPeopleByIds($peopleIds, $year, $month, $departmentPeopleId = null, $departmentPeopleReplacementId = null)
+  {
+    return DepartmentPeopleTable::getPeopleByIds($peopleIds, $year, $month, $departmentPeopleId, $departmentPeopleReplacementId);
+  }
+
   static public function getPeopleArrayByDepartmentIdKey($departmentIds, $year, $month)
   {
     return DepartmentPeopleTable::getPeopleArrayByDepartmentIdKey($departmentIds, $year, $month);
   }
 
-  static public function getFormattedData($year, $month, $departmentIds, $departmentPeopleId = null, $departmentPeopleReplacementId = null)
+  static public function getFormattedData(
+    $year,
+    $month,
+    $departmentIds,
+    $departmentPeopleId = null,
+    $departmentPeopleReplacementId = null, $peopleIds = array()
+  )
   {
     $result = array();
 
@@ -32,6 +43,12 @@ class Grafik extends BaseGrafik
       ->addWhere('g.month =? ', $month)
       ->andWhereIn('g.department_id', $departmentIds)
     ;
+
+    if (sizeof($peopleIds))
+    {
+      $query
+        ->andWhereIn('g.department_people_id', $peopleIds);
+    }
 
     if ($departmentPeopleId)
     {

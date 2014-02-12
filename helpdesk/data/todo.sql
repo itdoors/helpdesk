@@ -1034,6 +1034,8 @@ ALTER TABLE department_people
       REFERENCES individual (id) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION;
 
+select update_department_people_by_month_info(2014, 1);
+
 -------------------------------------------------------
 
 SELECT

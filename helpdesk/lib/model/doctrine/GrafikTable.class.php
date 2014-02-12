@@ -23,9 +23,21 @@ class GrafikTable extends Doctrine_Table
    * @param int[] $departmentIds
    * @param int $year
    * @param int $month
+   * @param int $departmentPeopleId
+   * @param int $departmentPeopleReplacementId
+   * @param int $offset
+   * @param int $limit
    * @return int[]
    */
-  static public function getPeopleIds($departmentIds, $year, $month, $departmentPeopleId = null, $departmentPeopleReplacementId = null)
+  static public function getPeopleIds(
+    $departmentIds,
+    $year,
+    $month,
+    $departmentPeopleId = null,
+    $departmentPeopleReplacementId = null,
+    $offset = 0,
+    $limit = 0
+  )
   {
     if (!is_array($departmentIds) && $departmentIds)
     {
@@ -37,7 +49,8 @@ class GrafikTable extends Doctrine_Table
     // @todo people ids must count from DepartmentPeopleMonthInfo
     $query = "
       SELECT
-        DISTINCT(d.department_people_id) AS people_id
+        DISTINCT(d.department_people_id) AS people_id,
+        d2.last_name as lastName
       FROM
         department_people_month_info d
      LEFT JOIN department_people d2 ON d.department_people_id = d2.id
@@ -50,8 +63,14 @@ class GrafikTable extends Doctrine_Table
     $params = array(
       ':year' => $year,
       ':month' => $month,
-      ':department_id' => implode(',', $departmentIds)
+      ':department_id' => implode(',', $departmentIds),
+      ':offset' => $offset
     );
+
+    if ($limit)
+    {
+      $params[':limit'] = $limit;
+    }
 
     if ($departmentPeopleId)
     {
@@ -64,6 +83,17 @@ class GrafikTable extends Doctrine_Table
       $query .= ' AND d.department_people_replacement_id = :department_people_replacement_id';
       $params[':department_people_replacement_id'] = $departmentPeopleReplacementId;
     }
+
+    $query .= ' ORDER BY d2.last_name ASC ';
+
+    // Offset limit
+    $query .= ' OFFSET :offset';
+
+    if ($limit)
+    {
+      $query .=' LIMIT :limit';
+    }
+
 
     $stmt = $conn->prepare($query);
 

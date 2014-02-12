@@ -1264,6 +1264,7 @@ class entityActions extends sfActions
   {
     $departmentId = $request->getParameter('department_id');
     $canEdit =  $request->getParameter('can_edit');
+    $offset = $request->getParameter('offset');
 
     if (!$departmentId)
     {
@@ -1272,10 +1273,23 @@ class entityActions extends sfActions
 
     $department = Doctrine::getTable('departments')->find($departmentId);
 
-    return $this->renderComponent('entity', 'grafik', array(
-      'department' => $department,
-      'can_edit' => $canEdit
-    ));
+    if ($offset)
+    {
+      return $this->renderComponent('entity', 'people_list', array(
+        'department_id' => $department->getId(),
+        'year' => date('Y'),
+        'month' => date('n'),
+        'offset' => $offset
+      ));
+    }
+    else
+    {
+      return $this->renderComponent('entity', 'grafik', array(
+        'department' => $department,
+        'can_edit' => $canEdit,
+        'offset' => $offset
+      ));
+    }
   }
 
   /**

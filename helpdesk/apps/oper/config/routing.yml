@@ -50,6 +50,10 @@ ajax_entity_grafik:
   url:   /entity/ajax/grafik/:department_id/:can_edit
   param: { module: entity, action: ajaxGrafik, can_edit: 0 }
 
+ajax_entity_grafik_post:
+  url:   /entity/ajax/grafik
+  param: { module: entity, action: ajaxGrafik }
+
 ajax_entity_general:
   url:   /entity/ajax/general/:department_id/:can_edit
   param: { module: entity, action: ajaxGeneral, can_edit: 0 }
