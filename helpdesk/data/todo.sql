@@ -947,8 +947,6 @@ GRANT SELECT ON table departments TO "1c";
 GRANT USAGE, SELECT ON SEQUENCE departments_id_seq TO "1c";
 ++++++++
 
-TRUNCATE individual;
-SELECT setval('individual_id_seq', 1);
 CREATE OR REPLACE FUNCTION process_individual()
   RETURNS integer AS
 $BODY$
@@ -966,7 +964,7 @@ BEGIN
 	LOOP
 		IF ((dpRow.drfo IS NOT NULL AND dpRow.drfo <> '') OR (dpRow.passport IS NOT NULL AND dpRow.passport <> ''))
 		THEN
-			SELECT * INTO individualRow from individual where tin = dpRow.drfo OR passport = dpRow.passport limit 1;
+			SELECT * INTO individualRow from individual where (tin = dpRow.drfo AND tin <> '') OR (passport = dpRow.passport AND passport <> '') limit 1;
 
 			individualId = individualRow.id;
 
@@ -1024,15 +1022,14 @@ END$BODY$
   LANGUAGE plpgsql VOLATILE
   COST 100;
 
-
- TRUNCATE individual;
+UPDATE department_people SET individual_id = null;
+ALTER TABLE department_people DROP CONSTRAINT department_people_individual_id_individual_id;
+TRUNCATE individual;
 SELECT setval('individual_id_seq', 1);
- select process_individual();
- SELECT setval('individual_id_seq', (SELECT MAX(id) FROM individual));
+select process_individual();
+SELECT setval('individual_id_seq', (SELECT MAX(id) FROM individual));
 
---------------------------
-
- ALTER TABLE department_people
+ALTER TABLE department_people
   ADD CONSTRAINT department_people_individual_id_individual_id FOREIGN KEY (individual_id)
       REFERENCES individual (id) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION;
@@ -1289,3 +1286,40 @@ ALTER TABLE grafik_time
   ADD CONSTRAINT grafik_time_department_people_id_department_people_id FOREIGN KEY (department_people_id)
       REFERENCES department_people (id) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION;
+
+
+---------------------------------------------------------------
+
+CREATE OR REPLACE FUNCTION department_people_to_other_department(slaveId int, masterId int)
+  RETURNS void AS
+$BODY$
+DECLARE
+
+BEGIN
+	UPDATE
+		department_people
+	SET
+		department_id = masterId
+	WHERE
+		department_id = slaveId;
+
+	UPDATE
+		grafik
+	SET
+		department_id = masterId
+	WHERE
+		department_id = slaveId;
+
+	UPDATE
+		grafik_time
+	SET
+		department_id = masterId
+	WHERE
+		department_id = slaveId;
+END$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
+
+BEGIN;
+	select department_people_to_other_department(606, 646);
+COMMIT;
