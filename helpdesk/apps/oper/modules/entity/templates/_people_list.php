@@ -325,3 +325,4 @@
   </tfoot>
 </table>
 <?php endif; // !isRowRefresh?>
+<?php unset($peoples)?>
