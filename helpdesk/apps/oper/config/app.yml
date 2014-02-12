@@ -4,5 +4,5 @@
 # default values
 all:
   grafik:
-    people_limit: 5
+    people_limit: 15
 
