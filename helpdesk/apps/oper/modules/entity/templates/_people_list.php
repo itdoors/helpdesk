@@ -296,7 +296,7 @@
       <td><?php echo $people->getRealSalary() ? sprintf("%0.2f", $people->getRealSalary()) : '';?></td>
     </tr>
     <?php endforeach;?>
-    <?php if (sizeof($people) && !$isOneRowRefresh) : ?>
+    <?php if (sizeof($peoples) && !$isOneRowRefresh) : ?>
       <tr class="show-more-people">
         <td colspan="<?php echo $days_count + 11?>">
             <a href="#" style="display: block"><?php echo __('show more')?></a>
