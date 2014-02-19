@@ -26,6 +26,10 @@ abstract class BaseMpkForm extends BaseFormDoctrine
       'department_id' => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Department'), 'required' => false)),
     ));
 
+    $this->validatorSchema->setPostValidator(
+      new sfValidatorDoctrineUnique(array('model' => 'Mpk', 'column' => array('name')))
+    );
+
     $this->widgetSchema->setNameFormat('mpk[%s]');
 
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);

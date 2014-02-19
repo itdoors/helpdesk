@@ -404,6 +404,7 @@ Mpk:
       autoincrement: true
     name:
       type: string(50)
+      unique: true
     department_id:
       type: integer
   relations:

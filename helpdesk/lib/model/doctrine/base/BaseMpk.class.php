@@ -39,6 +39,7 @@ abstract class BaseMpk extends sfDoctrineRecord
              ));
         $this->hasColumn('name', 'string', 50, array(
              'type' => 'string',
+             'unique' => true,
              'length' => 50,
              ));
         $this->hasColumn('department_id', 'integer', null, array(
