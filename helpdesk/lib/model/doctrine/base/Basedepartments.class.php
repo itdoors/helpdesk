@@ -30,6 +30,7 @@
  * @property DepartmentsStatus $Status
  * @property Doctrine_Collection $DogovorDepartment
  * @property Doctrine_Collection $DepartmentPeople
+ * @property Doctrine_Collection $DepartmentMpk
  * @property Doctrine_Collection $Groupclaim
  * @property Doctrine_Collection $GroupclaimDepartments
  * @property Doctrine_Collection $Claim
@@ -62,6 +63,7 @@
  * @method DepartmentsStatus   getStatus()                    Returns the current record's "Status" value
  * @method Doctrine_Collection getDogovorDepartment()         Returns the current record's "DogovorDepartment" collection
  * @method Doctrine_Collection getDepartmentPeople()          Returns the current record's "DepartmentPeople" collection
+ * @method Doctrine_Collection getDepartmentMpk()             Returns the current record's "DepartmentMpk" collection
  * @method Doctrine_Collection getGroupclaim()                Returns the current record's "Groupclaim" collection
  * @method Doctrine_Collection getGroupclaimDepartments()     Returns the current record's "GroupclaimDepartments" collection
  * @method Doctrine_Collection getClaim()                     Returns the current record's "Claim" collection
@@ -93,6 +95,7 @@
  * @method departments         setStatus()                    Sets the current record's "Status" value
  * @method departments         setDogovorDepartment()         Sets the current record's "DogovorDepartment" collection
  * @method departments         setDepartmentPeople()          Sets the current record's "DepartmentPeople" collection
+ * @method departments         setDepartmentMpk()             Sets the current record's "DepartmentMpk" collection
  * @method departments         setGroupclaim()                Sets the current record's "Groupclaim" collection
  * @method departments         setGroupclaimDepartments()     Sets the current record's "GroupclaimDepartments" collection
  * @method departments         setClaim()                     Sets the current record's "Claim" collection
@@ -210,6 +213,10 @@ abstract class Basedepartments extends sfDoctrineRecord
              'foreign' => 'department_id'));
 
         $this->hasMany('DepartmentPeople', array(
+             'local' => 'id',
+             'foreign' => 'department_id'));
+
+        $this->hasMany('Mpk as DepartmentMpk', array(
              'local' => 'id',
              'foreign' => 'department_id'));
 

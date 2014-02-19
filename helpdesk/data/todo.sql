@@ -1325,3 +1325,98 @@ END$BODY$
 BEGIN;
 	select department_people_to_other_department(606, 646);
 COMMIT;
+
+---------------------------
+
+CREATE TABLE mpk (id BIGSERIAL, name VARCHAR(50), PRIMARY KEY(id));
+CREATE TABLE department_mpk (department_id BIGINT, mpk_id BIGINT, PRIMARY KEY(department_id, mpk_id));
+ALTER TABLE department_mpk ADD CONSTRAINT department_mpk_mpk_id_mpk_id FOREIGN KEY (mpk_id) REFERENCES mpk(id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE department_mpk ADD CONSTRAINT department_mpk_department_id_departments_id FOREIGN KEY (department_id) REFERENCES departments(id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE;
+
+-----------------------
+
+insert into mpk (name) (select distinct (mpk) from departments where not exists (select name from mpk where name = departments.mpk));
+
+CREATE OR REPLACE FUNCTION process_department_mpk()
+  RETURNS integer AS
+$BODY$
+DECLARE
+	dRow departments%ROWTYPE;
+	totalCount int;
+	mpkId int;
+BEGIN
+	totalCount = 0;
+	mpkId = null;
+	FOR dRow IN SELECT * FROM departments
+	LOOP
+		SELECT id INTO mpkId FROM mpk where name = dRow.mpk;
+
+		IF (mpkId IS NOT NULL AND NOT EXISTS(SELECT * FROM department_mpk WHERE department_id = dRow.id AND mpk_id = mpkId)) THEN
+			INSERT INTO department_mpk (department_id, mpk_id) VALUES (dRow.id, mpkId);
+			totalCount = totalCount + 1;
+		ELSE
+		  mpkId = null;
+		END IF;
+	END LOOP;
+	RETURN totalCount;
+END$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
+
+
+select process_department_mpk();
+
+ALTER TABLE department_people ADD COLUMN mpk_id integer;
+ALTER TABLE department_people ADD CONSTRAINT department_people_mpk_id_mpk_id FOREIGN KEY (mpk_id) REFERENCES mpk(id) NOT DEFERRABLE INITIALLY IMMEDIATE;
+
+UPDATE
+	department_people
+set mpk_id = (select mpk_id from department_mpk where department_id = department_people.department_id limit 1);
+
+
+
+---------------------
+
+
+CREATE OR REPLACE FUNCTION insert_department_people_by_mpk(individualid integer, mpkName varchar(50))
+  RETURNS integer AS
+$BODY$
+DECLARE
+	mpkId int;
+	departmentId int;
+	return_id int;
+BEGIN
+	SELECT id INTO mpkId FROM mpk WHERE name = mpkName;
+
+	IF (mpkId IS NULL) THEN
+		RETURN -1;
+	END IF;
+
+	SELECT department_id INTO departmentId FROM department_mpk where mpk_id = mpkId;
+
+	IF (departmentId IS NULL) THEN
+		RETURN -2;
+	END IF;
+
+	IF NOT EXISTS (SELECT id from individual where id = individualId)
+	THEN
+		RETURN -3;
+	END IF;
+	IF EXISTS (SELECT id from department_people where department_id = departmentId and individual_id = individualId and mpk_id = mpkId limit 1)
+	THEN
+		RETURN -4;
+	END IF;
+	INSERT INTO department_people (department_id, individual_id, mpk_id) values (departmentId, individualId, mpkId) RETURNING id INTO return_id;
+    RETURN return_id;
+END$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
+
+
+select insert_department_people_by_mpk(individualId, 'mpk');
+
+----RETURN
+-1 - нет такого mpk
+-2 - нет связанного отделения
+-3 - нет individual
+-4 - такой сотрудник уже сужествует

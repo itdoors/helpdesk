@@ -39,7 +39,9 @@
  * @property integer $individual_id
  * @property string $guid
  * @property string $passport
+ * @property integer $mpk_id
  * @property Individual $Individual
+ * @property Mpk $Mpk
  * @property departments $Department
  * @property DepartmentPeoplePosition $Position
  * @property lookup $Lookup
@@ -82,7 +84,9 @@
  * @method integer                  getIndividualId()              Returns the current record's "individual_id" value
  * @method string                   getGuid()                      Returns the current record's "guid" value
  * @method string                   getPassport()                  Returns the current record's "passport" value
+ * @method integer                  getMpkId()                     Returns the current record's "mpk_id" value
  * @method Individual               getIndividual()                Returns the current record's "Individual" value
+ * @method Mpk                      getMpk()                       Returns the current record's "Mpk" value
  * @method departments              getDepartment()                Returns the current record's "Department" value
  * @method DepartmentPeoplePosition getPosition()                  Returns the current record's "Position" value
  * @method lookup                   getLookup()                    Returns the current record's "Lookup" value
@@ -124,7 +128,9 @@
  * @method DepartmentPeople         setIndividualId()              Sets the current record's "individual_id" value
  * @method DepartmentPeople         setGuid()                      Sets the current record's "guid" value
  * @method DepartmentPeople         setPassport()                  Sets the current record's "passport" value
+ * @method DepartmentPeople         setMpkId()                     Sets the current record's "mpk_id" value
  * @method DepartmentPeople         setIndividual()                Sets the current record's "Individual" value
+ * @method DepartmentPeople         setMpk()                       Sets the current record's "Mpk" value
  * @method DepartmentPeople         setDepartment()                Sets the current record's "Department" value
  * @method DepartmentPeople         setPosition()                  Sets the current record's "Position" value
  * @method DepartmentPeople         setLookup()                    Sets the current record's "Lookup" value
@@ -265,6 +271,9 @@ abstract class BaseDepartmentPeople extends sfDoctrineRecord
              'type' => 'string',
              'length' => 8,
              ));
+        $this->hasColumn('mpk_id', 'integer', null, array(
+             'type' => 'integer',
+             ));
     }
 
     public function setUp()
@@ -272,6 +281,10 @@ abstract class BaseDepartmentPeople extends sfDoctrineRecord
         parent::setUp();
         $this->hasOne('Individual', array(
              'local' => 'individual_id',
+             'foreign' => 'id'));
+
+        $this->hasOne('Mpk', array(
+             'local' => 'mpk_id',
              'foreign' => 'id'));
 
         $this->hasOne('departments as Department', array(

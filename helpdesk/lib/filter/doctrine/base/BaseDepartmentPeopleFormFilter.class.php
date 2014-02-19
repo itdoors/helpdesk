@@ -46,6 +46,7 @@ abstract class BaseDepartmentPeopleFormFilter extends BaseFormFilterDoctrine
       'individual_id'      => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Individual'), 'add_empty' => true)),
       'guid'               => new sfWidgetFormFilterInput(),
       'passport'           => new sfWidgetFormFilterInput(),
+      'mpk_id'             => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Mpk'), 'add_empty' => true)),
     ));
 
     $this->setValidators(array(
@@ -82,6 +83,7 @@ abstract class BaseDepartmentPeopleFormFilter extends BaseFormFilterDoctrine
       'individual_id'      => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Individual'), 'column' => 'id')),
       'guid'               => new sfValidatorPass(array('required' => false)),
       'passport'           => new sfValidatorPass(array('required' => false)),
+      'mpk_id'             => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Mpk'), 'column' => 'id')),
     ));
 
     $this->widgetSchema->setNameFormat('department_people_filters[%s]');
@@ -135,6 +137,7 @@ abstract class BaseDepartmentPeopleFormFilter extends BaseFormFilterDoctrine
       'individual_id'      => 'ForeignKey',
       'guid'               => 'Text',
       'passport'           => 'Text',
+      'mpk_id'             => 'ForeignKey',
     );
   }
 }

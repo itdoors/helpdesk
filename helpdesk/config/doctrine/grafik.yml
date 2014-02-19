@@ -98,11 +98,18 @@ DepartmentPeople:
       type: string(32)
     passport:
       type: string(8)
+    mpk_id:
+      type: integer
   relations:
     Individual:
       class: Individual
       foreignAlias: DepartmentPeople
       local: individual_id
+      foreign: id
+    Mpk:
+      class: Mpk
+      foreignAlias: DepartmentPeople
+      local: mpk_id
       foreign: id
     Department:
       class: departments
@@ -388,4 +395,20 @@ Salary:
     year_month:
       fields: [year, month]
       type: unique
-    
+
+Mpk:
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true
+    name:
+      type: string(50)
+    department_id:
+      type: integer
+  relations:
+    Department:
+      class: departments
+      foreignAlias: DepartmentMpk
+      local: department_id
+      foreign: id
