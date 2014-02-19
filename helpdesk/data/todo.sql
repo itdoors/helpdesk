@@ -964,12 +964,24 @@ BEGIN
 	isNew = TRUE;
 	FOR dpRow IN SELECT * FROM department_people WHERE parent_id IS NULL AND (passport IS NOT NULL or drfo IS NOT NULL)
 	LOOP
-		IF ((dpRow.drfo IS NOT NULL AND dpRow.drfo <> '') OR (dpRow.passport IS NOT NULL AND dpRow.passport <> ''))
-		THEN
-			SELECT * INTO individualRow from individual where (tin = dpRow.drfo AND tin <> '') OR (passport = dpRow.passport AND passport <> '') limit 1;
+		individualId = null;
+
+		IF (dpRow.drfo IS NOT NULL AND dpRow.drfo <> '') THEN
+			SELECT * INTO individualRow from individual where (tin = dpRow.drfo AND tin <> '') limit 1;
 
 			individualId = individualRow.id;
+		END IF;
 
+		IF (individualId IS NULL AND (dpRow.passport IS NOT NULL AND dpRow.passport <> '') AND (dpRow.drfo IS NULL OR dpRow.drfo = ''))
+		THEN
+			SELECT * INTO individualRow from individual where (passport = dpRow.passport AND passport <> '') limit 1;
+
+			individualId = individualRow.id;
+		END IF;
+
+
+		IF ((dpRow.drfo IS NOT NULL AND dpRow.drfo <> '') OR (dpRow.passport IS NOT NULL AND dpRow.passport <> ''))
+		THEN
 			IF (individualId IS NULL)
 			THEN
 				isNew = TRUE;
@@ -1419,3 +1431,7 @@ select insert_department_people_by_mpk(individualId, 'mpk');
 -4 - такой сотрудник уже сужествует
 
 -----------------EOF Function for inserting department_people for 1c
+
+--------------------Update name on department_people
+update department_people set name = last_name || ' ' || middle_name || ' ' || first_name;
+--------------------EOF Update name on department_people
