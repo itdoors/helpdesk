@@ -202,8 +202,6 @@ works:
       local: works_id
       foreign: claim_id
 
-
-      
 departments:
   columns:
     id:

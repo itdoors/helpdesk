@@ -40,7 +40,17 @@
   </script>
   <?php endif;?>
 
-  <table cellspacing="0" width="100%" class="gray" id="grafik_table">
+  <div class="Fmodel_dialog">
+    <a class="people_href"
+       data-department_id="<?php echo $department_id?>"
+       data-year="<?php echo $year?>"
+       data-month="<?php echo $month?>"
+       href="#">
+      <?php echo __('Add people')?>
+    </a>
+  </div>
+
+  <table cellspacing="0" width="100%" class="gray" id="grafik_table" data-offset="<?php echo isset($offset) ? $offset : 0 ?>">
     <thead>
       <tr>
         <th></th>
@@ -71,7 +81,7 @@
       $all_total_evening = 0;
       $all_total_night = 0;
       $all_total_holidays = 0;
-      $count = 0;
+      $count = isset($offset) ? $offset : 0;
 
       foreach ($peoples as $people): /** @var DepartmentPeople $people */
       $total = 0;
@@ -286,6 +296,13 @@
       <td><?php echo $people->getRealSalary() ? sprintf("%0.2f", $people->getRealSalary()) : '';?></td>
     </tr>
     <?php endforeach;?>
+    <?php if (sizeof($peoples) && !$isOneRowRefresh) : ?>
+      <tr class="show-more-people">
+        <td colspan="<?php echo $days_count + 11?>">
+            <a href="#" style="display: block"><?php echo __('show more')?></a>
+        </td>
+      </tr>
+    <?php endif?>
 <?php if (!$isRowRefresh): ?>
     </tbody>
     <tfoot>
@@ -307,14 +324,5 @@
     </tr>
   </tfoot>
 </table>
-
-<div class="Fmodel_dialog">
-  <a class="people_href"
-     data-department_id="<?php echo $department_id?>"
-     data-year="<?php echo $year?>"
-     data-month="<?php echo $month?>"
-     href="#">
-    <?php echo __('Add people')?>
-  </a>
-</div>
 <?php endif; // !isRowRefresh?>
+<?php unset($peoples)?>

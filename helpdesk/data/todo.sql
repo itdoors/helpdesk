@@ -945,6 +945,8 @@ GRANT USAGE, SELECT ON SEQUENCE department_people_id_seq TO "1c";
 GRANT ALL ON table department_people_month_info TO "1c";
 GRANT SELECT ON table departments TO "1c";
 GRANT USAGE, SELECT ON SEQUENCE departments_id_seq TO "1c";
+GRANT SELECT ON table mpk TO "1c";
+GRANT USAGE, SELECT ON SEQUENCE mpk_id_seq TO "1c";
 ++++++++
 
 CREATE OR REPLACE FUNCTION process_individual()
@@ -962,12 +964,24 @@ BEGIN
 	isNew = TRUE;
 	FOR dpRow IN SELECT * FROM department_people WHERE parent_id IS NULL AND (passport IS NOT NULL or drfo IS NOT NULL)
 	LOOP
-		IF ((dpRow.drfo IS NOT NULL AND dpRow.drfo <> '') OR (dpRow.passport IS NOT NULL AND dpRow.passport <> ''))
-		THEN
-			SELECT * INTO individualRow from individual where (tin = dpRow.drfo AND tin <> '') OR (passport = dpRow.passport AND passport <> '') limit 1;
+		individualId = null;
+
+		IF (dpRow.drfo IS NOT NULL AND dpRow.drfo <> '') THEN
+			SELECT * INTO individualRow from individual where (tin = dpRow.drfo AND tin <> '') limit 1;
 
 			individualId = individualRow.id;
+		END IF;
 
+		IF (individualId IS NULL AND (dpRow.passport IS NOT NULL AND dpRow.passport <> '') AND (dpRow.drfo IS NULL OR dpRow.drfo = ''))
+		THEN
+			SELECT * INTO individualRow from individual where (passport = dpRow.passport AND passport <> '') limit 1;
+
+			individualId = individualRow.id;
+		END IF;
+
+
+		IF ((dpRow.drfo IS NOT NULL AND dpRow.drfo <> '') OR (dpRow.passport IS NOT NULL AND dpRow.passport <> ''))
+		THEN
 			IF (individualId IS NULL)
 			THEN
 				isNew = TRUE;
@@ -1022,6 +1036,7 @@ END$BODY$
   LANGUAGE plpgsql VOLATILE
   COST 100;
 
+------------------------PROCESS INDIVIDUAL
 UPDATE department_people SET individual_id = null;
 ALTER TABLE department_people DROP CONSTRAINT department_people_individual_id_individual_id;
 TRUNCATE individual;
@@ -1034,22 +1049,12 @@ ALTER TABLE department_people
       REFERENCES individual (id) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION;
 
--------------------------------------------------------
+select update_department_people_by_month_info(2014, 1);
 
-SELECT
-	dp.*
-FROM
-	department_people dp
-INNER JOIN
-	department_people_month_info dpmi ON dpmi.department_people_id = dp.id
-WHERE
-	dp.parent_id IS NULL AND
-	((dp.drfo IS NULL OR dp.drfo = '') AND (dp.passport IS NULL OR dp.passport = '')) AND
-	dpmi.year = 2014 AND
-	dpmi.month = 1;
+------------------------EOF PROCESS INDIVIDUAL
 
 
--------------------------------------
+-------------------------------------DELETE DEPARTMENT
 
 CREATE OR REPLACE FUNCTION delete_department(oldId int, newId int)
   RETURNS void AS
@@ -1128,9 +1133,7 @@ BEGIN;
 	select delete_department(606, 646);
 COMMIT;
 
-
-
-----------------------------------------------------------------
+-------------------------------------EOF DELETE DEPARTMENT
 
 CREATE OR REPLACE FUNCTION update_department_people_by_month_info(paramYear int, paramMonth int)
   RETURNS void AS
@@ -1323,3 +1326,111 @@ END$BODY$
 BEGIN;
 	select department_people_to_other_department(606, 646);
 COMMIT;
+
+---------------------------
+
+CREATE TABLE mpk (id BIGSERIAL, name VARCHAR(50), PRIMARY KEY(id));
+CREATE TABLE department_mpk (department_id BIGINT, mpk_id BIGINT, PRIMARY KEY(department_id, mpk_id));
+ALTER TABLE department_mpk ADD CONSTRAINT department_mpk_mpk_id_mpk_id FOREIGN KEY (mpk_id) REFERENCES mpk(id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE department_mpk ADD CONSTRAINT department_mpk_department_id_departments_id FOREIGN KEY (department_id) REFERENCES departments(id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE;
+
+-----------------------
+
+--------------------- insert mpk table & dependencies
+
+update department_people set mpk_id = null;
+
+ALTER TABLE department_people DROP CONSTRAINT department_people_mpk_id_mpk_id;
+
+DROP TABLE IF EXISTS department_mpk;
+DROP TABLE IF EXISTS mpk;
+
+CREATE TABLE mpk (id BIGSERIAL, name VARCHAR(50) UNIQUE, department_id BIGINT, PRIMARY KEY(id));
+
+ALTER TABLE department_people
+  ADD CONSTRAINT department_people_mpk_id_mpk_id FOREIGN KEY (mpk_id)
+      REFERENCES mpk (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION;
+
+ALTER TABLE mpk ADD CONSTRAINT mpk_department_id_departments_id FOREIGN KEY (department_id) REFERENCES departments(id) NOT DEFERRABLE INITIALLY IMMEDIATE;
+
+GRANT SELECT ON table mpk TO "1c";
+GRANT USAGE, SELECT ON SEQUENCE mpk_id_seq TO "1c";
+
+CREATE OR REPLACE FUNCTION process_department_mpk()
+  RETURNS integer AS
+$BODY$
+DECLARE
+	dRow departments%ROWTYPE;
+	totalCount int;
+BEGIN
+	totalCount = 0;
+	FOR dRow IN SELECT * FROM departments where status_id <> 2
+	LOOP
+		IF NOT EXISTS (SELECT * FROM mpk where name = dRow.mpk) THEN
+			INSERT INTO mpk (department_id, name) VALUES (dRow.id, dRow.mpk);
+			totalCount = totalCount + 1;
+		END IF;
+	END LOOP;
+	RETURN totalCount;
+END$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
+
+select process_department_mpk();
+
+UPDATE
+	department_people
+set mpk_id = (select id from mpk where department_id = department_people.department_id limit 1);
+
+------------EOF insert mpk table & dependencies
+
+-----------------Function for inserting department_people for 1c
+
+CREATE OR REPLACE FUNCTION insert_department_people_by_mpk(individualid integer, mpkName varchar(50))
+  RETURNS integer AS
+$BODY$
+DECLARE
+	mpkId int;
+	departmentId int;
+	return_id int;
+BEGIN
+	SELECT id INTO mpkId FROM mpk WHERE name = mpkName;
+
+	IF (mpkId IS NULL) THEN
+		RETURN -1;
+	END IF;
+
+	SELECT department_id INTO departmentId FROM mpk where id = mpkId;
+
+	IF (departmentId IS NULL) THEN
+		RETURN -2;
+	END IF;
+
+	IF NOT EXISTS (SELECT id from individual where id = individualId)
+	THEN
+		RETURN -3;
+	END IF;
+	IF EXISTS (SELECT id from department_people where department_id = departmentId and individual_id = individualId and mpk_id = mpkId limit 1)
+	THEN
+		RETURN -4;
+	END IF;
+	INSERT INTO department_people (department_id, individual_id, mpk_id) values (departmentId, individualId, mpkId) RETURNING id INTO return_id;
+    RETURN return_id;
+END$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
+
+select insert_department_people_by_mpk(individualId, 'mpk');
+
+----RETURN
+-1 - нет такого mpk
+-2 - нет связанного отделения
+-3 - нет individual
+-4 - такой сотрудник уже сужествует
+
+-----------------EOF Function for inserting department_people for 1c
+
+--------------------Update name on department_people
+update department_people set name = last_name || ' ' || middle_name || ' ' || first_name;
+--------------------EOF Update name on department_people

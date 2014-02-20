@@ -28,6 +28,16 @@ class DepartmentPeopleTable extends Doctrine_Table
       return array();
     }
 
+    return self::getPeopleByIds($peopleIds, $year, $month, $departmentPeopleId, $departmentPeopleReplacementId);
+  }
+
+  static public function getPeopleByIds($peopleIds, $year, $month, $departmentPeopleId = null, $departmentPeopleReplacementId = null)
+  {
+    if (!sizeof($peopleIds))
+    {
+      return array();
+    }
+
     /** @var Doctrine_Collection $query */
     $query = self::getInstance()
       ->createQuery('dp')

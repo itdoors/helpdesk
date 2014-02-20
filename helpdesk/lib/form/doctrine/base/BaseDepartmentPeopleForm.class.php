@@ -49,6 +49,7 @@ abstract class BaseDepartmentPeopleForm extends BaseFormDoctrine
       'individual_id'      => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Individual'), 'add_empty' => true)),
       'guid'               => new sfWidgetFormInputText(),
       'passport'           => new sfWidgetFormInputText(),
+      'mpk_id'             => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Mpk'), 'add_empty' => true)),
     ));
 
     $this->setValidators(array(
@@ -86,6 +87,7 @@ abstract class BaseDepartmentPeopleForm extends BaseFormDoctrine
       'individual_id'      => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Individual'), 'required' => false)),
       'guid'               => new sfValidatorString(array('max_length' => 32, 'required' => false)),
       'passport'           => new sfValidatorString(array('max_length' => 8, 'required' => false)),
+      'mpk_id'             => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Mpk'), 'required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('department_people[%s]');

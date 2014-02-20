@@ -74,9 +74,9 @@ abstract class BaseIndividual extends sfDoctrineRecord
         $this->hasColumn('birthday', 'date', null, array(
              'type' => 'date',
              ));
-        $this->hasColumn('tin', 'string', 12, array(
+        $this->hasColumn('tin', 'string', 24, array(
              'type' => 'string',
-             'length' => 12,
+             'length' => 24,
              ));
         $this->hasColumn('passport', 'string', 8, array(
              'type' => 'string',

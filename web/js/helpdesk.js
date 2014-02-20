@@ -897,7 +897,9 @@ function updateGrafikRow(targetRowId)
 
 function updateTotalHours()
 {
-  var targetTable = $('#grafik_table');
+  // Temporary hack
+  return false;
+  /*var targetTable = $('#grafik_table');
 
   var target = $('#grafik-table-total-info');
 
@@ -919,7 +921,7 @@ function updateTotalHours()
 
   var value = '' + total + '(' + totalDays + '/' + totalEvening + '/' + totalNight + '/' + totalHolidays + ')';
 
-  target.html(target.data('text') + ': ' + value);
+  target.html(target.data('text') + ': ' + value);*/
 }
 
 function deleteSelector(selectorId)

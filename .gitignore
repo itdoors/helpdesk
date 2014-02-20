@@ -6,7 +6,7 @@ web/uploads/*,
 .idea/*
 helpdesk/config/databases.yml
 helpdesk/config/ProjectConfiguration.class.php
-helpdesk/config/prope.ini
+helpdesk/config/propel.ini
 data/sql/*
 lib/filter/doctrine/base/Base*
 lib/filter/doctrine/*Plugin/base/Base*
