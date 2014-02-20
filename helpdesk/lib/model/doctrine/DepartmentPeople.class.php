@@ -70,7 +70,7 @@ class DepartmentPeople extends BaseDepartmentPeople
       return $this->getLastName() . ' ' . $this->getFirstName() . ' ' . $this->getMiddleName();
     }
 
-    return $this->getName();
+    return (string) $this->getName();
   }
 
   /**
