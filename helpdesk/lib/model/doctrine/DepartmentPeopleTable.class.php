@@ -21,8 +21,6 @@ class DepartmentPeopleTable extends Doctrine_Table
   {
     $peopleIds = GrafikTable::getPeopleIds($departmentIds, $year, $month, $departmentPeopleId, $departmentPeopleReplacementId);
 
-    $individualIds = DepartmentPeopleTable::getIndividualIds($peopleIds);
-
     if (!sizeof($peopleIds))
     {
       return array();
@@ -37,6 +35,8 @@ class DepartmentPeopleTable extends Doctrine_Table
     {
       return array();
     }
+
+    $individualIds = DepartmentPeopleTable::getIndividualIds($peopleIds);
 
     /** @var Doctrine_Collection $query */
     $query = self::getInstance()
