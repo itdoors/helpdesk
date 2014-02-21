@@ -99,7 +99,14 @@ class DepartmentPeople extends BaseDepartmentPeople
 
     if ($individualInfo->getLastName() || $individualInfo->getFirstName() || $individualInfo->getMiddleName())
     {
-      return $individualInfo->getLastName() . ' ' . $individualInfo->getFirstName() . ' ' . $individualInfo->getMiddleName();
+      $mpk = $this->getMpk();
+
+      $mpk = $mpk ? ' ('.$mpk.')' : '';
+
+      return  $individualInfo->getLastName() . ' ' .
+              $individualInfo->getFirstName() . ' ' .
+              $individualInfo->getMiddleName() .
+              $mpk;
     }
 
     return __('No individual data');
