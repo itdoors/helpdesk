@@ -1434,3 +1434,81 @@ select insert_department_people_by_mpk(individualId, 'mpk');
 --------------------Update name on department_people
 update department_people set name = last_name || ' ' || middle_name || ' ' || first_name;
 --------------------EOF Update name on department_people
+
+
+
+--------------------------DEV_GRAFIK
+
+GRANT USAGE ON SCHEMA public to "1c";
+GRANT SELECT ON table individual TO "1c";
+GRANT USAGE, SELECT ON SEQUENCE individual_id_seq TO "1c";
+GRANT USAGE, SELECT ON SEQUENCE individual_id_seq TO "1c";
+GRANT ALL ON table department_people TO "1c";
+GRANT USAGE, SELECT ON SEQUENCE department_people_id_seq TO "1c";
+GRANT ALL ON table department_people_month_info TO "1c";
+GRANT SELECT ON table departments TO "1c";
+GRANT USAGE, SELECT ON SEQUENCE departments_id_seq TO "1c";
+GRANT SELECT ON table mpk TO "1c";
+GRANT USAGE, SELECT ON SEQUENCE mpk_id_seq TO "1c";
+GRANT SELECT ON table department_people_month_info TO "1c";
+
+
+UPDATE department_people SET individual_id = null;
+ALTER TABLE department_people DROP CONSTRAINT department_people_individual_id_individual_id;
+TRUNCATE individual;
+SELECT setval('individual_id_seq', 1);
+select process_individual();
+SELECT setval('individual_id_seq', (SELECT MAX(id) FROM individual));
+
+ALTER TABLE department_people
+  ADD CONSTRAINT department_people_individual_id_individual_id FOREIGN KEY (individual_id)
+      REFERENCES individual (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION;
+
+select update_department_people_by_month_info(2014, 1);
+
+update department_people set mpk_id = null;
+
+ALTER TABLE department_people DROP CONSTRAINT department_people_mpk_id_mpk_id;
+
+DROP TABLE IF EXISTS department_mpk;
+DROP TABLE IF EXISTS mpk;
+
+CREATE TABLE mpk (id BIGSERIAL, name VARCHAR(50) UNIQUE, department_id BIGINT, PRIMARY KEY(id));
+
+ALTER TABLE department_people
+  ADD CONSTRAINT department_people_mpk_id_mpk_id FOREIGN KEY (mpk_id)
+      REFERENCES mpk (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION;
+
+ALTER TABLE mpk ADD CONSTRAINT mpk_department_id_departments_id FOREIGN KEY (department_id) REFERENCES departments(id) NOT DEFERRABLE INITIALLY IMMEDIATE;
+
+GRANT SELECT ON table mpk TO "1c";
+GRANT USAGE, SELECT ON SEQUENCE mpk_id_seq TO "1c";
+
+CREATE OR REPLACE FUNCTION process_department_mpk()
+  RETURNS integer AS
+$BODY$
+DECLARE
+	dRow departments%ROWTYPE;
+	totalCount int;
+BEGIN
+	totalCount = 0;
+	FOR dRow IN SELECT * FROM departments where status_id <> 2
+	LOOP
+		IF NOT EXISTS (SELECT * FROM mpk where name = dRow.mpk) THEN
+			INSERT INTO mpk (department_id, name) VALUES (dRow.id, dRow.mpk);
+			totalCount = totalCount + 1;
+		END IF;
+	END LOOP;
+	RETURN totalCount;
+END$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
+
+select process_department_mpk();
+
+UPDATE
+	department_people
+set mpk_id = (select id from mpk where department_id = department_people.department_id limit 1);
+--------------------------EOF DEV_GRAFIK

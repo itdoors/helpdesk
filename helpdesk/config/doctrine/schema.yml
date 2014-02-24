@@ -1213,3 +1213,18 @@ District:
       local: region_id
       foreign: id
    
+HelpdeskGuid:
+  columns:
+    helpdesk_name:
+      primary: true
+      type: string(50)
+      notnull: true
+    helpdesk_id:
+      primary: true
+      type: integer
+      notnull: true
+    guid:
+      primary: true
+      type: string(50)
+      notnull: true
+
