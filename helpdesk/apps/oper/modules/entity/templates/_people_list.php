@@ -27,16 +27,11 @@
        </a>
   <?php endif;?>
 
-  <?php if (sizeof($peoples) > 10) : ?>
+  <?php if (!$isRowRefresh) : ?>
   <script type="text/javascript">
-    $(document).ready(function(){
-      var oTableGrafik = $('#grafik_table').dataTable({
-        sDom: 't',
-        bSort: false,
-        iDisplayLength: -1
-      });
-      new FixedHeader( oTableGrafik );
-    });
+
+    $('#grafik_table').fixedtableheader();
+
   </script>
   <?php endif;?>
 
@@ -50,8 +45,8 @@
     </a>
   </div>
 
-  <table cellspacing="0" width="100%" class="gray" id="grafik_table" data-offset="<?php echo isset($offset) ? $offset : 0 ?>">
-    <thead>
+  <table cellspacing="0" width="100%" class="gray entries" id="grafik_table" data-offset="<?php echo isset($offset) ? $offset : 0 ?>">
+    <thead >
       <tr>
         <th></th>
         <th></th>

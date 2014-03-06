@@ -319,3 +319,7 @@ div#organization_duplicate{
   position: absolute;
   top: 55px;
 }
+
+table.entries {}
+table.entries thead.fixed { position:fixed;top:0; }
+table.entries thead.absolute { position:absolute; }

@@ -1452,6 +1452,10 @@ GRANT SELECT ON table mpk TO "1c";
 GRANT USAGE, SELECT ON SEQUENCE mpk_id_seq TO "1c";
 GRANT SELECT ON table department_people_month_info TO "1c";
 
+GRANT SELECT ON table department_people_position TO "1c";
+GRANT USAGE, SELECT ON SEQUENCE department_people_position_id_seq TO "1c";
+GRANT SELECT ON table helpdesk_guid TO "1c";
+
 
 UPDATE department_people SET individual_id = null;
 ALTER TABLE department_people DROP CONSTRAINT department_people_individual_id_individual_id;

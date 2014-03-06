@@ -1225,6 +1225,6 @@ HelpdeskGuid:
       notnull: true
     guid:
       primary: true
-      type: string(50)
+      type: string(32)
       notnull: true
 
