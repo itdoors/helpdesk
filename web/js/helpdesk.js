@@ -897,9 +897,9 @@ function updateGrafikRow(targetRowId)
 
 function updateTotalHours()
 {
-  // Temporary hack
-  return false;
-  /*var targetTable = $('#grafik_table');
+  //return false;
+
+  var targetTable = $('#grafik_table');
 
   var target = $('#grafik-table-total-info');
 
@@ -911,17 +911,41 @@ function updateTotalHours()
   var totalNight = 0;
   var totalHolidays = 0;
 
+  //Not Officially
+  var totalNotOfficially = 0;
+  var totalDaysNotOfficially = 0;
+  var totalEveningNotOfficially = 0;
+  var totalNightNotOfficially = 0;
+
   targetRows.each(function(index){
     total += $(this).data('total');
     totalDays += $(this).data('total-days');
     totalEvening += $(this).data('total-evening');
     totalNight += $(this).data('total-night');
     totalHolidays += $(this).data('total-holidays');
+
+    totalNotOfficially += $(this).data('total_not_officially');
+    totalDaysNotOfficially += $(this).data('total-days_not_officially');
+    totalEveningNotOfficially += $(this).data('total-evening_not_officially');
+    totalNightNotOfficially += $(this).data('total-night_not_officially');
   });
 
-  var value = '' + total + '(' + totalDays + '/' + totalEvening + '/' + totalNight + '/' + totalHolidays + ')';
+  var monthTotal = total + totalNotOfficially;
+  var monthTotalDay = totalDays + totalDaysNotOfficially;
+  var monthTotalEvening = totalEvening + totalEveningNotOfficially;
+  var monthTotalNight = totalNight + totalNightNotOfficially;
 
-  target.html(target.data('text') + ': ' + value);*/
+  var value = '<span style="color: #008200">' +
+                total.toFixed(2) + ' (' + totalDays + '/' + totalEvening + '/' + totalNight + '/' + totalHolidays + ')' +
+              '</span>' + ' / ' +
+              '<span style="color: #3366FF">' +
+                totalNotOfficially.toFixed(2) + ' (' + totalDaysNotOfficially + '/' + totalEveningNotOfficially + '/' + totalNightNotOfficially + ')' +
+              '</span>' + ' / '+
+              '<span>' +
+                monthTotal.toFixed(2) + ' (' + monthTotalDay + '/' + monthTotalEvening + '/' + monthTotalNight + '/' + totalHolidays + ')' +
+              '</span>';
+
+  target.html(target.data('text') + ': ' + value);
 }
 
 function deleteSelector(selectorId)

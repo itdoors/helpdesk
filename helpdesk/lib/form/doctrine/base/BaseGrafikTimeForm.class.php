@@ -24,10 +24,15 @@ abstract class BaseGrafikTimeForm extends BaseFormDoctrine
       'department_people_replacement_id' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('DepartmentPeopleReplacement'), 'add_empty' => false)),
       'from_time'                        => new sfWidgetFormTime(),
       'to_time'                          => new sfWidgetFormTime(),
+      'not_officially'                   => new sfWidgetFormInputCheckbox(),
       'total'                            => new sfWidgetFormInputText(),
       'total_day'                        => new sfWidgetFormInputText(),
       'total_evening'                    => new sfWidgetFormInputText(),
       'total_night'                      => new sfWidgetFormInputText(),
+      'total_not_officially'             => new sfWidgetFormInputText(),
+      'total_day_not_officially'         => new sfWidgetFormInputText(),
+      'total_evening_not_officially'     => new sfWidgetFormInputText(),
+      'total_night_not_officially'       => new sfWidgetFormInputText(),
     ));
 
     $this->setValidators(array(
@@ -40,10 +45,15 @@ abstract class BaseGrafikTimeForm extends BaseFormDoctrine
       'department_people_replacement_id' => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('DepartmentPeopleReplacement'), 'required' => false)),
       'from_time'                        => new sfValidatorTime(array('required' => false)),
       'to_time'                          => new sfValidatorTime(array('required' => false)),
+      'not_officially'                   => new sfValidatorBoolean(array('required' => false)),
       'total'                            => new sfValidatorNumber(array('required' => false)),
       'total_day'                        => new sfValidatorNumber(array('required' => false)),
       'total_evening'                    => new sfValidatorNumber(array('required' => false)),
       'total_night'                      => new sfValidatorNumber(array('required' => false)),
+      'total_not_officially'             => new sfValidatorNumber(array('required' => false)),
+      'total_day_not_officially'         => new sfValidatorNumber(array('required' => false)),
+      'total_evening_not_officially'     => new sfValidatorNumber(array('required' => false)),
+      'total_night_not_officially'       => new sfValidatorNumber(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('grafik_time[%s]');

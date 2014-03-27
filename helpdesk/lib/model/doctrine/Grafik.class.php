@@ -423,9 +423,13 @@ class Grafik extends BaseGrafik
           is_vacation,
           total_day,
           total_evening,
-          total_night)'*/
+          total_night,
+          total_not_officially,
+          total_day_not_officially,
+          total_evening_not_officially,
+          total_night_not_officially)'*/
 
-    $pattern = '(%d, %d, %d, %d, %d, %d, %f, %s, %s, %s, %s, %f, %f, %f)';
+    $pattern = '(%d, %d, %d, %d, %d, %d, %f, %s, %s, %s, %s, %f, %f, %f, %f, %f, %f, %f)';
 
     $workDaysInNextMonth = self::getWorkDaysInTheMonth($nextYear, $nextMonth);
 
@@ -458,6 +462,12 @@ class Grafik extends BaseGrafik
       $dataIsFired = $prevDayData->getIsFired() ? 'true' : 'false';
       $dataIsVacation = $prevDayData->getIsVacation() ? 'true' : 'false';
 
+      //Not Officially
+      $dataTotalNotOfficially= $prevDayData->getTotalNotOfficially();
+      $dataTotalDayNotOfficially = $prevDayData->getTotalDayNotOfficially();
+      $dataTotalEveningNotOfficially = $prevDayData->getTotalEveningNotOfficially();
+      $dataTotalNightNotOfficially = $prevDayData->getTotalNightNotOfficially();
+
       $return[] = sprintf($pattern,
         $nextYear,
         $nextMonth,
@@ -472,7 +482,11 @@ class Grafik extends BaseGrafik
         $dataIsVacation,
         $dataTotalDay,
         $dataTotalEvening,
-        $dataTotalNight
+        $dataTotalNight,
+        $dataTotalNotOfficially,
+        $dataTotalDayNotOfficially,
+        $dataTotalEveningNotOfficially,
+        $dataTotalNightNotOfficially
       );
     }
 
@@ -513,12 +527,17 @@ class Grafik extends BaseGrafik
           day,
           from_time,
           to_time,
+          not_official,
+          total,
+          total_day,
+          total_evening,
+          total_night,
           total,
           total_day,
           total_evening,
           total_night)'*/
 
-    $pattern = "(%d, %d, %d, %d, %d, %d, '%s', '%s', %f, %f, %f, %f)";
+    $pattern = "(%d, %d, %d, %d, %d, %d, '%s', '%s', %s, %f, %f, %f, %f, %f, %f, %f, %f)";
 
     $workDaysInNextMonth = self::getWorkDaysInTheMonth($nextYear, $nextMonth);
 
@@ -552,6 +571,13 @@ class Grafik extends BaseGrafik
         $dataTotalEvening = $prevDayData->getTotalEvening();
         $dataTotalNight = $prevDayData->getTotalNight();
 
+        //Not Officially
+        $dataNotOfficially= $prevDayData->getNotOfficially() ? 'true' : 'false';
+        $dataTotalNotOfficially= $prevDayData->getTotalNotOfficially();
+        $dataTotalDayNotOfficially = $prevDayData->getTotalDayNotOfficially();
+        $dataTotalEveningNotOfficially = $prevDayData->getTotalEveningNotOfficially();
+        $dataTotalNightNotOfficially = $prevDayData->getTotalNightNotOfficially();
+
         $return[] = sprintf($pattern,
           $nextYear,
           $nextMonth,
@@ -561,10 +587,15 @@ class Grafik extends BaseGrafik
           $day,
           $dataFromTime,
           $dataToTime,
+          $dataNotOfficially,
           $dataTotal,
           $dataTotalDay,
           $dataTotalEvening,
-          $dataTotalNight
+          $dataTotalNight,
+          $dataTotalNotOfficially,
+          $dataTotalDayNotOfficially,
+          $dataTotalEveningNotOfficially,
+          $dataTotalNightNotOfficially
         );
       }
     }
@@ -723,7 +754,11 @@ class Grafik extends BaseGrafik
           is_vacation,
           total_day,
           total_evening,
-          total_night
+          total_night,
+          total_not_officially,
+          total_day_not_officially,
+          total_evening_not_officially,
+          total_night_not_officially
         )
         VALUES ";
 
@@ -753,10 +788,15 @@ class Grafik extends BaseGrafik
           day,
           from_time,
           to_time,
+          not_officially,
           total,
           total_day,
           total_evening,
-          total_night
+          total_night,
+          total_not_officially,
+          total_day_not_officially,
+          total_evening_not_officially,
+          total_night_not_officially
         )
         VALUES ";
 
@@ -1272,9 +1312,14 @@ class Grafik extends BaseGrafik
     $totalDay = 0;
     $totalEvening = 0;
     $totalNight = 0;
+    $totalNotOfficially = 0;
+    $totalDayNotOfficially = 0;
+    $totalEveningNotOfficially = 0;
+    $totalNightNotOfficially = 0;
 
     $grafikTimes = Grafik::getGrafikTimes($params);
 
+    /** @var GrafikTime[] $grafikTimes*/
     foreach ($grafikTimes as $grafikTime)
     {
       $total += $grafikTime->getResult();
@@ -1282,12 +1327,24 @@ class Grafik extends BaseGrafik
       $totalEvening += $grafikTime->getTotalEvening();
       $totalNight += $grafikTime->getTotalNight();
 
+      // Not Officially
+      $totalNotOfficially += $grafikTime->getTotalNotOfficially();
+      $totalDayNotOfficially += $grafikTime->getTotalDayNotOfficially();
+      $totalEveningNotOfficially += $grafikTime->getTotalEveningNotOfficially();
+      $totalNightNotOfficially += $grafikTime->getTotalNightNotOfficially();
     }
 
     $this->setTotal($total);
     $this->setTotalDay($totalDay);
     $this->setTotalEvening($totalEvening);
     $this->setTotalNight($totalNight);
+
+    // Not Officially
+    $this->setTotalNotOfficially($totalNotOfficially);
+    $this->setTotalDayNotOfficially($totalDayNotOfficially);
+    $this->setTotalEveningNotOfficially($totalEveningNotOfficially);
+    $this->setTotalNightNotOfficially($totalNightNotOfficially);
+
     $this->save();
   }
 

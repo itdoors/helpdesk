@@ -1516,3 +1516,20 @@ UPDATE
 	department_people
 set mpk_id = (select id from mpk where department_id = department_people.department_id limit 1);
 --------------------------EOF DEV_GRAFIK
+
+
+----- GRAFIK NOT OFFICIALLY
+ALTER TABLE grafik ADD COLUMN total_not_officially double precision;
+ALTER TABLE grafik ADD COLUMN total_day_not_officially double precision;
+ALTER TABLE grafik ADD COLUMN total_evening_not_officially double precision;
+ALTER TABLE grafik ADD COLUMN total_night_not_officially double precision;
+
+ALTER TABLE grafik_time ADD COLUMN total_not_officially double precision;
+ALTER TABLE grafik_time ADD COLUMN total_day_not_officially double precision;
+ALTER TABLE grafik_time ADD COLUMN total_evening_not_officially double precision;
+ALTER TABLE grafik_time ADD COLUMN total_night_not_officially double precision;
+ALTER TABLE grafik_time ADD COLUMN not_officially boolean;
+ALTER TABLE grafik_time ALTER COLUMN not_officially SET DEFAULT false;
+
+
+----- EOF GRAFIK NOT OFFICIALLY

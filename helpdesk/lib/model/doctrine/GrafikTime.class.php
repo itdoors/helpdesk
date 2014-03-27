@@ -92,12 +92,47 @@ class GrafikTime extends BaseGrafikTime
 
     $diff = ($to_time_timestamp - $from_time_timestamp)/3600;
 
-    $this->setTotal($diff);
-    $this->setTotalDay($this->getDayHours());
-    $this->setTotalEvening($this->getEveningHours());
-    $this->setTotalNight($this->getNightHours());
+    // Not official
+    if ($this->getNotOfficially())
+    {
+      $this->setTotalNotOfficially($diff);
+      $this->setTotalDayNotOfficially($this->getDayHours());
+      $this->setTotalEveningNotOfficially($this->getEveningHours());
+      $this->setTotalNightNotOfficially($this->getNightHours());
+
+    }
+    else
+    {
+      $this->setTotal($diff);
+      $this->setTotalDay($this->getDayHours());
+      $this->setTotalEvening($this->getEveningHours());
+      $this->setTotalNight($this->getNightHours());
+    }
+
+    $this->resetDependsOnNotOfficially();
 
     $this->save();
+  }
+
+  /**
+   * If reset from officially to not officially need to be total be NULL
+   */
+  protected function resetDependsOnNotOfficially()
+  {
+    if ($this->getNotOfficially())
+    {
+      $this->setTotal(NULL);
+      $this->setTotalDay(NULL);
+      $this->setTotalEvening(NULL);
+      $this->setTotalNight(NULL);
+    }
+    else
+    {
+      $this->setTotalNotOfficially(NULL);
+      $this->setTotalDayNotOfficially(NULL);
+      $this->setTotalEveningNotOfficially(NULL);
+      $this->setTotalNightNotOfficially(NULL);
+    }
   }
 
   public function delete(Doctrine_Connection $conn = null)
@@ -109,5 +144,10 @@ class GrafikTime extends BaseGrafikTime
     parent::delete($conn);
 
     $grafik->recount();
+  }
+
+  public function isOfficially()
+  {
+    return !$this->getNotOfficially();
   }
 }

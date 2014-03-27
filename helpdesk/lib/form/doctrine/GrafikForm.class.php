@@ -108,6 +108,8 @@ class GrafikForm extends BaseGrafikForm
     /** @var Grafik $object */
     $object = parent::save();
 
+    $object->recount();
+
     if ($this->getObject()->personDoesntWork())
     {
       $params = $this->getObject()->toArray();

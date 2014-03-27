@@ -14,10 +14,15 @@
  * @property integer $department_people_replacement_id
  * @property time $from_time
  * @property time $to_time
+ * @property boolean $not_officially
  * @property float $total
  * @property float $total_day
  * @property float $total_evening
  * @property float $total_night
+ * @property float $total_not_officially
+ * @property float $total_day_not_officially
+ * @property float $total_evening_not_officially
+ * @property float $total_night_not_officially
  * @property departments $Department
  * @property DepartmentPeople $DepartmentPeople
  * @property DepartmentPeople $DepartmentPeopleReplacement
@@ -31,10 +36,15 @@
  * @method integer          getDepartmentPeopleReplacementId()    Returns the current record's "department_people_replacement_id" value
  * @method time             getFromTime()                         Returns the current record's "from_time" value
  * @method time             getToTime()                           Returns the current record's "to_time" value
+ * @method boolean          getNotOfficially()                    Returns the current record's "not_officially" value
  * @method float            getTotal()                            Returns the current record's "total" value
  * @method float            getTotalDay()                         Returns the current record's "total_day" value
  * @method float            getTotalEvening()                     Returns the current record's "total_evening" value
  * @method float            getTotalNight()                       Returns the current record's "total_night" value
+ * @method float            getTotalNotOfficially()               Returns the current record's "total_not_officially" value
+ * @method float            getTotalDayNotOfficially()            Returns the current record's "total_day_not_officially" value
+ * @method float            getTotalEveningNotOfficially()        Returns the current record's "total_evening_not_officially" value
+ * @method float            getTotalNightNotOfficially()          Returns the current record's "total_night_not_officially" value
  * @method departments      getDepartment()                       Returns the current record's "Department" value
  * @method DepartmentPeople getDepartmentPeople()                 Returns the current record's "DepartmentPeople" value
  * @method DepartmentPeople getDepartmentPeopleReplacement()      Returns the current record's "DepartmentPeopleReplacement" value
@@ -47,10 +57,15 @@
  * @method GrafikTime       setDepartmentPeopleReplacementId()    Sets the current record's "department_people_replacement_id" value
  * @method GrafikTime       setFromTime()                         Sets the current record's "from_time" value
  * @method GrafikTime       setToTime()                           Sets the current record's "to_time" value
+ * @method GrafikTime       setNotOfficially()                    Sets the current record's "not_officially" value
  * @method GrafikTime       setTotal()                            Sets the current record's "total" value
  * @method GrafikTime       setTotalDay()                         Sets the current record's "total_day" value
  * @method GrafikTime       setTotalEvening()                     Sets the current record's "total_evening" value
  * @method GrafikTime       setTotalNight()                       Sets the current record's "total_night" value
+ * @method GrafikTime       setTotalNotOfficially()               Sets the current record's "total_not_officially" value
+ * @method GrafikTime       setTotalDayNotOfficially()            Sets the current record's "total_day_not_officially" value
+ * @method GrafikTime       setTotalEveningNotOfficially()        Sets the current record's "total_evening_not_officially" value
+ * @method GrafikTime       setTotalNightNotOfficially()          Sets the current record's "total_night_not_officially" value
  * @method GrafikTime       setDepartment()                       Sets the current record's "Department" value
  * @method GrafikTime       setDepartmentPeople()                 Sets the current record's "DepartmentPeople" value
  * @method GrafikTime       setDepartmentPeopleReplacement()      Sets the current record's "DepartmentPeopleReplacement" value
@@ -101,6 +116,10 @@ abstract class BaseGrafikTime extends sfDoctrineRecord
         $this->hasColumn('to_time', 'time', null, array(
              'type' => 'time',
              ));
+        $this->hasColumn('not_officially', 'boolean', null, array(
+             'type' => 'boolean',
+             'default' => false,
+             ));
         $this->hasColumn('total', 'float', null, array(
              'type' => 'float',
              ));
@@ -111,6 +130,18 @@ abstract class BaseGrafikTime extends sfDoctrineRecord
              'type' => 'float',
              ));
         $this->hasColumn('total_night', 'float', null, array(
+             'type' => 'float',
+             ));
+        $this->hasColumn('total_not_officially', 'float', null, array(
+             'type' => 'float',
+             ));
+        $this->hasColumn('total_day_not_officially', 'float', null, array(
+             'type' => 'float',
+             ));
+        $this->hasColumn('total_evening_not_officially', 'float', null, array(
+             'type' => 'float',
+             ));
+        $this->hasColumn('total_night_not_officially', 'float', null, array(
              'type' => 'float',
              ));
     }

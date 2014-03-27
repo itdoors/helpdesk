@@ -287,6 +287,14 @@ Grafik:
       type: float
     total_night:
       type: float
+    total_not_officially:
+      type: float
+    total_day_not_officially:
+      type: float
+    total_evening_not_officially:
+      type: float
+    total_night_not_officially:
+      type: float
     is_sick:
       type: boolean
       default: false
@@ -345,6 +353,9 @@ GrafikTime:
       type: time
     to_time:
       type: time
+    not_officially:
+      type: boolean
+      default: false
     total:
       type: float
     total_day:
@@ -352,6 +363,14 @@ GrafikTime:
     total_evening:
       type: float
     total_night:
+      type: float
+    total_not_officially:
+      type: float
+    total_day_not_officially:
+      type: float
+    total_evening_not_officially:
+      type: float
+    total_night_not_officially:
       type: float
   relations:
     Department:
