@@ -14,7 +14,7 @@ default:
 
   stylesheets:    [reset.css, style.css, main.css, jquery-ui.css, default.css, /sfFormExtraPlugin/css/jquery.autocompleter.css]
 
-  javascripts:    [jquery.min.js, jquery.ui.min.js, jquery.validate.min.js, jquery.ui.i18n.ru.js, forms.js, helpdesk.js?v1.02, saveClass/DSaveStatus.js, saveClass/DSaveClaimtype.js, saveClass/DSaveDescription.js, saveClass/DSaveSDescription.js, saveClass/DSaveKurator.js, saveClass/DSaveStuff.js, saveClass/DSaveOurcosts.js, saveClass/DispatcherNew.js, jqprint.js, /js/jquery.dataTables.js, /sfFormExtraPlugin/js/jquery.autocompleter.js, /js/FixedHeader.min.js, /js/jquery.appear.js]
+  javascripts:    [jquery.min.js, jquery.ui.min.js, jquery.validate.min.js, jquery.ui.i18n.ru.js, forms.js, helpdesk.js?v1.02, saveClass/DSaveStatus.js, saveClass/DSaveClaimtype.js, saveClass/DSaveDescription.js, saveClass/DSaveSDescription.js, saveClass/DSaveKurator.js, saveClass/DSaveStuff.js, saveClass/DSaveOurcosts.js, saveClass/DispatcherNew.js, jqprint.js, /js/jquery.dataTables.js, /sfFormExtraPlugin/js/jquery.autocompleter.js, /js/FixedHeader.min.js, /js/jquery.appear.js, /js/fixedheader/jquery.fixedtableheader.min.js]
 
   has_layout:     true
   layout:         layout

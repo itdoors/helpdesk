@@ -21,10 +21,15 @@ abstract class BaseGrafikTimeFormFilter extends BaseFormFilterDoctrine
       'department_people_replacement_id' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('DepartmentPeopleReplacement'), 'add_empty' => true)),
       'from_time'                        => new sfWidgetFormFilterInput(),
       'to_time'                          => new sfWidgetFormFilterInput(),
+      'not_officially'                   => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
       'total'                            => new sfWidgetFormFilterInput(),
       'total_day'                        => new sfWidgetFormFilterInput(),
       'total_evening'                    => new sfWidgetFormFilterInput(),
       'total_night'                      => new sfWidgetFormFilterInput(),
+      'total_not_officially'             => new sfWidgetFormFilterInput(),
+      'total_day_not_officially'         => new sfWidgetFormFilterInput(),
+      'total_evening_not_officially'     => new sfWidgetFormFilterInput(),
+      'total_night_not_officially'       => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
@@ -36,10 +41,15 @@ abstract class BaseGrafikTimeFormFilter extends BaseFormFilterDoctrine
       'department_people_replacement_id' => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('DepartmentPeopleReplacement'), 'column' => 'id')),
       'from_time'                        => new sfValidatorPass(array('required' => false)),
       'to_time'                          => new sfValidatorPass(array('required' => false)),
+      'not_officially'                   => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
       'total'                            => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
       'total_day'                        => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
       'total_evening'                    => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
       'total_night'                      => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
+      'total_not_officially'             => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
+      'total_day_not_officially'         => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
+      'total_evening_not_officially'     => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
+      'total_night_not_officially'       => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
     ));
 
     $this->widgetSchema->setNameFormat('grafik_time_filters[%s]');
@@ -68,10 +78,15 @@ abstract class BaseGrafikTimeFormFilter extends BaseFormFilterDoctrine
       'department_people_replacement_id' => 'ForeignKey',
       'from_time'                        => 'Text',
       'to_time'                          => 'Text',
+      'not_officially'                   => 'Boolean',
       'total'                            => 'Number',
       'total_day'                        => 'Number',
       'total_evening'                    => 'Number',
       'total_night'                      => 'Number',
+      'total_not_officially'             => 'Number',
+      'total_day_not_officially'         => 'Number',
+      'total_evening_not_officially'     => 'Number',
+      'total_night_not_officially'       => 'Number',
     );
   }
 }

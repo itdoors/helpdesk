@@ -37,6 +37,7 @@ CREATE TABLE handling_result (id BIGSERIAL, name VARCHAR(128) NOT NULL, slug VAR
 CREATE TABLE handling_status (id BIGSERIAL, name VARCHAR(128) NOT NULL, PRIMARY KEY(id));
 CREATE TABLE handling_type (id BIGSERIAL, name VARCHAR(128) NOT NULL, slug VARCHAR(128), PRIMARY KEY(id));
 CREATE TABLE handling_user (id BIGSERIAL, handling_id BIGINT NOT NULL, user_id BIGINT NOT NULL, part BIGINT, PRIMARY KEY(id));
+CREATE TABLE helpdesk_guid (helpdesk_name VARCHAR(50), helpdesk_id BIGINT, guid VARCHAR(32), PRIMARY KEY(helpdesk_name, helpdesk_id, guid));
 CREATE TABLE history (id BIGSERIAL, model_name VARCHAR(255) NOT NULL, model_id BIGINT, user_id BIGINT, field_name VARCHAR(255), more VARCHAR(255), old_value VARCHAR(255), value VARCHAR(255), createdatetime TIMESTAMP, PRIMARY KEY(id));
 CREATE TABLE idea (id BIGSERIAL, name VARCHAR(255) NOT NULL, user_id BIGINT NOT NULL, createdatetime TIMESTAMP NOT NULL, description TEXT, result TEXT, expert_description TEXT, significance BIGINT, financial BIGINT, originality BIGINT, readiness BIGINT, PRIMARY KEY(id));
 CREATE TABLE idea_goal (id BIGSERIAL, name VARCHAR(255) NOT NULL, PRIMARY KEY(id));

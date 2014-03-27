@@ -15,28 +15,45 @@
     <td><?php echo __('Edit')?></td>
     <td><?php echo __('Delete')?></td>
   </tr>
-  <?php foreach ($grafiks as $grafik):?>
   <?php
-    $dayTotal += $grafik->getResult();
-    $dayTotalDay += $grafik->getTotalDay();
-    $dayTotalEvening += $grafik->getTotalEvening();
-    $dayTotalNight += $grafik->getTotalNight();
+  /** @var GrafikTime[] $grafiks */
+  foreach ($grafiks as $grafik):?>
+  <?php
+    $isOfficially = $grafik->isOfficially();
+
+    if ($isOfficially)
+    {
+      $dayTotal += $grafik->getResult();
+      $dayTotalDay += $grafik->getTotalDay();
+      $dayTotalEvening += $grafik->getTotalEvening();
+      $dayTotalNight += $grafik->getTotalNight();
+    }
+    else
+    {
+      $dayTotal += $grafik->getTotalNotOfficially();
+      $dayTotalDay += $grafik->getTotalDayNotOfficially();
+      $dayTotalEvening += $grafik->getTotalEveningNotOfficially();
+      $dayTotalNight += $grafik->getTotalNightNotOfficially();
+    }
+
+    // Color
+    $color = $isOfficially ? '#008200' : '#3366FF';
   ?>
-  <tr>
+  <tr style="color: <?php echo $color; ?>">
     <td>
       <?php echo $grafik->getFromTime();?> - <?php echo $grafik->getToTime();?>
     </td>
     <td>
-      <?php echo $grafik->getResult();?>
+      <?php echo $isOfficially ? $grafik->getResult() : $grafik->getTotalNotOfficially();?>
     </td>
     <td>
-      <?php echo $grafik->getTotalDay();?>
+      <?php echo $isOfficially ? $grafik->getTotalDay() : $grafik->getTotalDayNotOfficially();?>
     </td>
     <td>
-      <?php echo $grafik->getTotalEvening();?>
+      <?php echo $isOfficially ? $grafik->getTotalEvening() : $grafik->getTotalEveningNotOfficially();?>
     </td>
     <td>
-      <?php echo $grafik->getTotalNight();?>
+      <?php echo $isOfficially ?  $grafik->getTotalNight() : $grafik->getTotalNightNotOfficially();?>
     </td>
     <td>
       <a href="#" class="grafik_href"
@@ -56,8 +73,7 @@
           'parents_tag'   => 'td',
           'where'      => array(
             'id' => $grafik->getId(),
-
-            ),
+          ),
           'ref_functions' =>
             array(
               '#grafik_day_list'=>

@@ -27,16 +27,11 @@
        </a>
   <?php endif;?>
 
-  <?php if (sizeof($peoples) > 10) : ?>
+  <?php if (!$isRowRefresh) : ?>
   <script type="text/javascript">
-    $(document).ready(function(){
-      var oTableGrafik = $('#grafik_table').dataTable({
-        sDom: 't',
-        bSort: false,
-        iDisplayLength: -1
-      });
-      new FixedHeader( oTableGrafik );
-    });
+
+    $('#grafik_table').fixedtableheader();
+
   </script>
   <?php endif;?>
 
@@ -50,8 +45,8 @@
     </a>
   </div>
 
-  <table cellspacing="0" width="100%" class="gray" id="grafik_table" data-offset="<?php echo isset($offset) ? $offset : 0 ?>">
-    <thead>
+  <table cellspacing="0" width="100%" class="gray entries" id="grafik_table" data-offset="<?php echo isset($offset) ? $offset : 0 ?>">
+    <thead >
       <tr>
         <th></th>
         <th></th>
@@ -81,20 +76,33 @@
       $all_total_evening = 0;
       $all_total_night = 0;
       $all_total_holidays = 0;
+
+      // Not Officially
+      $all_total_not_officially = 0;
+      $all_total_days_not_officially = 0;
+      $all_total_evening_not_officially = 0;
+      $all_total_night_not_officially = 0;
+
       $count = isset($offset) ? $offset : 0;
 
       foreach ($peoples as $people): /** @var DepartmentPeople $people */
-      $total = 0;
-      $day_hours = 0;
-      $evening_hours = 0;
-      $night_hours = 0;
-      $count++;
-      $salary_days_count = 0;
-      $hospitalTill5 = 0;
-      $hospitalAfter5 = 0;
-      $vacation = 0;
-      $hoursHolidays = 0;
-      $keyRow = $year.'-'.$month.'-'.$department_id.'-'.$people->getId().'-'.$people->getReplacementId();
+        $total = 0;
+        $day_hours = 0;
+        $evening_hours = 0;
+        $night_hours = 0;
+
+        $total_not_officially = 0;
+        $day_hours_not_officially = 0;
+        $evening_hours_not_officially = 0;
+        $night_hours_not_officially = 0;
+
+        $count++;
+        $salary_days_count = 0;
+        $hospitalTill5 = 0;
+        $hospitalAfter5 = 0;
+        $vacation = 0;
+        $hoursHolidays = 0;
+        $keyRow = $year.'-'.$month.'-'.$department_id.'-'.$people->getId().'-'.$people->getReplacementId();
     ?>
     <tr id="<?php echo $keyRow?>"
         data-department_people_replacement_id = "<?php echo $people->getReplacementId()?>"
@@ -105,7 +113,7 @@
         <a href="#" class="people_href" data-id="<?php echo $people->getId()?>"
          data-replacement_id = "<?php echo $people->getReplacementId()?>"
          data-key-row = "#<?php echo $keyRow?>"
-         <?php if ($people->getParentId()) : ?>style="background-color: red"<?php endif;?>
+         <?php if ($people->getParentId()) : ?>style="background-color: #dda6a6"<?php endif;?>
         >
           <?php echo $people?>
         </a>
@@ -124,7 +132,7 @@
        }
 
        ?>
-        <td <?php if ($is_weekend) : ?>style="background-color: red"<?php endif;?>>
+        <td <?php if ($is_weekend) : ?>style="background-color: #dda6a6"<?php endif;?>>
           <?php //if ( $canEdit && $year == date('Y') && $month >= intval(date('n')-1)):?>
           <?php if ( $canEdit ):?>
           <?php //if ( $canEdit && Grafik::canCopyToNextMonth($year, $month) ):?>
@@ -137,15 +145,16 @@
             <?php
               $key = $year.'-'.$month.'-'.$day.'-'.$department_id.'-'.$people->getId().'-'.$people->getReplacementId();
             if (isset($grafik[$key])) : ?>
-              <?php  /*$result = Grafik::getTotalResultByGrafikArray($grafik[$key]);
-                     $day_hours = Grafik::getTotalDayHoursByGrafikArray($grafik[$key]);
-                     $evening_hours = Grafik::getTotalEveningHoursByGrafikArray($grafik[$key]);
-                     $night_hours = Grafik::getTotalNightHoursByGrafikArray($grafik[$key]);*/
+              <?php
 
+              /** @var Grafik $grafikKey */
+              $grafikKey = $grafik[$key];
               //todo delete before production
-              $result = $grafik[$key]->getResult() ? $grafik[$key]->getResult() : '-';
+              $result = $grafikKey->getResult() ? $grafikKey->getResult() : '-';
+              $resultNotOfficially = $grafikKey->getTotalNotOfficially() ? $grafikKey->getTotalNotOfficially() : '-';
 
               $total += floatval($result);
+              $total_not_officially += floatval($grafikKey->getTotalNotOfficially());
               if (floatval($result))
               {
                 $salary_days_count++;
@@ -157,13 +166,17 @@
               }
               else
               {
-                $day_hours += $grafik[$key]->getTotalDay();
-                $evening_hours += $grafik[$key]->getTotalEvening();
-                $night_hours += $grafik[$key]->getTotalNight();
+                $day_hours += $grafikKey->getTotalDay();
+                $evening_hours += $grafikKey->getTotalEvening();
+                $night_hours += $grafikKey->getTotalNight();
+
+                $day_hours_not_officially += $grafikKey->getTotalDayNotOfficially();
+                $evening_hours_not_officially += $grafikKey->getTotalEveningNotOfficially();
+                $night_hours_not_officially += $grafikKey->getTotalNightNotOfficially();
               }
 
               //hospital
-              if ($grafik[$key]->isHospital() && !$is_weekend)
+              if ($grafikKey->isHospital() && !$is_weekend)
               {
                 if ($hospitalTill5 < 5)
                 {
@@ -175,12 +188,20 @@
                 }
               }
               //vacation
-              if ($grafik[$key]->isVacation())
+              if ($grafikKey->isVacation())
               {
                 $vacation++;
               }
               ?>
-              <?php echo floatval($result) ? sprintf("%0.2f", $result) : $result?>
+              <span style="color:#008200">
+                <?php echo floatval($result) ? sprintf("%0.2f", $result) : $result?>
+              </span>
+              <span style="color: #3366FF">
+              <?php
+                // Not Officially
+                echo floatval($resultNotOfficially) && $resultNotOfficially != 0 ?
+                    sprintf("%0.2f", $resultNotOfficially) : '' ?>
+              </span>
             <?php else : ?>
               <?php echo '-'?>
             <?php endif;?>
@@ -265,16 +286,47 @@
         data-total-days = "<?php echo $day_hours?>"
         data-total-evening = "<?php echo $evening_hours?>"
         data-total-night = "<?php echo $night_hours?>"
+        data-total_not_officially = "<?php echo $total_not_officially?>"
+        data-total-days_not_officially = "<?php echo $day_hours_not_officially?>"
+        data-total-evening_not_officially = "<?php echo $evening_hours_not_officially?>"
+        data-total-night_not_officially = "<?php echo $night_hours_not_officially?>"
         data-total-holidays = "<?php echo $hoursHolidays?>"
       ><?php
         $all_total += $total;
         $all_total_days += $day_hours;
         $all_total_evening += $evening_hours;
         $all_total_night += $night_hours;
-        $all_total_holidays += $hoursHolidays;
-        echo $total ? sprintf("%0.2f", $total) : '-';
-        echo $total ? '('.$day_hours.'/'.$evening_hours.'/'.$night_hours . '/' . $hoursHolidays .')' : '';
-        ?>
+
+        // Not Officially
+        $all_total_not_officially += $total_not_officially;
+        $all_total_days_not_officially += $day_hours_not_officially;
+        $all_total_evening_not_officially += $evening_hours_not_officially;
+        $all_total_night_not_officially += $night_hours_not_officially;
+
+        $all_total_holidays += $hoursHolidays;?>
+        <span style="color:#008200">
+        <?php
+          echo $total ? sprintf("%0.2f", $total) : '-';
+          echo $total ? '('.$day_hours.'/'.$evening_hours.'/'.$night_hours . '/' . $hoursHolidays .')' : '';
+        ?></span>
+        <span style="color: #3366FF">
+        <?php
+          // Not Officially
+          echo $total_not_officially ? sprintf("%0.2f", $total_not_officially) : '';
+          echo $total_not_officially ? '('.$day_hours_not_officially.'/'.$evening_hours_not_officially.'/'.$night_hours_not_officially.')' : '';
+        ?></span>
+        <span>
+        <?php
+        // Not Officially
+        $monthTotal = $total_not_officially + $total;
+        $monthTotalDay = $day_hours_not_officially + $day_hours;
+        $monthTotalEvening = $evening_hours_not_officially + $evening_hours;
+        $monthTotalNight = $night_hours_not_officially + $night_hours;
+        echo $monthTotal ? sprintf("%0.2f", $monthTotal) : '';
+        echo  $monthTotal ?
+              '('. $monthTotalDay .'/'.$monthTotalEvening.'/'. $monthTotalNight . '/'. $hoursHolidays .')' :
+              '';
+        ?></span>
       </td>
       <td><?php echo $people->getSalary()?></td>
       <td><?php
@@ -315,10 +367,27 @@
       <td></td>
       <td colspan="8" data-text="<?php echo __('Total by month')?>" id="grafik-table-total-info">
         <?php echo __('Total by month')?>:
-          <?php
+        <span style="color:#008200">
+        <?php
             echo $all_total ? sprintf("%0.2f", $all_total) : '-';
-            echo $all_total ? '('.$all_total_days.'/'.$all_total_evening.'/'.$all_total_night.'/'.$all_total_holidays.')' : '-'
+            echo $all_total ? '('.$all_total_days.'/'.$all_total_evening.'/'.$all_total_night.'/'.$all_total_holidays.')' : '-';
           ?>
+        </span>
+        /<span style="color: #3366FF">
+        <?php
+            // Not officially
+            echo $all_total_not_officially ? sprintf("%0.2f", $all_total_not_officially) : '-';
+            echo $all_total_not_officially ? '('.$all_total_days_not_officially.'/'.$all_total_evening_not_officially.'/'.$all_total_night_not_officially.')' : '-'
+        ?></span>
+        /<span>
+        <?php
+        $allMonthTotal = $all_total_not_officially + $all_total;
+        $allMonthTotalDay = $all_total_days_not_officially + $all_total_days;
+        $allMonthTotalEvening = $all_total_evening_not_officially + $all_total_evening;
+        $allMonthTotalNight = $all_total_night_not_officially + $all_total_night;
+        echo $allMonthTotal ? sprintf("%0.2f", $allMonthTotal) : '-';
+        echo $allMonthTotal ? '('.$allMonthTotalDay.'/'.$allMonthTotalEvening.'/'.$allMonthTotalNight.'/'.$all_total_holidays.')' : '-'
+        ?></span>
       </td>
       <td></td>
     </tr>

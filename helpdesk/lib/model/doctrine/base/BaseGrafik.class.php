@@ -15,6 +15,10 @@
  * @property float $total_day
  * @property float $total_evening
  * @property float $total_night
+ * @property float $total_not_officially
+ * @property float $total_day_not_officially
+ * @property float $total_evening_not_officially
+ * @property float $total_night_not_officially
  * @property boolean $is_sick
  * @property boolean $is_skip
  * @property boolean $is_fired
@@ -33,6 +37,10 @@
  * @method float            getTotalDay()                         Returns the current record's "total_day" value
  * @method float            getTotalEvening()                     Returns the current record's "total_evening" value
  * @method float            getTotalNight()                       Returns the current record's "total_night" value
+ * @method float            getTotalNotOfficially()               Returns the current record's "total_not_officially" value
+ * @method float            getTotalDayNotOfficially()            Returns the current record's "total_day_not_officially" value
+ * @method float            getTotalEveningNotOfficially()        Returns the current record's "total_evening_not_officially" value
+ * @method float            getTotalNightNotOfficially()          Returns the current record's "total_night_not_officially" value
  * @method boolean          getIsSick()                           Returns the current record's "is_sick" value
  * @method boolean          getIsSkip()                           Returns the current record's "is_skip" value
  * @method boolean          getIsFired()                          Returns the current record's "is_fired" value
@@ -50,6 +58,10 @@
  * @method Grafik           setTotalDay()                         Sets the current record's "total_day" value
  * @method Grafik           setTotalEvening()                     Sets the current record's "total_evening" value
  * @method Grafik           setTotalNight()                       Sets the current record's "total_night" value
+ * @method Grafik           setTotalNotOfficially()               Sets the current record's "total_not_officially" value
+ * @method Grafik           setTotalDayNotOfficially()            Sets the current record's "total_day_not_officially" value
+ * @method Grafik           setTotalEveningNotOfficially()        Sets the current record's "total_evening_not_officially" value
+ * @method Grafik           setTotalNightNotOfficially()          Sets the current record's "total_night_not_officially" value
  * @method Grafik           setIsSick()                           Sets the current record's "is_sick" value
  * @method Grafik           setIsSkip()                           Sets the current record's "is_skip" value
  * @method Grafik           setIsFired()                          Sets the current record's "is_fired" value
@@ -102,6 +114,18 @@ abstract class BaseGrafik extends sfDoctrineRecord
              'type' => 'float',
              ));
         $this->hasColumn('total_night', 'float', null, array(
+             'type' => 'float',
+             ));
+        $this->hasColumn('total_not_officially', 'float', null, array(
+             'type' => 'float',
+             ));
+        $this->hasColumn('total_day_not_officially', 'float', null, array(
+             'type' => 'float',
+             ));
+        $this->hasColumn('total_evening_not_officially', 'float', null, array(
+             'type' => 'float',
+             ));
+        $this->hasColumn('total_night_not_officially', 'float', null, array(
              'type' => 'float',
              ));
         $this->hasColumn('is_sick', 'boolean', null, array(

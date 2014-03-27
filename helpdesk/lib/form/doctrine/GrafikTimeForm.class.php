@@ -12,7 +12,12 @@ class GrafikTimeForm extends BaseGrafikTimeForm
 {
   public function configure()
   {
-    unset($this['total'], $this['total_day'], $this['total_evening'], $this['total_night']);
+    /*unset(
+      $this['total'],
+      $this['total_day'],
+      $this['total_evening'],
+      $this['total_night']
+    );*/
 
     $this->i18n = sfContext::getInstance()->getI18N();
 
@@ -37,6 +42,18 @@ class GrafikTimeForm extends BaseGrafikTimeForm
     }
 
     $this->disableCSRFProtection();
+
+    $this->useFields(array(
+      'from_time',
+      'to_time',
+      'not_officially',
+      'year',
+      'month',
+      'day',
+      'department_id',
+      'department_people_id',
+      'department_people_replacement_id',
+    ));
   }
 
   protected function setDefaultTime()
