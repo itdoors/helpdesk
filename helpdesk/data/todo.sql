@@ -1514,7 +1514,17 @@ select process_department_mpk();
 
 UPDATE
 	department_people
-set mpk_id = (select id from mpk where department_id = department_people.department_id limit 1);
+SET
+	department_id = (
+		SELECT
+			department_id
+		FROM
+			mpk
+		WHERE
+			id = department_people.mpk_id
+		LIMIT 1)
+WHERE
+	mpk_id IS NOT NULL;
 --------------------------EOF DEV_GRAFIK
 
 
