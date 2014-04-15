@@ -320,6 +320,8 @@ div#organization_duplicate{
   top: 55px;
 }
 
-table.entries {}
+table.entries { border-collapse: collapse; }
 table.entries thead.fixed { position:fixed;top:0; }
 table.entries thead.absolute { position:absolute; }
+table.entries th { border: 1px solid #000000; }
+table.entries td { border: 1px solid #000000; }
