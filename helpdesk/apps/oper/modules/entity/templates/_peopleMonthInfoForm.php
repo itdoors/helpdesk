@@ -64,6 +64,7 @@
       echo $peopleMonthInfoForm['surcharge']->renderRow();
       echo $peopleMonthInfoForm['surcharge_type_id']->renderRow();
       echo $peopleMonthInfoForm['surcharge_type_key']->renderRow();
+      echo $peopleMonthInfoForm['surcharge_description']->renderRow();
     ?>
   </div>
 
@@ -77,6 +78,7 @@
       echo $peopleMonthInfoForm['bonus']->renderRow();
       echo $peopleMonthInfoForm['bonus_type_id']->renderRow();
       echo $peopleMonthInfoForm['bonus_type_key']->renderRow();
+      echo $peopleMonthInfoForm['bonus_description']->renderRow();
     ?>
   </div>
 
@@ -91,6 +93,7 @@
       echo $peopleMonthInfoForm['fine']->renderRow();
       echo $peopleMonthInfoForm['fine_type_id']->renderRow();
       echo $peopleMonthInfoForm['fine_type_key']->renderRow();
+      echo $peopleMonthInfoForm['fine_description']->renderRow();
     ?>
   </div>
   <?php

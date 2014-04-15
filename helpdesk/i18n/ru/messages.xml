@@ -1436,6 +1436,18 @@
             <source>Not officially</source>
             <target>Подряд</target>
         </trans-unit>
+        <trans-unit>
+            <source>Surcharge description</source>
+            <target>Примечание</target>
+        </trans-unit>
+        <trans-unit>
+            <source>Bonus description</source>
+            <target>Примечание</target>
+        </trans-unit>
+        <trans-unit>
+            <source>Fine description</source>
+            <target>Примечание</target>
+        </trans-unit>
     </body>
   </file>
 </xliff>
