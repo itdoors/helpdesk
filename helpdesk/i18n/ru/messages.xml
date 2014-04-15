@@ -1432,6 +1432,10 @@
             <source>Export same mpk</source>
             <target>Экспорт по одинаковым МПК</target>
         </trans-unit>
+        <trans-unit>
+            <source>Not officially</source>
+            <target>Подряд</target>
+        </trans-unit>
     </body>
   </file>
 </xliff>
