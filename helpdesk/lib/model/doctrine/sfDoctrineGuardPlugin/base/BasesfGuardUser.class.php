@@ -49,6 +49,7 @@
  * @property Doctrine_Collection $History
  * @property Doctrine_Collection $QueueLog
  * @property Doctrine_Collection $OrganizationUser
+ * @property Doctrine_Collection $Departments
  * @property Doctrine_Collection $Client
  * @property Doctrine_Collection $Documents
  * @property Doctrine_Collection $LogClaim
@@ -99,6 +100,7 @@
  * @method Doctrine_Collection   getHistory()                 Returns the current record's "History" collection
  * @method Doctrine_Collection   getQueueLog()                Returns the current record's "QueueLog" collection
  * @method Doctrine_Collection   getOrganizationUser()        Returns the current record's "OrganizationUser" collection
+ * @method Doctrine_Collection   getDepartments()             Returns the current record's "Departments" collection
  * @method Doctrine_Collection   getClient()                  Returns the current record's "Client" collection
  * @method Doctrine_Collection   getDocuments()               Returns the current record's "Documents" collection
  * @method Doctrine_Collection   getLogClaim()                Returns the current record's "LogClaim" collection
@@ -148,6 +150,7 @@
  * @method sfGuardUser           setHistory()                 Sets the current record's "History" collection
  * @method sfGuardUser           setQueueLog()                Sets the current record's "QueueLog" collection
  * @method sfGuardUser           setOrganizationUser()        Sets the current record's "OrganizationUser" collection
+ * @method sfGuardUser           setDepartments()             Sets the current record's "Departments" collection
  * @method sfGuardUser           setClient()                  Sets the current record's "Client" collection
  * @method sfGuardUser           setDocuments()               Sets the current record's "Documents" collection
  * @method sfGuardUser           setLogClaim()                Sets the current record's "LogClaim" collection
@@ -361,6 +364,10 @@ abstract class BasesfGuardUser extends sfDoctrineRecord
         $this->hasMany('OrganizationUser', array(
              'local' => 'id',
              'foreign' => 'user_id'));
+
+        $this->hasMany('departments as Departments', array(
+             'local' => 'id',
+             'foreign' => 'opermanager_id'));
 
         $this->hasMany('client as Client', array(
              'local' => 'id',

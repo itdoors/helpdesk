@@ -21,6 +21,7 @@
  * @property integer $departments_type_id
  * @property string $description
  * @property string $coordinates
+ * @property integer $opermanager_id
  * @property city $City
  * @property contract $contract
  * @property organization $Organization
@@ -28,6 +29,7 @@
  * @property Doctrine_Collection $Stuff
  * @property DepartmentsType $DepartmentsType
  * @property DepartmentsStatus $Status
+ * @property sfGuardUser $Opermanager
  * @property Doctrine_Collection $DogovorDepartment
  * @property Doctrine_Collection $DepartmentPeople
  * @property Doctrine_Collection $DepartmentMpk
@@ -54,6 +56,7 @@
  * @method integer             getDepartmentsTypeId()         Returns the current record's "departments_type_id" value
  * @method string              getDescription()               Returns the current record's "description" value
  * @method string              getCoordinates()               Returns the current record's "coordinates" value
+ * @method integer             getOpermanagerId()             Returns the current record's "opermanager_id" value
  * @method city                getCity()                      Returns the current record's "City" value
  * @method contract            getContract()                  Returns the current record's "contract" value
  * @method organization        getOrganization()              Returns the current record's "Organization" value
@@ -61,6 +64,7 @@
  * @method Doctrine_Collection getStuff()                     Returns the current record's "Stuff" collection
  * @method DepartmentsType     getDepartmentsType()           Returns the current record's "DepartmentsType" value
  * @method DepartmentsStatus   getStatus()                    Returns the current record's "Status" value
+ * @method sfGuardUser         getOpermanager()               Returns the current record's "Opermanager" value
  * @method Doctrine_Collection getDogovorDepartment()         Returns the current record's "DogovorDepartment" collection
  * @method Doctrine_Collection getDepartmentPeople()          Returns the current record's "DepartmentPeople" collection
  * @method Doctrine_Collection getDepartmentMpk()             Returns the current record's "DepartmentMpk" collection
@@ -86,6 +90,7 @@
  * @method departments         setDepartmentsTypeId()         Sets the current record's "departments_type_id" value
  * @method departments         setDescription()               Sets the current record's "description" value
  * @method departments         setCoordinates()               Sets the current record's "coordinates" value
+ * @method departments         setOpermanagerId()             Sets the current record's "opermanager_id" value
  * @method departments         setCity()                      Sets the current record's "City" value
  * @method departments         setContract()                  Sets the current record's "contract" value
  * @method departments         setOrganization()              Sets the current record's "Organization" value
@@ -93,6 +98,7 @@
  * @method departments         setStuff()                     Sets the current record's "Stuff" collection
  * @method departments         setDepartmentsType()           Sets the current record's "DepartmentsType" value
  * @method departments         setStatus()                    Sets the current record's "Status" value
+ * @method departments         setOpermanager()               Sets the current record's "Opermanager" value
  * @method departments         setDogovorDepartment()         Sets the current record's "DogovorDepartment" collection
  * @method departments         setDepartmentPeople()          Sets the current record's "DepartmentPeople" collection
  * @method departments         setDepartmentMpk()             Sets the current record's "DepartmentMpk" collection
@@ -173,6 +179,9 @@ abstract class Basedepartments extends sfDoctrineRecord
              'type' => 'string',
              'length' => 255,
              ));
+        $this->hasColumn('opermanager_id', 'integer', null, array(
+             'type' => 'integer',
+             ));
     }
 
     public function setUp()
@@ -206,6 +215,10 @@ abstract class Basedepartments extends sfDoctrineRecord
 
         $this->hasOne('DepartmentsStatus as Status', array(
              'local' => 'status_id',
+             'foreign' => 'id'));
+
+        $this->hasOne('sfGuardUser as Opermanager', array(
+             'local' => 'opermanager_id',
              'foreign' => 'id'));
 
         $this->hasMany('DogovorDepartment', array(

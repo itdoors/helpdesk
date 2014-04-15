@@ -245,7 +245,8 @@ class departmentsTable extends Doctrine_Table
       ->leftJoin('d.City as city')
       ->leftJoin('city.Region as region')
       ->leftJoin('d.Status as Status')
-      ->leftJoin('d.DepartmentsType as DepartmentsType');
+      ->leftJoin('d.DepartmentsType as DepartmentsType')
+      ->leftJoin('d.Opermanager as Opermanager');
       //->orderBy('city.name');
 
     return $departments_query;

@@ -57,6 +57,7 @@
         ))?>
       </th>
       <th><?php echo __('Description')?></th>
+      <th><?php echo __('Opermanager')?></th>
     </tr>
   </thead>
   <tbody>
@@ -82,7 +83,8 @@
     <td><?php echo format_date($department->getStatusDate(), 'dd.MM.yyyy', 'ru')?></td>
     <td><?php echo $department->getDepartmentsType()?></td>
     <td><?php echo $department->getDescription()?></td>
-  </tr>  
+    <td><?php echo $department->getOpermanager()?></td>
+  </tr>
   <?php endforeach;?>
   </tbody>
  

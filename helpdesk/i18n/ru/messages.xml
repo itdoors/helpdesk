@@ -1448,6 +1448,10 @@
             <source>Fine description</source>
             <target>Примечание</target>
         </trans-unit>
+        <trans-unit>
+            <source>Opermanager</source>
+            <target>Опер менеджер</target>
+        </trans-unit>
     </body>
   </file>
 </xliff>

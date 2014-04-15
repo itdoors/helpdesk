@@ -242,6 +242,8 @@ departments:
       type: string
     coordinates:
       type: string(255)
+    opermanager_id:
+      type: integer
   relations:
     City:
       class: city
@@ -277,6 +279,16 @@ departments:
       class: DepartmentsStatus
       foreignAlias: Departments
       local: status_id
+      foreign: id
+    Opermanager:
+      class: DepartmentsStatus
+      foreignAlias: Departments
+      local: status_id
+      foreign: id
+    Opermanager:
+      class: sfGuardUser
+      foreignAlias: Departments
+      local: opermanager_id
       foreign: id
       
 DepartmentsType:

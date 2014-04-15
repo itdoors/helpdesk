@@ -16,9 +16,11 @@ class entityActions extends sfActions
   }
   
   /**
-  * Executes index action
-  *
-  * @param sfRequest $request A request object
+   * Executes index action
+   *
+   * @param sfWebRequest $request A request object
+   *
+   * @return string
   */
   public function executeIndex(sfWebRequest $request)
   {

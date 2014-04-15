@@ -16,10 +16,11 @@ generator:
       fields:  ~
       list:    
         #tableMethod:  doSelect
-        display: [id, mpk, contract, organization, region, city, address, added_field, clientlist, persons]
-      filter:  
+        #display: [id, mpk, contract, organization, region, city, address, added_field, clientlist, persons]
+        display: [id, mpk, contract, organization, region, city, address, added_field, opermanager]
+      filter:
         display: [mpk, region_id, city_id, name, contract_id, organization_id]
       form:    
-        display: [mpk, name, city_id, address, organization_id, contract_id, square, added_field]
+        display: [mpk, name, city_id, address, organization_id, contract_id, square, added_field, opermanager_id]
       edit:    ~
       new:     ~
