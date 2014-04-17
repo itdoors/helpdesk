@@ -68,6 +68,27 @@ class stuffTable extends Doctrine_Table
         ->execute();
         return $q;
     }
+
+  public static function getSearchResultsAutocomplite($s)
+  {
+    $pattern = $s;
+
+    $q = Doctrine::getTable('sfGuardUser')
+      ->createQuery('u')
+      ->select('u.id, u.last_name, u.middle_name, u.first_name')
+      ->innerJoin('u.Stuff s')
+      ->where('LOWER(u.last_name) LIKE ?', '%'.strtolower($pattern)."%");
+
+    $q = $q->fetchArray();
+
+    $result = array();
+    foreach ($q as $object)
+    {
+      $result[$object['id']] = $object['last_name'] . ' ' . $object['first_name'] . ' ' . $object['middle_name'];
+    }
+
+    return $result;
+  }
     
     public function getAllPersons()
     {

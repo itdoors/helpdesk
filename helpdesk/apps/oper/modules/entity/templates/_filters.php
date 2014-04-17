@@ -24,6 +24,9 @@
       
       echo $filter_form['address']->renderLabel();
       echo $filter_form['address']->render();
+
+      echo $filter_form['opermanager_id']->renderLabel();
+      echo $filter_form['opermanager_id']->render();
       
       
       echo $filter_form->renderHiddenFields();

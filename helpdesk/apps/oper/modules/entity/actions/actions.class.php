@@ -101,6 +101,9 @@ class entityActions extends sfActions
           case 'departments_type_id':
             $query->addWhere($query->getRootAlias().'.departments_type_id = ?', $value);
             break;
+          case 'opermanager_id':
+            $query->addWhere($query->getRootAlias().'.opermanager_id = ?', $value);
+            break;
         }
       }
     }

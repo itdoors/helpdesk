@@ -10,6 +10,21 @@
  */
 class ajaxdataActions extends sfActions
 {
+  public function executeAuto_stuff(sfWebRequest $request)
+  {
+    if (!$request->isXmlHttpRequest())
+    {
+      return sfView::NONE;
+    }
+
+    $search_field_value = $request->getParameter('q');
+    $results = stuffTable::getSearchResultsAutocomplite($search_field_value);
+    if ($request->isXmlHttpRequest())
+    {
+      return $this->renderText(json_encode($results));
+    }
+  }
+
   public function executeAuto_organization(sfWebRequest $request)
   {
     if (!$request->isXmlHttpRequest())

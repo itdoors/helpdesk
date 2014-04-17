@@ -53,7 +53,12 @@ class EntityFormFilter extends BasedepartmentsFormFilter
       )
     ));
     
-    $this->setWidget('address', new sfWidgetFormInputText()); 
+    $this->setWidget('address', new sfWidgetFormInputText());
+
+    $this->setWidget('opermanager_id', new sfWidgetFormDoctrineJQueryAutocompleter(array(
+      'model'=>'sfGuardUser',
+      'url'=>url_for('ajaxdata/auto_stuff'),
+    )));
     
     $this->setValidator('mpk', new sfValidatorString()); 
     $this->setValidator('organization_id', new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Organization'), 'required' => false))); 
@@ -63,7 +68,8 @@ class EntityFormFilter extends BasedepartmentsFormFilter
     $this->setValidator('status_id', new sfValidatorInteger()); 
     $this->setValidator('departments_type_id', new sfValidatorInteger()); 
     $this->setValidator('address', new sfValidatorString()); 
-    
+    $this->setValidator('opermanager_id', new sfValidatorString());
+
     $this->useFields(array(
       'mpk',
       'organization_id',
@@ -73,6 +79,7 @@ class EntityFormFilter extends BasedepartmentsFormFilter
       'status_id',
       'departments_type_id',
       'address',
+      'opermanager_id'
     ));
   }
 }
