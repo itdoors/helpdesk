@@ -116,6 +116,26 @@
         )
      )?></td>
   </tr>
+  <?php if ($sf_user->hasCredential('admin')) : ?>
+    <tr>
+      <td width="100"><?php echo __("Opermanager")?></td>
+      <td><?php
+        echo
+        !$can_edit ? $department->getDescription() :
+          get_component('Fmodel','ajax_field_change',
+            array(
+              'where'=> array(
+                'id'=> $department->getId(),
+              ),
+              'model' => 'departments',
+              'field' => 'opermanager_id',
+              'toString' =>'getOpermanagerString',
+              'default' => $department->getOpermanagerString(),
+            )
+          )?></td>
+    </tr>
+  <?php endif;?>
+
 </table>
 
 <?php include_partial('entity/show_general_organization_info', array('organization' => $department->getOrganization()))?>  

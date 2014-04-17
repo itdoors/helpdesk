@@ -166,4 +166,9 @@ class departments extends Basedepartments
   {
     return $this->getStatus() . ' ';
   }
+
+  public function getOpermanagerString()
+  {
+    return $this->getOpermanager() . ' ';
+  }
 }
