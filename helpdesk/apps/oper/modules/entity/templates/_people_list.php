@@ -107,6 +107,7 @@
     <tr id="<?php echo $keyRow?>"
         data-department_people_replacement_id = "<?php echo $people->getReplacementId()?>"
         data-department_people_id = "<?php echo $people->getId()?>"
+        title="<?php echo $people?>"
       >
       <td>#<?php echo $count?></td>
       <td>

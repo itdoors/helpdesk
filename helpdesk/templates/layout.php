@@ -10,6 +10,9 @@
     <?php include_javascripts() ?>
   </head>
 <body>
+<script type="text/javascript">
+  $( document ).tooltip();
+</script>
 <?php  
 $app = $sf_context->getConfiguration()->getApplication();
 $access = ($app != 'kurator') ? $app : 'stuff';
