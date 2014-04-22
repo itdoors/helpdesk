@@ -173,4 +173,33 @@ class DepartmentPeopleTable extends Doctrine_Table
 
     return $result;
   }
+
+  public static function getSearchResultsAutocomplite($s, $mpkId, $departmentId)
+  {
+    $pattern = $s;
+
+    $mpk = Doctrine::getTable('mpk')->findOneBy('name', $mpkId);
+
+    $departmentId = $mpk ? $mpk->getDepartmentId() : $departmentId;
+
+    $q = Doctrine::getTable('DepartmentPeople')
+      ->createQuery('dp')
+      ->select('dp.id as id')
+      ->addSelect('i.last_name as last_name')
+      ->addSelect('i.middle_name as middle_name')
+      ->addSelect('i.first_name as first_name')
+      ->leftJoin('dp.Individual i')
+      ->where('LOWER(i.last_name) LIKE ?', '%'.strtolower($pattern)."%")
+      ->andWhere('dp.department_id = ?', $departmentId);
+
+    $q = $q->fetchArray();
+
+    $result = array();
+    foreach ($q as $object)
+    {
+      $result[$object['id']] = $object['last_name'] . ' ' . $object['first_name'] . ' ' . $object['middle_name'];;
+    }
+
+    return $result;
+  }
 }

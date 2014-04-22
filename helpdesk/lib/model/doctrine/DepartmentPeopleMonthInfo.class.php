@@ -95,7 +95,11 @@ class DepartmentPeopleMonthInfo extends BaseDepartmentPeopleMonthInfo
     switch ($type_lukey)
     {
       case lookup::DEPARTMENT_PEOPLE_TYPE:
-        $char = 'З';
+        if ($this->getIsSubstitution()) {
+          $char = 'C';
+        } else {
+          $char = 'З';
+        }
         break;
       case lookup::DEPARTMENT_PEOPLE_TYPE_PERMANENT:
         $char = 'П';

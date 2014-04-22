@@ -29,6 +29,7 @@
  * @property boolean $is_clean_salary
  * @property integer $norma_days
  * @property integer $department_people_replacement_id
+ * @property boolean $is_substitution
  * @property string $real_salary
  * @property DepartmentPeoplePosition $Position
  * @property DepartmentPeople $DepartmentPeople
@@ -64,6 +65,7 @@
  * @method boolean                   getIsCleanSalary()                    Returns the current record's "is_clean_salary" value
  * @method integer                   getNormaDays()                        Returns the current record's "norma_days" value
  * @method integer                   getDepartmentPeopleReplacementId()    Returns the current record's "department_people_replacement_id" value
+ * @method boolean                   getIsSubstitution()                   Returns the current record's "is_substitution" value
  * @method string                    getRealSalary()                       Returns the current record's "real_salary" value
  * @method DepartmentPeoplePosition  getPosition()                         Returns the current record's "Position" value
  * @method DepartmentPeople          getDepartmentPeople()                 Returns the current record's "DepartmentPeople" value
@@ -98,6 +100,7 @@
  * @method DepartmentPeopleMonthInfo setIsCleanSalary()                    Sets the current record's "is_clean_salary" value
  * @method DepartmentPeopleMonthInfo setNormaDays()                        Sets the current record's "norma_days" value
  * @method DepartmentPeopleMonthInfo setDepartmentPeopleReplacementId()    Sets the current record's "department_people_replacement_id" value
+ * @method DepartmentPeopleMonthInfo setIsSubstitution()                   Sets the current record's "is_substitution" value
  * @method DepartmentPeopleMonthInfo setRealSalary()                       Sets the current record's "real_salary" value
  * @method DepartmentPeopleMonthInfo setPosition()                         Sets the current record's "Position" value
  * @method DepartmentPeopleMonthInfo setDepartmentPeople()                 Sets the current record's "DepartmentPeople" value
@@ -203,6 +206,10 @@ abstract class BaseDepartmentPeopleMonthInfo extends sfDoctrineRecord
         $this->hasColumn('department_people_replacement_id', 'integer', null, array(
              'type' => 'integer',
              'primary' => true,
+             ));
+        $this->hasColumn('is_substitution', 'boolean', null, array(
+             'type' => 'boolean',
+             'default' => false,
              ));
         $this->hasColumn('real_salary', 'string', 128, array(
              'type' => 'string',

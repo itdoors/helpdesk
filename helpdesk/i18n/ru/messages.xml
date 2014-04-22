@@ -1452,6 +1452,10 @@
             <source>Opermanager</source>
             <target>Опер менеджер</target>
         </trans-unit>
+        <trans-unit>
+            <source>Is substitution</source>
+            <target>Совмещение</target>
+        </trans-unit>
     </body>
   </file>
 </xliff>

@@ -1290,3 +1290,10 @@ $('.entity_excel_print').live('click', function(e){
   $(this).replaceWith(replaceElement);
   replaceElement.after(replaceTextElementText);
 });
+
+function auto_mpk()
+{
+  var mpk_id = $('#autocomplete_department_people_month_info_mpk_id').val();
+  var department_id = $('#autocomplete_department_people_month_info_mpk_id').data('department_id');
+  $('#autocomplete_department_people_month_info_department_people_replacement_id').data('extra', JSON.stringify({mpk_id: mpk_id, department_id: department_id}));
+}

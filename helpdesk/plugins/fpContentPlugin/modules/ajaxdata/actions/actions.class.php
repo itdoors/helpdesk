@@ -25,6 +25,43 @@ class ajaxdataActions extends sfActions
     }
   }
 
+  public function executeAuto_mpk(sfWebRequest $request)
+  {
+    if (!$request->isXmlHttpRequest())
+    {
+      return sfView::NONE;
+    }
+
+    $search_field_value = $request->getParameter('q');
+    $results = mpkTable::getSearchResultsAutocomplite($search_field_value);
+    if ($request->isXmlHttpRequest())
+    {
+      return $this->renderText(json_encode($results));
+    }
+  }
+
+  public function executeAuto_department_people(sfWebRequest $request)
+  {
+    if (!$request->isXmlHttpRequest())
+    {
+      return sfView::NONE;
+    }
+
+    $search_field_value = $request->getParameter('q');
+
+    $extra = $request->getParameter('extra');
+
+    $extra = json_decode($extra, true);
+    $mpkId = intval($extra['mpk_id']);
+    $departmentId = intval($extra['department_id']);
+
+    $results = DepartmentPeopleTable::getSearchResultsAutocomplite($search_field_value, $mpkId, $departmentId);
+    if ($request->isXmlHttpRequest())
+    {
+      return $this->renderText(json_encode($results));
+    }
+  }
+
   public function executeAuto_organization(sfWebRequest $request)
   {
     if (!$request->isXmlHttpRequest())

@@ -33,6 +33,7 @@ abstract class BaseDepartmentPeopleMonthInfoFormFilter extends BaseFormFilterDoc
       'salary_type_id'                   => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('SalaryType'), 'add_empty' => true)),
       'is_clean_salary'                  => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
       'norma_days'                       => new sfWidgetFormFilterInput(),
+      'is_substitution'                  => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
       'real_salary'                      => new sfWidgetFormFilterInput(),
     ));
 
@@ -57,6 +58,7 @@ abstract class BaseDepartmentPeopleMonthInfoFormFilter extends BaseFormFilterDoc
       'salary_type_id'                   => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('SalaryType'), 'column' => 'id')),
       'is_clean_salary'                  => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
       'norma_days'                       => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'is_substitution'                  => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
       'real_salary'                      => new sfValidatorPass(array('required' => false)),
     ));
 
@@ -101,6 +103,7 @@ abstract class BaseDepartmentPeopleMonthInfoFormFilter extends BaseFormFilterDoc
       'is_clean_salary'                  => 'Boolean',
       'norma_days'                       => 'Number',
       'department_people_replacement_id' => 'Number',
+      'is_substitution'                  => 'Boolean',
       'real_salary'                      => 'Text',
     );
   }

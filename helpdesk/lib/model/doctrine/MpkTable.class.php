@@ -16,4 +16,23 @@ class MpkTable extends Doctrine_Table
     {
         return Doctrine_Core::getTable('Mpk');
     }
+
+  public static function getSearchResultsAutocomplite($s)
+  {
+    $pattern = $s;
+
+    $q = Doctrine::getTable('Mpk')
+      ->createQuery('m')
+      ->where('LOWER(m.name) LIKE ?', '%'.strtolower($pattern)."%");
+
+    $q = $q->fetchArray();
+
+    $result = array();
+    foreach ($q as $object)
+    {
+      $result[$object['id']] = $object['name'];
+    }
+
+    return $result;
+  }
 }

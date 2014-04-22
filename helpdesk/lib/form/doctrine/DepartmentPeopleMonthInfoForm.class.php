@@ -66,7 +66,32 @@ class DepartmentPeopleMonthInfoForm extends BaseDepartmentPeopleMonthInfoForm
       }
     }
 
-    $queryReplacement = Doctrine::getTable('DepartmentPeople')
+    $this->setWidget('is_substitution', new sfWidgetFormInputCheckbox());
+    $this->setValidator('is_substitution', new sfValidatorBoolean(array('required' => false)));
+
+    $this->setWidget('mpk_id', new sfWidgetFormDoctrineJQueryAutocompleter(array(
+      'model'=>'Mpk',
+      'url'=>url_for('ajaxdata/auto_mpk'),
+      'js_callback' => 'auto_mpk',
+    ), array(
+      'data-department_id' => $departmentId
+    )));
+
+    if ($departmentId) {
+      /** @var Mpk $mpk */
+      $mpk = Doctrine::getTable('Mpk')->findOneBy('department_id', $departmentId);
+
+      if ($mpk) {
+        $this->getWidget('mpk_id')->setDefault($mpk->getId());
+      }
+    }
+
+    $this->setWidget('department_people_replacement_id', new sfWidgetFormDoctrineJQueryAutocompleter(array(
+      'model'=>'DepartmentPeople',
+      'url'=>url_for('ajaxdata/auto_department_people'),
+    )));
+
+    /*$queryReplacement = Doctrine::getTable('DepartmentPeople')
       ->createQuery('dp')
       ->where('dp.department_id = ?', $departmentId)
       ->andWhere('dp.parent_id is null')
@@ -77,7 +102,7 @@ class DepartmentPeopleMonthInfoForm extends BaseDepartmentPeopleMonthInfoForm
         'query' => $queryReplacement,
         'add_empty' => true
       )
-    ));
+    ));*/
 
     /*$this->setValidator('department_people_replacement_id', new sfValidatorDoctrineChoice(array(
       'model' => 'DepartmentPeople',
@@ -254,6 +279,7 @@ class DepartmentPeopleMonthInfoForm extends BaseDepartmentPeopleMonthInfoForm
     if ($object->getTypeId() != $replacementTypeId)
     {
       $object->setDepartmentPeopleReplacementId(0);
+      $object->setIsSubstitution(false);
       $object->save();
     }
 

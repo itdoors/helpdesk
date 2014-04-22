@@ -48,7 +48,12 @@
     </ul>
   <?php endif;?>
   <div id="department_people_replacement_id_holder" style="display: <?php echo $displayReplacement?>">
+    <?php echo $peopleMonthInfoForm['mpk_id']->renderRow(); ?>
     <?php echo $peopleMonthInfoForm['department_people_replacement_id']->renderRow(); ?>
+    <?php echo $peopleMonthInfoForm['is_substitution']->renderRow(); ?>
+    <script type="text/javascript">
+      auto_mpk();
+    </script>
   </div>
   <?php
   echo $peopleMonthInfoForm['employment_type_id']->renderRow();

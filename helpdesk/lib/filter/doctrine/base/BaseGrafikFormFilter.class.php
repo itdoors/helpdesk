@@ -13,6 +13,7 @@ abstract class BaseGrafikFormFilter extends BaseFormFilterDoctrine
   public function setup()
   {
     $this->setWidgets(array(
+      'is_substitution'                  => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
       'total'                            => new sfWidgetFormFilterInput(),
       'total_day'                        => new sfWidgetFormFilterInput(),
       'total_evening'                    => new sfWidgetFormFilterInput(),
@@ -28,6 +29,7 @@ abstract class BaseGrafikFormFilter extends BaseFormFilterDoctrine
     ));
 
     $this->setValidators(array(
+      'is_substitution'                  => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
       'total'                            => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
       'total_day'                        => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
       'total_evening'                    => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
@@ -65,6 +67,7 @@ abstract class BaseGrafikFormFilter extends BaseFormFilterDoctrine
       'department_id'                    => 'Number',
       'department_people_id'             => 'Number',
       'department_people_replacement_id' => 'Number',
+      'is_substitution'                  => 'Boolean',
       'total'                            => 'Number',
       'total_day'                        => 'Number',
       'total_evening'                    => 'Number',

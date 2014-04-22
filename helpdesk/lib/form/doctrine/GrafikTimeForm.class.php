@@ -12,12 +12,7 @@ class GrafikTimeForm extends BaseGrafikTimeForm
 {
   public function configure()
   {
-    /*unset(
-      $this['total'],
-      $this['total_day'],
-      $this['total_evening'],
-      $this['total_night']
-    );*/
+    sfContext::getInstance()->getConfiguration()->loadHelpers('Url');
 
     $this->i18n = sfContext::getInstance()->getI18N();
 
@@ -52,7 +47,7 @@ class GrafikTimeForm extends BaseGrafikTimeForm
       'day',
       'department_id',
       'department_people_id',
-      'department_people_replacement_id',
+      'department_people_replacement_id'
     ));
   }
 

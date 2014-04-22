@@ -12,6 +12,7 @@
  * @property integer $department_id
  * @property integer $department_people_id
  * @property integer $department_people_replacement_id
+ * @property boolean $is_substitution
  * @property time $from_time
  * @property time $to_time
  * @property boolean $not_officially
@@ -34,6 +35,7 @@
  * @method integer          getDepartmentId()                     Returns the current record's "department_id" value
  * @method integer          getDepartmentPeopleId()               Returns the current record's "department_people_id" value
  * @method integer          getDepartmentPeopleReplacementId()    Returns the current record's "department_people_replacement_id" value
+ * @method boolean          getIsSubstitution()                   Returns the current record's "is_substitution" value
  * @method time             getFromTime()                         Returns the current record's "from_time" value
  * @method time             getToTime()                           Returns the current record's "to_time" value
  * @method boolean          getNotOfficially()                    Returns the current record's "not_officially" value
@@ -55,6 +57,7 @@
  * @method GrafikTime       setDepartmentId()                     Sets the current record's "department_id" value
  * @method GrafikTime       setDepartmentPeopleId()               Sets the current record's "department_people_id" value
  * @method GrafikTime       setDepartmentPeopleReplacementId()    Sets the current record's "department_people_replacement_id" value
+ * @method GrafikTime       setIsSubstitution()                   Sets the current record's "is_substitution" value
  * @method GrafikTime       setFromTime()                         Sets the current record's "from_time" value
  * @method GrafikTime       setToTime()                           Sets the current record's "to_time" value
  * @method GrafikTime       setNotOfficially()                    Sets the current record's "not_officially" value
@@ -109,6 +112,10 @@ abstract class BaseGrafikTime extends sfDoctrineRecord
              'type' => 'integer',
              'notnull' => true,
              'default' => 0,
+             ));
+        $this->hasColumn('is_substitution', 'boolean', null, array(
+             'type' => 'boolean',
+             'default' => false,
              ));
         $this->hasColumn('from_time', 'time', null, array(
              'type' => 'time',
