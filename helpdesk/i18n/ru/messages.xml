@@ -1266,7 +1266,7 @@
       </trans-unit>		  
 	  <trans-unit>
 		<source>Department people replacement</source>
-        <target>Заменяемый сотрудник</target>
+        <target>Кто заменяет</target>
       </trans-unit>	
 	  <trans-unit>
 		<source>Department people replacement </source>
