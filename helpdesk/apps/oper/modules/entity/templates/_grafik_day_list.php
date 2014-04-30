@@ -77,7 +77,7 @@
           'ref_functions' =>
             array(
               '#grafik_day_list'=>
-                 url_for('entity/refresh_grafik_day_list').'?grafik[department_people_id]='.$params['department_people_id'].'&grafik[department_people_replacement_id]='.$params['department_people_replacement_id'].'&grafik[department_id]='.$params['department_id'].'&grafik[year]='.$params['year'].'&grafik[month]='.$params['month'].'&grafik[day]='.$params['day'].'&'
+                 url_for('entity/refresh_grafik_day_list').'?grafik[department_people_id]='.$params['department_people_id'].'&grafik[department_people_replacement_id]='.$params['department_people_replacement_id'].'&grafik[department_id]='.$params['department_id'].'&grafik[year]='.$params['year'].'&grafik[month]='.$params['month'].'&grafik[day]='.$params['day'].'&grafik[replacement_type]='.$params['replacement_type'].'&'
             )
         ))
       ?>

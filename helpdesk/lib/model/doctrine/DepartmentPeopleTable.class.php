@@ -29,7 +29,7 @@ class DepartmentPeopleTable extends Doctrine_Table
     return self::getPeopleByIds($peopleIds, $year, $month, $departmentPeopleId, $departmentPeopleReplacementId);
   }
 
-  static public function getPeopleByIds($peopleIds, $year, $month, $departmentPeopleId = null, $departmentPeopleReplacementId = null)
+  static public function getPeopleByIds($peopleIds, $year, $month, $departmentPeopleId = null, $departmentPeopleReplacementId = null, $replacementType = '')
   {
     if (!sizeof($peopleIds))
     {
@@ -81,6 +81,12 @@ class DepartmentPeopleTable extends Doctrine_Table
         ->addWhere('dpmi.department_people_replacement_id = ?', $departmentPeopleReplacementId);
     }
 
+    if ($replacementType)
+    {
+      $queryMonth
+        ->addWhere('dpmi.replacement_type = ?', $replacementType);
+    }
+
     $monthInfoCollection = $queryMonth->execute();
 
     if (!sizeof($monthInfoCollection))
@@ -98,6 +104,7 @@ class DepartmentPeopleTable extends Doctrine_Table
       $year = $info->getYear();
       $month = $info->getMonth();
       $replacementId = $info->getDepartmentPeopleReplacementId();
+      $replacementType = $info->getReplacementType();
 
       if (!isset($peopleArray[$personId]))
       {
@@ -107,7 +114,7 @@ class DepartmentPeopleTable extends Doctrine_Table
       /** @var DepartmentPeople $person */
       $person = clone $peopleArray[$personId];
 
-      $person->setYearMonthReplacement($year, $month, $replacementId);
+      $person->setYearMonthReplacement($year, $month, $replacementId, $replacementType);
 
       if (isset($individuals[$person->getIndividualId()]))
       {

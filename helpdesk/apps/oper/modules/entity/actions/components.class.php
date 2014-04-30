@@ -221,6 +221,7 @@ class entityComponents extends sfComponents
       $this->month,
       $this->department_people_id,
       $this->department_people_replacement_id,
+      $this->replacement_type,
       $this->offset,
       $this->limit
     );
@@ -230,7 +231,8 @@ class entityComponents extends sfComponents
       $this->year,
       $this->month,
       $this->department_people_id,
-      $this->department_people_replacement_id
+      $this->department_people_replacement_id,
+      $this->replacement_type
     );
 
     $this->canCopyToNetxtMonth = sizeof($this->peoples) && Grafik::canCopyToNextMonth($this->year, $this->month);

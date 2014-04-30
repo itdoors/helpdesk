@@ -1546,25 +1546,42 @@ ALTER TABLE grafik_time ALTER COLUMN not_officially SET DEFAULT false;
 
 -------- SUBSTITUTION-------------
 
-ALTER TABLE department_people_month_info ADD COLUMN is_substitution boolean DEFAULT false;
-ALTER TABLE department_people_month_info ALTER COLUMN is_substitution SET NOT NULL;
+ALTER TABLE department_people_month_info DROP COLUMN IF EXISTS is_substitution;
+ALTER TABLE grafik DROP COLUMN IF EXISTS is_substitution;
+ALTER TABLE grafik_time DROP COLUMN IF EXISTS is_substitution;
 
-ALTER TABLE grafik ADD COLUMN is_substitution boolean DEFAULT false;
-ALTER TABLE grafik ALTER COLUMN is_substitution SET NOT NULL;
+-- DPMI
+ALTER TABLE department_people_month_info DROP COLUMN IF EXISTS replacement_type;
+ALTER TABLE department_people_month_info ADD COLUMN replacement_type character varying(10);
+ALTER TABLE department_people_month_info ALTER COLUMN replacement_type SET DEFAULT 'r'::character varying;
+UPDATE department_people_month_info SET replacement_type = 'r'::character varying WHERE replacement_type IS NULL;
+ALTER TABLE department_people_month_info ALTER COLUMN replacement_type SET NOT NULL;
+--
 
-ALTER TABLE grafik_time ADD COLUMN is_substitution boolean DEFAULT false;
-ALTER TABLE grafik_time ALTER COLUMN is_substitution SET NOT NULL;
-
-
-ALTER TABLE grafik DROP CONSTRAINT grafik_pkey;
-
-ALTER TABLE grafik
-  ADD CONSTRAINT grafik_pkey PRIMARY KEY(year, month, day, department_id, department_people_id, department_people_replacement_id, is_substitution);
-
-
-ALTER TABLE department_people_month_info DROP CONSTRAINT department_people_month_info_pkey;
+ALTER TABLE department_people_month_info DROP CONSTRAINT IF EXISTS department_people_month_info_pkey;
 
 ALTER TABLE department_people_month_info
-  ADD CONSTRAINT department_people_month_info_pkey PRIMARY KEY(department_people_id, year, month, department_people_replacement_id, is_substitution);
+  ADD CONSTRAINT department_people_month_info_pkey PRIMARY KEY(department_people_id, year, month, department_people_replacement_id, replacement_type);
+
+-- GRAFIK
+ALTER TABLE grafik DROP COLUMN IF EXISTS replacement_type;
+ALTER TABLE grafik ADD COLUMN replacement_type character varying(10);
+ALTER TABLE grafik ALTER COLUMN replacement_type SET DEFAULT 'r'::character varying;
+UPDATE grafik SET replacement_type = 'r'::character varying WHERE replacement_type IS NULL;
+ALTER TABLE grafik ALTER COLUMN replacement_type SET NOT NULL;
+
+ALTER TABLE grafik DROP CONSTRAINT IF EXISTS grafik_pkey;
+
+ALTER TABLE grafik
+  ADD CONSTRAINT grafik_pkey PRIMARY KEY(department_people_id, year, month, day, department_people_replacement_id, replacement_type);
+
+
+-- GRAFIK TIME
+ALTER TABLE grafik_time DROP COLUMN IF EXISTS replacement_type;
+ALTER TABLE grafik_time ADD COLUMN replacement_type character varying(10);
+ALTER TABLE grafik_time ALTER COLUMN replacement_type SET DEFAULT 'r'::character varying;
+UPDATE grafik_time SET replacement_type = 'r'::character varying WHERE replacement_type IS NULL;
+ALTER TABLE grafik_time ALTER COLUMN replacement_type SET NOT NULL;
+
 
 -------- EOF SUBSTITUTION-------------

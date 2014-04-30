@@ -50,7 +50,7 @@
   <div id="department_people_replacement_id_holder" style="display: <?php echo $displayReplacement?>">
     <?php echo $peopleMonthInfoForm['mpk_id']->renderRow(); ?>
     <?php echo $peopleMonthInfoForm['department_people_replacement_id']->renderRow(); ?>
-    <?php echo $peopleMonthInfoForm['is_substitution']->renderRow(); ?>
+    <?php echo $peopleMonthInfoForm['replacement_type']->renderRow(); ?>
     <script type="text/javascript">
       auto_mpk();
     </script>
@@ -135,7 +135,8 @@
         'department_people_replacement_id'=> $peopleMonthInfoForm->getObject()->getDepartmentPeopleReplacementId(),
         'department_people_id'=> $peopleMonthInfoForm->getObject()->getDepartmentPeopleId(),
         'year' => $peopleMonthInfoForm->getObject()->getYear(),
-        'month' => $peopleMonthInfoForm->getObject()->getMonth()
+        'month' => $peopleMonthInfoForm->getObject()->getMonth(),
+        'replacement_type' => $peopleMonthInfoForm->getObject()->getReplacementType()
       ),
       'ref_functions_names' => array('updatePeoplePist', 'closePeopleDialog')
     ))

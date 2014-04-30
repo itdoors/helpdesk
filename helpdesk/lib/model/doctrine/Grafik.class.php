@@ -17,9 +17,9 @@ class Grafik extends BaseGrafik
     return DepartmentPeopleTable::getPeople($departmentIds, $year, $month, $departmentPeopleId, $departmentPeopleReplacementId);
   }
 
-  static public function getPeopleByIds($peopleIds, $year, $month, $departmentPeopleId = null, $departmentPeopleReplacementId = null)
+  static public function getPeopleByIds($peopleIds, $year, $month, $departmentPeopleId = null, $departmentPeopleReplacementId = null, $replacementType = '')
   {
-    return DepartmentPeopleTable::getPeopleByIds($peopleIds, $year, $month, $departmentPeopleId, $departmentPeopleReplacementId);
+    return DepartmentPeopleTable::getPeopleByIds($peopleIds, $year, $month, $departmentPeopleId, $departmentPeopleReplacementId, $replacementType);
   }
 
   static public function getPeopleArrayByDepartmentIdKey($departmentIds, $year, $month)
@@ -1090,6 +1090,7 @@ class Grafik extends BaseGrafik
     $department_id = $this->getDepartmentId();
     $department_people_id = $this->getDepartmentPeopleId();
     $department_people_replacement_id = $this->getDepartmentPeopleReplacementId();
+    $replacementType = $this->getReplacementType();
     /*$from_time = $this->getFromTime();
     $to_time = $this->getToTime();*/
     $is_sick = $this->getIsSick();
@@ -1121,6 +1122,7 @@ class Grafik extends BaseGrafik
         ->addWhere('g.department_id =?', $department_id)
         ->addWhere('g.department_people_id =?', $department_people_id)
         ->addWhere('g.department_people_replacement_id =?', $department_people_replacement_id)
+        ->addWhere('g.replacement_type =?', $replacementType)
         ->fetchOne();
         
       if (!$grafik)
@@ -1132,6 +1134,7 @@ class Grafik extends BaseGrafik
         $grafik->setDepartmentId($department_id);
         $grafik->setDepartmentPeopleId($department_people_id);
         $grafik->setDepartmentPeopleReplacementId($department_people_replacement_id);
+        $grafik->setReplacementType($replacementType);
       }
       
       /*$grafik->setFromTime($from_time);
@@ -1283,6 +1286,7 @@ class Grafik extends BaseGrafik
       $grafik->setDepartmentId($params['department_id']);
       $grafik->setDepartmentPeopleId($params['department_people_id']);
       $grafik->setDepartmentPeopleReplacementId($params['department_people_replacement_id']);
+      $grafik->setReplacementType($params['replacement_type']);
       $grafik->save();
     }
 
@@ -1299,6 +1303,7 @@ class Grafik extends BaseGrafik
       ->addWhere('department_id = ?', $params['department_id'])
       ->addWhere('department_people_id = ?', $params['department_people_id'])
       ->addWhere('department_people_replacement_id = ?', $params['department_people_replacement_id'])
+      ->addWhere('replacement_type = ?', $params['replacement_type'])
       ->fetchOne();
 
     return $grafik;
@@ -1357,7 +1362,8 @@ class Grafik extends BaseGrafik
       ->addWhere('day = ?', $params['day'])
       ->addWhere('department_id = ?', $params['department_id'])
       ->addWhere('department_people_id = ?', $params['department_people_id'])
-      ->addWhere('department_people_replacement_id = ?', $params['department_people_replacement_id']);
+      ->addWhere('department_people_replacement_id = ?', $params['department_people_replacement_id'])
+      ->addWhere('replacement_type = ?', $params['replacement_type']);
 
     //if not new current record dont use to validate
     if ($id)
@@ -1645,13 +1651,19 @@ class Grafik extends BaseGrafik
    */
   public function getKey()
   {
-    return $this->getYear() .'-'. $this->getMonth().'-'. $this->getDay() .'-'.$this->getDepartmentId().'-'.$this->getDepartmentPeopleId().'-'.$this->getDepartmentPeopleReplacementId();
+    return  $this->getYear() . '-' .
+            $this->getMonth(). '-' .
+            $this->getDay() . '-' .
+            $this->getDepartmentId() . '-' .
+            $this->getDepartmentPeopleId() . '-' .
+            $this->getDepartmentPeopleReplacementId() . '-' .
+            $this->getReplacementType();
   }
 
   /**
    * Returns result in 1C format
    *
-   * return string
+   * @return string
    */
   public function getResultFor1C()
   {

@@ -85,7 +85,8 @@
 
       $count = isset($offset) ? $offset : 0;
 
-      foreach ($peoples as $people): /** @var DepartmentPeople $people */
+      /** @var DepartmentPeople[] $peoples */
+      foreach ($peoples as $people):
         $total = 0;
         $day_hours = 0;
         $evening_hours = 0;
@@ -102,17 +103,19 @@
         $hospitalAfter5 = 0;
         $vacation = 0;
         $hoursHolidays = 0;
-        $keyRow = $year.'-'.$month.'-'.$department_id.'-'.$people->getId().'-'.$people->getReplacementId();
+        $keyRow = $year.'-'.$month.'-'.$department_id.'-'.$people->getId().'-'.$people->getReplacementId().'-'.$people->getReplacementType();
     ?>
     <tr id="<?php echo $keyRow?>"
         data-department_people_replacement_id = "<?php echo $people->getReplacementId()?>"
         data-department_people_id = "<?php echo $people->getId()?>"
+        data-replacement_type = "<?php echo $people->getReplacementType()?>"
         title="<?php echo $people?>"
       >
       <td>#<?php echo $count?></td>
       <td>
         <a href="#" class="people_href" data-id="<?php echo $people->getId()?>"
          data-replacement_id = "<?php echo $people->getReplacementId()?>"
+         data-replacement_type = "<?php echo $people->getReplacementType()?>"
          data-key-row = "#<?php echo $keyRow?>"
          <?php if ($people->getParentId()) : ?>style="background-color: #dda6a6"<?php endif;?>
         >
@@ -141,10 +144,17 @@
              data-day="<?php echo $day?>"
              data-people_id="<?php echo $people->getId()?>"
              data-replacement_id="<?php echo $people->getReplacementId()?>"
+             data-replacement_type="<?php echo $people->getReplacementType()?>"
             >
           <?php endif;?>
             <?php
-              $key = $year.'-'.$month.'-'.$day.'-'.$department_id.'-'.$people->getId().'-'.$people->getReplacementId();
+              $key =  $year . '-' .
+                      $month . '-' .
+                      $day . '-' .
+                      $department_id . '-' .
+                      $people->getId() . '-' .
+                      $people->getReplacementId() . '-' .
+                      $people->getReplacementType();
             if (isset($grafik[$key])) : ?>
               <?php
 

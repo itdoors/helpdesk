@@ -198,9 +198,10 @@ DepartmentPeopleMonthInfo:
       type: integer
       default: 0
       primary: true
-    is_substitution:
-      type: boolean
-      default: false
+    replacement_type:
+      type: string(10)
+      default: r
+      primary: true
     real_salary:
       type: string(128)
   relations:
@@ -288,9 +289,10 @@ Grafik:
       primary: true
       notnull: true
       default: 0
-    is_substitution:
-      type: boolean
-      default: false
+    replacement_type:
+      type: string(10)
+      default: r
+      primary: true
     total:
       type: float
     total_day:
@@ -361,9 +363,9 @@ GrafikTime:
       type: integer
       notnull: true
       default: 0
-    is_substitution:
-      type: boolean
-      default: false
+    replacement_type:
+      type: string(10)
+      default: r
     from_time:
       type: time
     to_time:

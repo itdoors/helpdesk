@@ -25,13 +25,14 @@
         'department_id'=>$params['department_id'],
         'department_people_id'=>$params['department_people_id'],
         'department_people_replacement_id'=>$params['department_people_replacement_id'],
+        'replacement_type'=>$params['replacement_type'],
         'year' => $params['year'],
         'month' => $params['month'],
         'day' => $params['day']
       ),
       'ref_functions'=>
       array(
-        '#grafik_day_list'=>url_for('entity/refresh_grafik_day_list').'?grafik[department_people_id]='.$params['department_people_id'].'&grafik[department_people_replacement_id]='.$params['department_people_replacement_id'].'&grafik[department_id]='.$params['department_id'].'&grafik[year]='.$params['year'].'&grafik[month]='.$params['month'].'&grafik[day]='.$params['day'].'&'
+        '#grafik_day_list'=>url_for('entity/refresh_grafik_day_list').'?grafik[department_people_id]='.$params['department_people_id'].'&grafik[department_people_replacement_id]='.$params['department_people_replacement_id'].'&grafik[department_id]='.$params['department_id'].'&grafik[year]='.$params['year'].'&grafik[month]='.$params['month'].'&grafik[day]='.$params['day'].'&grafik[replacement_type]='.$params['replacement_type'].'&'
       )
     )
   );?>

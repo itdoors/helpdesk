@@ -11,7 +11,7 @@
  * @property integer $department_id
  * @property integer $department_people_id
  * @property integer $department_people_replacement_id
- * @property boolean $is_substitution
+ * @property string $replacement_type
  * @property float $total
  * @property float $total_day
  * @property float $total_evening
@@ -34,7 +34,7 @@
  * @method integer          getDepartmentId()                     Returns the current record's "department_id" value
  * @method integer          getDepartmentPeopleId()               Returns the current record's "department_people_id" value
  * @method integer          getDepartmentPeopleReplacementId()    Returns the current record's "department_people_replacement_id" value
- * @method boolean          getIsSubstitution()                   Returns the current record's "is_substitution" value
+ * @method string           getReplacementType()                  Returns the current record's "replacement_type" value
  * @method float            getTotal()                            Returns the current record's "total" value
  * @method float            getTotalDay()                         Returns the current record's "total_day" value
  * @method float            getTotalEvening()                     Returns the current record's "total_evening" value
@@ -56,7 +56,7 @@
  * @method Grafik           setDepartmentId()                     Sets the current record's "department_id" value
  * @method Grafik           setDepartmentPeopleId()               Sets the current record's "department_people_id" value
  * @method Grafik           setDepartmentPeopleReplacementId()    Sets the current record's "department_people_replacement_id" value
- * @method Grafik           setIsSubstitution()                   Sets the current record's "is_substitution" value
+ * @method Grafik           setReplacementType()                  Sets the current record's "replacement_type" value
  * @method Grafik           setTotal()                            Sets the current record's "total" value
  * @method Grafik           setTotalDay()                         Sets the current record's "total_day" value
  * @method Grafik           setTotalEvening()                     Sets the current record's "total_evening" value
@@ -107,9 +107,10 @@ abstract class BaseGrafik extends sfDoctrineRecord
              'type' => 'integer',
              'primary' => true,
              ));
-        $this->hasColumn('is_substitution', 'boolean', null, array(
-             'type' => 'boolean',
-             'default' => false,
+        $this->hasColumn('replacement_type', 'string', 10, array(
+             'type' => 'string',
+             'primary' => true,
+             'length' => 10,
              ));
         $this->hasColumn('total', 'float', null, array(
              'type' => 'float',

@@ -95,7 +95,7 @@ class DepartmentPeopleMonthInfo extends BaseDepartmentPeopleMonthInfo
     switch ($type_lukey)
     {
       case lookup::DEPARTMENT_PEOPLE_TYPE:
-        if ($this->getIsSubstitution()) {
+        if ($this->isSubstitution()) {
           $char = 'C';
         } else {
           $char = 'З';
@@ -107,6 +107,22 @@ class DepartmentPeopleMonthInfo extends BaseDepartmentPeopleMonthInfo
     }
 
     return $char;
+  }
+
+  /**
+   * Is substitution
+   */
+  public function isSubstitution()
+  {
+    return $this->getReplacementType() == DepartmentPeople::REPLACEMENT_TYPE_SUBSTITUTION;
+  }
+
+  /**
+   * Is replacement
+   */
+  public function isReplacement()
+  {
+    return $this->getReplacementType() == DepartmentPeople::REPLACEMENT_TYPE_REPLACEMENT;
   }
 
   public function copyGrafikFromPreviousMonth($personId, $departmentId, $previous_year, $previous_month, $year, $month)
@@ -152,6 +168,7 @@ class DepartmentPeopleMonthInfo extends BaseDepartmentPeopleMonthInfo
       ':department_people_id' => $this->getDepartmentPeopleId(),
       ':department_people_replacement_id' => $this->getDepartmentPeopleReplacementId(),
       ':department_id' => $this->getDepartmentId(),
+      ':replacement_type' => $this->getReplacementType(),
     );
 
     // @todo people ids must count from DepartmentPeopleMonthInfo
@@ -164,7 +181,8 @@ class DepartmentPeopleMonthInfo extends BaseDepartmentPeopleMonthInfo
         month = :month and
         department_people_id = :department_people_id and
         department_people_replacement_id = :department_people_replacement_id and
-        department_id = :department_id";
+        department_id = :department_id and
+        replacement_type = :replacement_type";
 
     $stmt = $conn->prepare($query);
 
@@ -179,7 +197,8 @@ class DepartmentPeopleMonthInfo extends BaseDepartmentPeopleMonthInfo
         month = :month and
         department_people_id = :department_people_id and
         department_people_replacement_id = :department_people_replacement_id and
-        department_id = :department_id";
+        department_id = :department_id and
+        replacement_type = :replacement_type";
 
     $stmt = $conn->prepare($query);
 
@@ -189,6 +208,7 @@ class DepartmentPeopleMonthInfo extends BaseDepartmentPeopleMonthInfo
       ':department_people_id' => $this->getDepartmentPeopleId(),
       ':department_people_replacement_id' => $this->getDepartmentPeopleReplacementId(),
       ':department_id' => $this->getDepartmentId(),
+      ':replacement_type' => $this->getReplacementType(),
     );
 
     $stmt->execute($params);
@@ -201,7 +221,8 @@ class DepartmentPeopleMonthInfo extends BaseDepartmentPeopleMonthInfo
         year = :year and
         month = :month and
         department_people_id = :department_people_id and
-        department_people_replacement_id = :department_people_replacement_id";
+        department_people_replacement_id = :department_people_replacement_id and
+        replacement_type = :replacement_type";
 
     $stmt = $conn->prepare($query);
 
@@ -210,6 +231,7 @@ class DepartmentPeopleMonthInfo extends BaseDepartmentPeopleMonthInfo
       ':month' => $this->getMonth(),
       ':department_people_id' => $this->getDepartmentPeopleId(),
       ':department_people_replacement_id' => $this->getDepartmentPeopleReplacementId(),
+      ':replacement_type' => $this->getReplacementType(),
     );
 
     $stmt->execute($params);
@@ -295,5 +317,25 @@ class DepartmentPeopleMonthInfo extends BaseDepartmentPeopleMonthInfo
     return $this->getFineFloat() ?
            $this->getFineFloat() . '(' . $this->getFineTypeChar(). ')' . $this->getFineTypeKey() :
            '';
+  }
+
+  /**
+   * Find record by params
+   *
+   * @param mixed[] $params
+   *
+   * @return DepartmentPeopleMonthInfo
+   */
+  public static function findOne($params)
+  {
+    $q = Doctrine::getTable('DepartmentPeopleMonthInfo')
+      ->createQuery('dpmi')
+      ->addWhere('year = ?', $params['year'])
+      ->addWhere('month = ?', $params['month'])
+      ->addWhere('department_people_id = ?', $params['department_people_id'])
+      ->addWhere('department_people_replacement_id = ?', $params['department_people_replacement_id'])
+      ->addWhere('replacement_type = ?', $params['replacement_type']);
+
+    return $q->fetchOne();
   }
 }

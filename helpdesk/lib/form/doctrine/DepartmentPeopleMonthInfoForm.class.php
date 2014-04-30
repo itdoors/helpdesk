@@ -10,6 +10,9 @@
  */
 class DepartmentPeopleMonthInfoForm extends BaseDepartmentPeopleMonthInfoForm
 {
+  protected $isReplacementTypeChanged = false;
+  protected $objectToReplace = null;
+
   public function configure()
   {
     $this->i18n = sfContext::getInstance()->getI18N();
@@ -66,8 +69,18 @@ class DepartmentPeopleMonthInfoForm extends BaseDepartmentPeopleMonthInfoForm
       }
     }
 
-    $this->setWidget('is_substitution', new sfWidgetFormInputCheckbox());
-    $this->setValidator('is_substitution', new sfValidatorBoolean(array('required' => false)));
+    // Replacement type
+    $replacementChoices = array(
+      DepartmentPeople::REPLACEMENT_TYPE_REPLACEMENT => $this->i18n->__('Replacement'),
+      DepartmentPeople::REPLACEMENT_TYPE_SUBSTITUTION => $this->i18n->__('Substitution'),
+    );
+    $this->setWidget('replacement_type', new sfWidgetFormChoice(array(
+      'choices' => $replacementChoices
+    )));
+    $this->setValidator('replacement_type', new sfValidatorString(array(
+      'required' => false,
+    )));
+    // EOF Replacement type
 
     $this->setWidget('mpk_id', new sfWidgetFormDoctrineJQueryAutocompleter(array(
       'model'=>'Mpk',
@@ -213,9 +226,14 @@ class DepartmentPeopleMonthInfoForm extends BaseDepartmentPeopleMonthInfoForm
           new sfValidatorCallback(
             array(
               'callback' => array($this, 'checkSurchargeBonusFine'),
-            ))
+            )
+          ),
+          new sfValidatorCallback(
+            array(
+              'callback' => array($this, 'checkReplacementType'),
+            )
           )
-        )
+        ))
      );
 
     $this->validatorSchema->setOption('allow_extra_fields', true);
@@ -279,7 +297,7 @@ class DepartmentPeopleMonthInfoForm extends BaseDepartmentPeopleMonthInfoForm
     if ($object->getTypeId() != $replacementTypeId)
     {
       $object->setDepartmentPeopleReplacementId(0);
-      $object->setIsSubstitution(false);
+      //$object->setIsSubstitution(false);
       $object->save();
     }
 
@@ -298,6 +316,128 @@ class DepartmentPeopleMonthInfoForm extends BaseDepartmentPeopleMonthInfoForm
     }*/
 
     return $object;
+  }
+
+  /**
+   * Returns object to replace cz replacement_type part of PK.
+   * And that's why on change replacement type object became isNew == true
+   *
+   * @return DepartmentPeopleMonthInfo
+   */
+  public function getObjectToReplace()
+  {
+    return $this->objectToReplace;
+  }
+
+  /**
+   * Sets object to replace cz replacement_type part of PK.
+   * And that's why on change replacement type object became isNew == true
+   *
+   * @param DepartmentPeopleMonthInfo $object
+   */
+  public function setObjectToReplace($object)
+  {
+    $this->objectToReplace = clone $object;
+  }
+
+  /**
+   * Updates data in grafik & grafik_time table if replacement type where changed
+   *
+   * @return DepartmentPeopleMonthInfo $object
+   */
+  public function replacementTypeUpdate()
+  {
+    $values = $this->getValues();
+    $object = $this->getObjectToReplace();
+
+    $replacementTypeNew = $values['replacement_type'];
+    $replacementTypeOld = $object->getReplacementType();
+
+    $conn = Doctrine_Manager::getInstance()->connection();
+
+    $params = array(
+      ':year' => $object->getYear(),
+      ':month' => $object->getMonth(),
+      ':department_people_id' => $object->getDepartmentPeopleId(),
+      ':department_people_replacement_id' => $object->getDepartmentPeopleReplacementId(),
+      ':department_id' => $object->getDepartmentId(),
+      ':replacement_type_new' => $replacementTypeNew,
+      ':replacement_type_old' => $replacementTypeOld,
+    );
+
+    $query = "
+    UPDATE
+      grafik
+    SET
+      replacement_type = :replacement_type_new
+      where
+        year = :year and
+        month = :month and
+        department_people_id = :department_people_id and
+        department_people_replacement_id = :department_people_replacement_id and
+        department_id = :department_id and
+        replacement_type = :replacement_type_old";
+
+    $stmt = $conn->prepare($query);
+
+    $stmt->execute($params);
+
+    $query = "
+    UPDATE
+      grafik_time
+    SET
+      replacement_type = :replacement_type_new
+      where
+        year = :year and
+        month = :month and
+        department_people_id = :department_people_id and
+        department_people_replacement_id = :department_people_replacement_id and
+        department_id = :department_id and
+        replacement_type = :replacement_type_old";
+
+    $stmt = $conn->prepare($query);
+
+    $stmt->execute($params);
+
+    return $object;
+  }
+
+  /**
+   * When change replacement type from R to S or from S to R
+   * Checks if there is no person with other replacement type
+   */
+  public function checkReplacementType($validator, $values, $arguments)
+  {
+    if (!isset($values['replacement_type'])) {
+      $error = $this->i18n->__('There is no replacement type');
+      $this->setOption('replacementError', $error);
+      throw new sfValidatorError($validator, $error);
+    }
+
+    $replacementTypeNew = $values['replacement_type'];
+    $object = $this->getObject();
+
+    if ($replacementTypeNew != $object->getReplacementType()) {
+      // If person exists => throw exception
+      $params = $object->toArray();
+      $params['replacement_type'] = $replacementTypeNew;
+
+      /** @var DepartmentPeopleMonthInfo $person */
+      $person = DepartmentPeopleMonthInfo::findOne($params);
+
+      if ($person) {
+        $error = $this->i18n->__('Person with same data already exists');
+        $this->setOption('replacementError', $error);
+        throw new sfValidatorError($validator, $error);
+      } else {
+        // If changed set some variable to true and in form save
+        // Update grafik && grafik time with new replacement type
+        $this->isReplacementTypeChanged = true;
+        $this->setObjectToReplace($object);
+      }
+    }
+
+    return $values;
   }
 
   public function checkReplacement($validator, $values, $arguments)

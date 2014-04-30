@@ -393,6 +393,7 @@ $('.grafik_day_href').live('click', function (e){
   target.data('day', $(this).data('day'));
   target.data('people_id', $(this).data('people_id'));
   target.data('replacement_id', $(this).data('replacement_id'));
+  target.data('replacement_type', $(this).data('replacement_type'));
 
   var month_holder = $('#month_holder');
 
@@ -404,11 +405,12 @@ $('.grafik_day_href').live('click', function (e){
   data.day = $(this).data('day');
   data.department_people_id = $(this).data('people_id');
   data.department_people_replacement_id = $(this).data('replacement_id');
+  data.replacement_type = $(this).data('replacement_type');
   data.department_id = $('#grafik_holder').data('department_id');
 
   var url = $('#grafik_holder').data('grafik_day_url');
 
-  var targetRowId = '#' + data.year + '-' + data.month + '-' + data.department_id + '-' + data.department_people_id + '-' + data.department_people_replacement_id;
+  var targetRowId = '#' + data.year + '-' + data.month + '-' + data.department_id + '-' + data.department_people_id + '-' + data.department_people_replacement_id + '-' + data.replacement_type;
 
   //var targetRow = $(targetRowId);
 
@@ -574,6 +576,7 @@ $('.people_href').live('click', function (e){
   var url = grafikHolder.data('people_month_info_form_url');
   var id = $(this).data('id');
   var replacement_id = $(this).data('replacement_id');
+  var replacement_type = $(this).data('replacement_type');
   var department_id = grafikHolder.data('department_id');
   var year = monthHolder.data('year');
   var month = monthHolder.data('month');
@@ -587,6 +590,7 @@ $('.people_href').live('click', function (e){
     type: 'POST',
     data : {
       id: id,
+      replacement_type: replacement_type,
       replacement_id: replacement_id,
       department_id: department_id,
       year: year,
@@ -875,6 +879,7 @@ function updateGrafikRow(targetRowId)
   data.month = month_holder.data('month');
   data.department_people_id = targetRow.data('department_people_id');
   data.department_people_replacement_id = targetRow.data('department_people_replacement_id');
+  data.replacement_type = targetRow.data('replacement_type');
   data.department_id = $('#grafik_holder').data('department_id');
 
   var url = $('#grafik_holder').data('refresh_grafik_row_url');

@@ -39,7 +39,7 @@ abstract class BaseDepartmentPeopleMonthInfoForm extends BaseFormDoctrine
       'is_clean_salary'                  => new sfWidgetFormInputCheckbox(),
       'norma_days'                       => new sfWidgetFormInputText(),
       'department_people_replacement_id' => new sfWidgetFormInputHidden(),
-      'is_substitution'                  => new sfWidgetFormInputCheckbox(),
+      'replacement_type'                 => new sfWidgetFormInputHidden(),
       'real_salary'                      => new sfWidgetFormInputText(),
     ));
 
@@ -68,7 +68,7 @@ abstract class BaseDepartmentPeopleMonthInfoForm extends BaseFormDoctrine
       'is_clean_salary'                  => new sfValidatorBoolean(array('required' => false)),
       'norma_days'                       => new sfValidatorInteger(array('required' => false)),
       'department_people_replacement_id' => new sfValidatorChoice(array('choices' => array($this->getObject()->get('department_people_replacement_id')), 'empty_value' => $this->getObject()->get('department_people_replacement_id'), 'required' => false)),
-      'is_substitution'                  => new sfValidatorBoolean(array('required' => false)),
+      'replacement_type'                 => new sfValidatorChoice(array('choices' => array($this->getObject()->get('replacement_type')), 'empty_value' => $this->getObject()->get('replacement_type'), 'required' => false)),
       'real_salary'                      => new sfValidatorString(array('max_length' => 128, 'required' => false)),
     ));
 

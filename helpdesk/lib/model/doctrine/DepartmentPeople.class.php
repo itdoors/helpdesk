@@ -24,7 +24,11 @@ class DepartmentPeople extends BaseDepartmentPeople
   public $paramMonth;
   /** @var int $paramReplacementId */
   public $paramReplacementId;
+  /** @var string $paramReplacementId */
+  public $paramReplacementType;
 
+  const REPLACEMENT_TYPE_REPLACEMENT = 'r';
+  const REPLACEMENT_TYPE_SUBSTITUTION = 's';
   /*public function __construct($year = null, $month = null)
   {
     // $this->setYearMonth($year, $month);
@@ -233,10 +237,11 @@ class DepartmentPeople extends BaseDepartmentPeople
     $this->setParamReplacementId(0);
   }
 
-  public function setYearMonthReplacement($year = null, $month = null, $replacementId = 0)
+  public function setYearMonthReplacement($year = null, $month = null, $replacementId = 0, $replacementType = self::REPLACEMENT_TYPE_REPLACEMENT)
   {
     $this->setYearMonth($year, $month);
     $this->setParamReplacementId($replacementId);
+    $this->setParamReplacementType($replacementType);
   }
 
   public function setParamYear($year = null)
@@ -252,6 +257,11 @@ class DepartmentPeople extends BaseDepartmentPeople
   public function setParamReplacementId($replacementId = 0)
   {
     $this->paramReplacementId = $replacementId;
+  }
+
+  public function setParamReplacementType($replacementType = self::REPLACEMENT_TYPE_REPLACEMENT)
+  {
+    $this->paramReplacementType = $replacementType;
   }
 
   /**
@@ -279,6 +289,7 @@ class DepartmentPeople extends BaseDepartmentPeople
       ->createQuery('dpmi')
       ->where('dpmi.year = ?', $this->paramYear)
       ->addWhere('dpmi.month = ?', $this->paramMonth)
+      ->addWhere('dpmi.replacement_type = ?', $this->paramReplacementType)
       ->addWhere('dpmi.department_people_id = ?', $this->getId())
       ->addWhere('dpmi.department_people_replacement_id = ?', $this->paramReplacementId)
       ->fetchOne();
@@ -623,6 +634,17 @@ class DepartmentPeople extends BaseDepartmentPeople
     $monthInfo = $this->getMonthInfo();
 
     return $monthInfo ? $monthInfo->getDepartmentPeopleReplacementId() : 0;
+  }
+
+  /**
+   * Reloads getReplacementType from Month Info
+   */
+  public function getReplacementType()
+  {
+    /** @var DepartmentPeopleMonthInfo $monthInfo */
+    $monthInfo = $this->getMonthInfo();
+
+    return $monthInfo ? $monthInfo->getReplacementType() : self::REPLACEMENT_TYPE_REPLACEMENT;
   }
 
   /**

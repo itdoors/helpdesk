@@ -426,6 +426,7 @@ class entityActions extends sfActions
 
     $peopleId = $request->getParameter('id');
     $replacement_id = $request->getParameter('replacement_id');
+    $replacementType = $request->getParameter('replacement_type');
 
     $departmentId = $request->getParameter('department_id');
     $year = $request->getParameter('year');
@@ -439,6 +440,7 @@ class entityActions extends sfActions
         ->addWhere('dpmi.year = ? ', $year)
         ->addWhere('dpmi.month = ? ', $month)
         ->addWhere('dpmi.department_people_replacement_id = ? ', $replacement_id)
+        ->addWhere('dpmi.replacement_type = ? ', $replacementType)
         ->fetchOne();
 
       if (!$peopleMonthInfo)
@@ -448,6 +450,7 @@ class entityActions extends sfActions
         $peopleMonthInfo->setYear($year);
         $peopleMonthInfo->setMonth($month);
         $peopleMonthInfo->setDepartmentPeopleReplacementId($replacement_id);
+        $peopleMonthInfo->setReplacementType($replacementType);
         $peopleMonthInfo->save();
       }
 
@@ -640,6 +643,7 @@ class entityActions extends sfActions
         ->addWhere('dpmi.year = ?', $params['year'])
         ->addWhere('dpmi.month = ?', $params['month'])
         ->addWhere('dpmi.department_people_replacement_id = ?', $params['department_people_replacement_id'])
+        ->addWhere('dpmi.replacement_type = ?', $params['replacement_type'])
         ->fetchOne();
 
       /** @var DepartmentPeople $person */

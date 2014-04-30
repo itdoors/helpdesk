@@ -47,7 +47,8 @@ class GrafikTimeForm extends BaseGrafikTimeForm
       'day',
       'department_id',
       'department_people_id',
-      'department_people_replacement_id'
+      'department_people_replacement_id',
+      'replacement_type'
     ));
   }
 

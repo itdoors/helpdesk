@@ -20,13 +20,14 @@ class GrafikTable extends Doctrine_Table
   /**
    * Get DepartmentPeople Ids in current year month
    *
-   * @param int[] $departmentIds
-   * @param int $year
-   * @param int $month
-   * @param int $departmentPeopleId
-   * @param int $departmentPeopleReplacementId
-   * @param int $offset
-   * @param int $limit
+   * @param int[]   $departmentIds
+   * @param int     $year
+   * @param int     $month
+   * @param int     $departmentPeopleId
+   * @param int     $departmentPeopleReplacementId
+   * @param string  $replacementType
+   * @param int     $offset
+   * @param int     $limit
    * @return int[]
    */
   static public function getPeopleIds(
@@ -35,6 +36,7 @@ class GrafikTable extends Doctrine_Table
     $month,
     $departmentPeopleId = null,
     $departmentPeopleReplacementId = null,
+    $replacementType = '',
     $offset = 0,
     $limit = 0
   )
@@ -82,6 +84,12 @@ class GrafikTable extends Doctrine_Table
     {
       $query .= ' AND d.department_people_replacement_id = :department_people_replacement_id';
       $params[':department_people_replacement_id'] = $departmentPeopleReplacementId;
+    }
+
+    if ($replacementType)
+    {
+      $query .= ' AND d.replacement_type = :replacement_type';
+      $params[':replacement_type'] = $replacementType;
     }
 
     $query .= ' ORDER BY d2.last_name ASC ';
