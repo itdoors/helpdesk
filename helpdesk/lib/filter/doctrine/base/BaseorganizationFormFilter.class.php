@@ -30,6 +30,7 @@ abstract class BaseorganizationFormFilter extends BaseFormFilterDoctrine
       'scope_id'             => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Scope'), 'add_empty' => true)),
       'client_type_id'       => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('ClientType'), 'add_empty' => true)),
       'city_id'              => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('City'), 'add_empty' => true)),
+      'organization_sign_id' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('OrganizationSign'), 'add_empty' => true)),
       'client_list'          => new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'client')),
     ));
 
@@ -51,6 +52,7 @@ abstract class BaseorganizationFormFilter extends BaseFormFilterDoctrine
       'scope_id'             => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Scope'), 'column' => 'id')),
       'client_type_id'       => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('ClientType'), 'column' => 'id')),
       'city_id'              => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('City'), 'column' => 'id')),
+      'organization_sign_id' => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('OrganizationSign'), 'column' => 'id')),
       'client_list'          => new sfValidatorDoctrineChoice(array('multiple' => true, 'model' => 'client', 'required' => false)),
     ));
 
@@ -107,6 +109,7 @@ abstract class BaseorganizationFormFilter extends BaseFormFilterDoctrine
       'scope_id'             => 'ForeignKey',
       'client_type_id'       => 'ForeignKey',
       'city_id'              => 'ForeignKey',
+      'organization_sign_id' => 'ForeignKey',
       'client_list'          => 'ManyKey',
     );
   }

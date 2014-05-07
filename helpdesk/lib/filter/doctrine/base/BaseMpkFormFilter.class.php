@@ -13,13 +13,15 @@ abstract class BaseMpkFormFilter extends BaseFormFilterDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'name'          => new sfWidgetFormFilterInput(),
-      'department_id' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Department'), 'add_empty' => true)),
+      'name'                 => new sfWidgetFormFilterInput(),
+      'department_id'        => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Department'), 'add_empty' => true)),
+      'self_organization_id' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('SelfOrganization'), 'add_empty' => true)),
     ));
 
     $this->setValidators(array(
-      'name'          => new sfValidatorPass(array('required' => false)),
-      'department_id' => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Department'), 'column' => 'id')),
+      'name'                 => new sfValidatorPass(array('required' => false)),
+      'department_id'        => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Department'), 'column' => 'id')),
+      'self_organization_id' => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('SelfOrganization'), 'column' => 'id')),
     ));
 
     $this->widgetSchema->setNameFormat('mpk_filters[%s]');
@@ -39,9 +41,10 @@ abstract class BaseMpkFormFilter extends BaseFormFilterDoctrine
   public function getFields()
   {
     return array(
-      'id'            => 'Number',
-      'name'          => 'Text',
-      'department_id' => 'ForeignKey',
+      'id'                   => 'Number',
+      'name'                 => 'Text',
+      'department_id'        => 'ForeignKey',
+      'self_organization_id' => 'ForeignKey',
     );
   }
 }

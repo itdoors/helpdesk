@@ -30,6 +30,8 @@ class lookup extends Pluginlookup
   const DEPARTMENT_PEOPLE_TYPE_PERMANENT = 'department_people_type_permanent';
   const DEPARTMENT_PEOPLE_TYPE_REPLACEMENT = 'department_people_type';
 
+  const ORGANIZATION_SIGN_OWN = 'organization_sign_own';
+
   static public function getInstance()
   {
     return Doctrine::getTable('lookup')

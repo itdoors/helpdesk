@@ -15,15 +15,17 @@ abstract class BaseMpkForm extends BaseFormDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'id'            => new sfWidgetFormInputHidden(),
-      'name'          => new sfWidgetFormInputText(),
-      'department_id' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Department'), 'add_empty' => true)),
+      'id'                   => new sfWidgetFormInputHidden(),
+      'name'                 => new sfWidgetFormInputText(),
+      'department_id'        => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Department'), 'add_empty' => true)),
+      'self_organization_id' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('SelfOrganization'), 'add_empty' => true)),
     ));
 
     $this->setValidators(array(
-      'id'            => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id')), 'empty_value' => $this->getObject()->get('id'), 'required' => false)),
-      'name'          => new sfValidatorString(array('max_length' => 50, 'required' => false)),
-      'department_id' => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Department'), 'required' => false)),
+      'id'                   => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id')), 'empty_value' => $this->getObject()->get('id'), 'required' => false)),
+      'name'                 => new sfValidatorString(array('max_length' => 50, 'required' => false)),
+      'department_id'        => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Department'), 'required' => false)),
+      'self_organization_id' => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('SelfOrganization'), 'required' => false)),
     ));
 
     $this->validatorSchema->setPostValidator(

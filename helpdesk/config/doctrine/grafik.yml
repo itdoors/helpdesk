@@ -443,9 +443,16 @@ Mpk:
       unique: true
     department_id:
       type: integer
+    self_organization_id:
+      type: integer
   relations:
     Department:
       class: departments
       foreignAlias: DepartmentMpk
       local: department_id
+      foreign: id
+    SelfOrganization:
+      class: organization
+      foreignAlias: DepartmentMpk
+      local: self_organization_id
       foreign: id

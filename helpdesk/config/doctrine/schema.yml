@@ -54,6 +54,8 @@ organization:
       type: integer
     city_id:
       type: integer
+    organization_sign_id:
+      type: integer
 
   relations:
     OrganizationType:
@@ -81,6 +83,11 @@ organization:
       class: city
       foreignAlias: organization
       local: city_id
+      foreign: id
+    OrganizationSign:
+      class: lookup
+      foreignAlias: organization
+      local: organization_sign_id
       foreign: id
 
 OrganizationUser:

@@ -23,12 +23,15 @@
  * @property integer $scope_id
  * @property integer $client_type_id
  * @property integer $city_id
+ * @property integer $organization_sign_id
  * @property OrganizationType $OrganizationType
  * @property Doctrine_Collection $Departments
  * @property lookup $Scope
  * @property lookup $ClientType
  * @property city $City
+ * @property lookup $OrganizationSign
  * @property Doctrine_Collection $Dogovor
+ * @property Doctrine_Collection $DepartmentMpk
  * @property Doctrine_Collection $Handling
  * @property Doctrine_Collection $OrganizationUser
  * @property Doctrine_Collection $organization_importance
@@ -57,12 +60,15 @@
  * @method integer             getScopeId()                 Returns the current record's "scope_id" value
  * @method integer             getClientTypeId()            Returns the current record's "client_type_id" value
  * @method integer             getCityId()                  Returns the current record's "city_id" value
+ * @method integer             getOrganizationSignId()      Returns the current record's "organization_sign_id" value
  * @method OrganizationType    getOrganizationType()        Returns the current record's "OrganizationType" value
  * @method Doctrine_Collection getDepartments()             Returns the current record's "Departments" collection
  * @method lookup              getScope()                   Returns the current record's "Scope" value
  * @method lookup              getClientType()              Returns the current record's "ClientType" value
  * @method city                getCity()                    Returns the current record's "City" value
+ * @method lookup              getOrganizationSign()        Returns the current record's "OrganizationSign" value
  * @method Doctrine_Collection getDogovor()                 Returns the current record's "Dogovor" collection
+ * @method Doctrine_Collection getDepartmentMpk()           Returns the current record's "DepartmentMpk" collection
  * @method Doctrine_Collection getHandling()                Returns the current record's "Handling" collection
  * @method Doctrine_Collection getOrganizationUser()        Returns the current record's "OrganizationUser" collection
  * @method Doctrine_Collection getOrganizationImportance()  Returns the current record's "organization_importance" collection
@@ -90,12 +96,15 @@
  * @method organization        setScopeId()                 Sets the current record's "scope_id" value
  * @method organization        setClientTypeId()            Sets the current record's "client_type_id" value
  * @method organization        setCityId()                  Sets the current record's "city_id" value
+ * @method organization        setOrganizationSignId()      Sets the current record's "organization_sign_id" value
  * @method organization        setOrganizationType()        Sets the current record's "OrganizationType" value
  * @method organization        setDepartments()             Sets the current record's "Departments" collection
  * @method organization        setScope()                   Sets the current record's "Scope" value
  * @method organization        setClientType()              Sets the current record's "ClientType" value
  * @method organization        setCity()                    Sets the current record's "City" value
+ * @method organization        setOrganizationSign()        Sets the current record's "OrganizationSign" value
  * @method organization        setDogovor()                 Sets the current record's "Dogovor" collection
+ * @method organization        setDepartmentMpk()           Sets the current record's "DepartmentMpk" collection
  * @method organization        setHandling()                Sets the current record's "Handling" collection
  * @method organization        setOrganizationUser()        Sets the current record's "OrganizationUser" collection
  * @method organization        setOrganizationImportance()  Sets the current record's "organization_importance" collection
@@ -187,6 +196,9 @@ abstract class Baseorganization extends sfDoctrineRecord
         $this->hasColumn('city_id', 'integer', null, array(
              'type' => 'integer',
              ));
+        $this->hasColumn('organization_sign_id', 'integer', null, array(
+             'type' => 'integer',
+             ));
     }
 
     public function setUp()
@@ -212,9 +224,17 @@ abstract class Baseorganization extends sfDoctrineRecord
              'local' => 'city_id',
              'foreign' => 'id'));
 
+        $this->hasOne('lookup as OrganizationSign', array(
+             'local' => 'organization_sign_id',
+             'foreign' => 'id'));
+
         $this->hasMany('Dogovor', array(
              'local' => 'id',
              'foreign' => 'organization_id'));
+
+        $this->hasMany('Mpk as DepartmentMpk', array(
+             'local' => 'id',
+             'foreign' => 'self_organization_id'));
 
         $this->hasMany('Handling', array(
              'local' => 'id',

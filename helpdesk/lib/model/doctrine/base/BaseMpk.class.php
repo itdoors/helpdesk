@@ -8,19 +8,25 @@
  * @property integer $id
  * @property string $name
  * @property integer $department_id
+ * @property integer $self_organization_id
  * @property departments $Department
+ * @property organization $SelfOrganization
  * @property Doctrine_Collection $DepartmentPeople
  * 
- * @method integer             getId()               Returns the current record's "id" value
- * @method string              getName()             Returns the current record's "name" value
- * @method integer             getDepartmentId()     Returns the current record's "department_id" value
- * @method departments         getDepartment()       Returns the current record's "Department" value
- * @method Doctrine_Collection getDepartmentPeople() Returns the current record's "DepartmentPeople" collection
- * @method Mpk                 setId()               Sets the current record's "id" value
- * @method Mpk                 setName()             Sets the current record's "name" value
- * @method Mpk                 setDepartmentId()     Sets the current record's "department_id" value
- * @method Mpk                 setDepartment()       Sets the current record's "Department" value
- * @method Mpk                 setDepartmentPeople() Sets the current record's "DepartmentPeople" collection
+ * @method integer             getId()                   Returns the current record's "id" value
+ * @method string              getName()                 Returns the current record's "name" value
+ * @method integer             getDepartmentId()         Returns the current record's "department_id" value
+ * @method integer             getSelfOrganizationId()   Returns the current record's "self_organization_id" value
+ * @method departments         getDepartment()           Returns the current record's "Department" value
+ * @method organization        getSelfOrganization()     Returns the current record's "SelfOrganization" value
+ * @method Doctrine_Collection getDepartmentPeople()     Returns the current record's "DepartmentPeople" collection
+ * @method Mpk                 setId()                   Sets the current record's "id" value
+ * @method Mpk                 setName()                 Sets the current record's "name" value
+ * @method Mpk                 setDepartmentId()         Sets the current record's "department_id" value
+ * @method Mpk                 setSelfOrganizationId()   Sets the current record's "self_organization_id" value
+ * @method Mpk                 setDepartment()           Sets the current record's "Department" value
+ * @method Mpk                 setSelfOrganization()     Sets the current record's "SelfOrganization" value
+ * @method Mpk                 setDepartmentPeople()     Sets the current record's "DepartmentPeople" collection
  * 
  * @package    helpdesk
  * @subpackage model
@@ -45,6 +51,9 @@ abstract class BaseMpk extends sfDoctrineRecord
         $this->hasColumn('department_id', 'integer', null, array(
              'type' => 'integer',
              ));
+        $this->hasColumn('self_organization_id', 'integer', null, array(
+             'type' => 'integer',
+             ));
     }
 
     public function setUp()
@@ -52,6 +61,10 @@ abstract class BaseMpk extends sfDoctrineRecord
         parent::setUp();
         $this->hasOne('departments as Department', array(
              'local' => 'department_id',
+             'foreign' => 'id'));
+
+        $this->hasOne('organization as SelfOrganization', array(
+             'local' => 'self_organization_id',
              'foreign' => 'id'));
 
         $this->hasMany('DepartmentPeople', array(
