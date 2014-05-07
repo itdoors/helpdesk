@@ -1456,6 +1456,18 @@
             <source>Is substitution</source>
             <target>Совмещение</target>
         </trans-unit>
+        <trans-unit>
+            <source>Replacement type</source>
+            <target>Тип замены/совмещения</target>
+        </trans-unit>
+        <trans-unit>
+            <source>Replacement</source>
+            <target>Замена</target>
+        </trans-unit>
+        <trans-unit>
+            <source>Substitution</source>
+            <target>Совмещение</target>
+        </trans-unit>
     </body>
   </file>
 </xliff>
