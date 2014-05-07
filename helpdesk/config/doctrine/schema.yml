@@ -281,11 +281,6 @@ departments:
       local: status_id
       foreign: id
     Opermanager:
-      class: DepartmentsStatus
-      foreignAlias: Departments
-      local: status_id
-      foreign: id
-    Opermanager:
       class: sfGuardUser
       foreignAlias: Departments
       local: opermanager_id

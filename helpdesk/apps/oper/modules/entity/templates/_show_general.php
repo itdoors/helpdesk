@@ -12,7 +12,7 @@
 <table>
   <tr>
     <td width="100">MPK</td>
-    <td><?php echo $department->getMpk()?>
+    <td><?php echo $department->getMpksString()?>
       <?php
       /*if ($sf_user->hasCredential('admin'))
       {

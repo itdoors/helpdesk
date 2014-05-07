@@ -171,4 +171,37 @@ class departments extends Basedepartments
   {
     return $this->getOpermanager() . ' ';
   }
+
+  /**
+   * Returns mpks collection)
+   *
+   * @return Doctrine_Collection|Mpk[]
+   */
+  public function getMpks()
+  {
+    return Doctrine::getTable('Mpk')
+      ->createQuery('m')
+      ->where('department_id = ?', $this->getId())
+      ->execute();
+  }
+
+  /**
+   * Returns mpks array()
+   *
+   * @return Doctrine_Collection|Mpk[]
+   */
+  public function getMpksArray()
+  {
+    return $this->getMpks()->toKeyValueArray('id', 'name');
+  }
+
+  /**
+   * Returns mpks string with coma separator
+   *
+   * @return string
+   */
+  public function getMpksString()
+  {
+    return implode(', ', $this->getMpksArray());
+  }
 }
