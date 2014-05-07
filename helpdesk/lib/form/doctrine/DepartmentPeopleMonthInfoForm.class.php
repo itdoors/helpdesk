@@ -229,11 +229,11 @@ class DepartmentPeopleMonthInfoForm extends BaseDepartmentPeopleMonthInfoForm
               'callback' => array($this, 'checkSurchargeBonusFine'),
             )
           ),
-          new sfValidatorCallback(
+          /*new sfValidatorCallback(
             array(
               'callback' => array($this, 'checkReplacementType'),
             )
-          )
+          )*/
         ))
      );
 
