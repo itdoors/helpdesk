@@ -12,20 +12,24 @@
 <table>
   <tr>
     <td width="100">MPK</td>
-    <td><?php 
-      echo 
-      !$can_edit ? $department->getMpk() : 
-      get_component('Fmodel','ajax_field_change',
-      array(
-        'where' => array(
-          'id'=> $department->getId(),
-        ),
-        'model' => 'departments',
-        'field' => 'mpk',
-        'toString' =>'getMpk',
-        'default' => $department->getMpk(),
-        )
-     )?></td>
+    <td><?php echo $department->getMpk()?>
+      <?php
+      /*if ($sf_user->hasCredential('admin'))
+      {
+        echo
+        !$can_edit ? $department->getMpk() :
+        get_component('Fmodel','ajax_field_change',
+        array(
+          'where' => array(
+            'id'=> $department->getId(),
+          ),
+          'model' => 'departments',
+          'field' => 'mpk',
+          'toString' =>'getMpk',
+          'default' => $department->getMpk(),
+          )
+        );
+      }*/?></td>
   </tr>
   <tr>
     <td width="100"><?php echo __("Organization")?></td>
