@@ -99,6 +99,8 @@ class DepartmentPeople extends BaseDepartmentPeople
    */
   public function getFullName()
   {
+    $i18n = sfContext::getInstance()->getI18N();
+
     $individualInfo = $this->getIndividualInfo();
 
     if ($individualInfo->getLastName() || $individualInfo->getFirstName() || $individualInfo->getMiddleName())
@@ -117,11 +119,11 @@ class DepartmentPeople extends BaseDepartmentPeople
     if (sfContext::getInstance()->getUser()->hasCredential('admin')) {
       $id = $this->getId();
       $fullName = $this->_data['last_name'] . ' ' . $this->_data['middle_name'] . ' ' . $this->_data['first_name'];
-      return __('No individual data') . "({$id} {$fullName})";
+      return $i18n->__('No individual data') . "({$id} {$fullName})";
     }
     // EOF Temp information
 
-    return __('No individual data');
+    return $i18n->__('No individual data');
   }
 
   /**
