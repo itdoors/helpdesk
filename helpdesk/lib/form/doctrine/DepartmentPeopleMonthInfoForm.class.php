@@ -16,6 +16,7 @@ class DepartmentPeopleMonthInfoForm extends BaseDepartmentPeopleMonthInfoForm
   public function configure()
   {
     $this->i18n = sfContext::getInstance()->getI18N();
+    sfContext::getInstance()->getConfiguration()->loadHelpers('url');
 
     $isNew = $this->isNew();
 
