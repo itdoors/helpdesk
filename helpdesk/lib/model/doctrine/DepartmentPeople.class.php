@@ -118,7 +118,7 @@ class DepartmentPeople extends BaseDepartmentPeople
     // Temp information. delete when dev-grafik will be merged with master
     if (sfContext::getInstance()->getUser()->hasCredential('admin')) {
       $id = $this->getId();
-      $fullName = $this->_data['last_name'] . ' ' . $this->_data['middle_name'] . ' ' . $this->_data['first_name'];
+      $fullName = $this->_data['last_name'] . ' ' . $this->_data['first_name'] . ' ' . $this->_data['middle_name'];
       return $i18n->__('No individual data') . "({$id} {$fullName})";
     }
     // EOF Temp information
