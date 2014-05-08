@@ -35,7 +35,7 @@ abstract class BaseIndividualForm extends BaseFormDoctrine
       'last_name'   => new sfValidatorString(array('max_length' => 128, 'required' => false)),
       'birthday'    => new sfValidatorDate(array('required' => false)),
       'tin'         => new sfValidatorString(array('max_length' => 24, 'required' => false)),
-      'passport'    => new sfValidatorString(array('max_length' => 8, 'required' => false)),
+      'passport'    => new sfValidatorString(array('max_length' => 10, 'required' => false)),
       'phone'       => new sfValidatorString(array('max_length' => 32, 'required' => false)),
       'address'     => new sfValidatorString(array('max_length' => 128, 'required' => false)),
     ));

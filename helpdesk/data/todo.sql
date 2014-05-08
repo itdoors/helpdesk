@@ -1585,3 +1585,14 @@ ALTER TABLE grafik_time ALTER COLUMN replacement_type SET NOT NULL;
 
 
 -------- EOF SUBSTITUTION-------------
+
+
+ALTER TABLE department_people DROP COLUMN guid;
+ALTER TABLE department_people ADD COLUMN admission_date_not_officially date;
+ALTER TABLE department_people ADD COLUMN dismissal_date_not_officially date;
+ALTER TABLE department_people ADD COLUMN guid_department_people uuid;
+ALTER TABLE department_people ADD COLUMN guid_individual uuid;
+update department_people set admission_date_not_officially = admission_date where admission_date is not null;
+
+
+

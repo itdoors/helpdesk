@@ -36,8 +36,11 @@
  * @property string $address
  * @property date $admission_date
  * @property date $dismissal_date
+ * @property date $admission_date_not_officially
+ * @property date $dismissal_date_not_officially
  * @property integer $individual_id
- * @property string $guid
+ * @property string $guid_department_people
+ * @property string $guid_individual
  * @property string $passport
  * @property integer $mpk_id
  * @property Individual $Individual
@@ -50,94 +53,100 @@
  * @property Doctrine_Collection $DepartmentPeopleMonthInfo
  * @property Doctrine_Collection $Grafik
  * 
- * @method integer                  getId()                        Returns the current record's "id" value
- * @method integer                  getDepartmentId()              Returns the current record's "department_id" value
- * @method string                   getName()                      Returns the current record's "name" value
- * @method string                   getFirstName()                 Returns the current record's "first_name" value
- * @method string                   getMiddleName()                Returns the current record's "middle_name" value
- * @method string                   getLastName()                  Returns the current record's "last_name" value
- * @method string                   getSalary()                    Returns the current record's "salary" value
- * @method string                   getNumber()                    Returns the current record's "number" value
- * @method string                   getPersonCode()                Returns the current record's "person_code" value
- * @method string                   getPositionString()            Returns the current record's "position_string" value
- * @method integer                  getPositionId()                Returns the current record's "position_id" value
- * @method integer                  getYear()                      Returns the current record's "year" value
- * @method integer                  getMonth()                     Returns the current record's "month" value
- * @method date                     getBirthday()                  Returns the current record's "birthday" value
- * @method integer                  getTypeId()                    Returns the current record's "type_id" value
- * @method string                   getTypeString()                Returns the current record's "type_string" value
- * @method integer                  getEmploymentTypeId()          Returns the current record's "employment_type_id" value
- * @method integer                  getSalaryTypeId()              Returns the current record's "salary_type_id" value
- * @method string                   getContacts()                  Returns the current record's "contacts" value
- * @method string                   getPhone()                     Returns the current record's "phone" value
- * @method float                    getBonus()                     Returns the current record's "bonus" value
- * @method float                    getFine()                      Returns the current record's "fine" value
- * @method boolean                  getIsCleanSalary()             Returns the current record's "is_clean_salary" value
- * @method integer                  getNormaDays()                 Returns the current record's "norma_days" value
- * @method integer                  getParentId()                  Returns the current record's "parent_id" value
- * @method boolean                  getIsFromOneC()                Returns the current record's "is_from_one_c" value
- * @method boolean                  getIsApproved()                Returns the current record's "is_approved" value
- * @method string                   getDrfo()                      Returns the current record's "drfo" value
- * @method string                   getAddress()                   Returns the current record's "address" value
- * @method date                     getAdmissionDate()             Returns the current record's "admission_date" value
- * @method date                     getDismissalDate()             Returns the current record's "dismissal_date" value
- * @method integer                  getIndividualId()              Returns the current record's "individual_id" value
- * @method string                   getGuid()                      Returns the current record's "guid" value
- * @method string                   getPassport()                  Returns the current record's "passport" value
- * @method integer                  getMpkId()                     Returns the current record's "mpk_id" value
- * @method Individual               getIndividual()                Returns the current record's "Individual" value
- * @method Mpk                      getMpk()                       Returns the current record's "Mpk" value
- * @method departments              getDepartment()                Returns the current record's "Department" value
- * @method DepartmentPeoplePosition getPosition()                  Returns the current record's "Position" value
- * @method lookup                   getLookup()                    Returns the current record's "Lookup" value
- * @method DepartmentPeople         getParent()                    Returns the current record's "Parent" value
- * @method Doctrine_Collection      getDepartmentPeople()          Returns the current record's "DepartmentPeople" collection
- * @method Doctrine_Collection      getDepartmentPeopleMonthInfo() Returns the current record's "DepartmentPeopleMonthInfo" collection
- * @method Doctrine_Collection      getGrafik()                    Returns the current record's "Grafik" collection
- * @method DepartmentPeople         setId()                        Sets the current record's "id" value
- * @method DepartmentPeople         setDepartmentId()              Sets the current record's "department_id" value
- * @method DepartmentPeople         setName()                      Sets the current record's "name" value
- * @method DepartmentPeople         setFirstName()                 Sets the current record's "first_name" value
- * @method DepartmentPeople         setMiddleName()                Sets the current record's "middle_name" value
- * @method DepartmentPeople         setLastName()                  Sets the current record's "last_name" value
- * @method DepartmentPeople         setSalary()                    Sets the current record's "salary" value
- * @method DepartmentPeople         setNumber()                    Sets the current record's "number" value
- * @method DepartmentPeople         setPersonCode()                Sets the current record's "person_code" value
- * @method DepartmentPeople         setPositionString()            Sets the current record's "position_string" value
- * @method DepartmentPeople         setPositionId()                Sets the current record's "position_id" value
- * @method DepartmentPeople         setYear()                      Sets the current record's "year" value
- * @method DepartmentPeople         setMonth()                     Sets the current record's "month" value
- * @method DepartmentPeople         setBirthday()                  Sets the current record's "birthday" value
- * @method DepartmentPeople         setTypeId()                    Sets the current record's "type_id" value
- * @method DepartmentPeople         setTypeString()                Sets the current record's "type_string" value
- * @method DepartmentPeople         setEmploymentTypeId()          Sets the current record's "employment_type_id" value
- * @method DepartmentPeople         setSalaryTypeId()              Sets the current record's "salary_type_id" value
- * @method DepartmentPeople         setContacts()                  Sets the current record's "contacts" value
- * @method DepartmentPeople         setPhone()                     Sets the current record's "phone" value
- * @method DepartmentPeople         setBonus()                     Sets the current record's "bonus" value
- * @method DepartmentPeople         setFine()                      Sets the current record's "fine" value
- * @method DepartmentPeople         setIsCleanSalary()             Sets the current record's "is_clean_salary" value
- * @method DepartmentPeople         setNormaDays()                 Sets the current record's "norma_days" value
- * @method DepartmentPeople         setParentId()                  Sets the current record's "parent_id" value
- * @method DepartmentPeople         setIsFromOneC()                Sets the current record's "is_from_one_c" value
- * @method DepartmentPeople         setIsApproved()                Sets the current record's "is_approved" value
- * @method DepartmentPeople         setDrfo()                      Sets the current record's "drfo" value
- * @method DepartmentPeople         setAddress()                   Sets the current record's "address" value
- * @method DepartmentPeople         setAdmissionDate()             Sets the current record's "admission_date" value
- * @method DepartmentPeople         setDismissalDate()             Sets the current record's "dismissal_date" value
- * @method DepartmentPeople         setIndividualId()              Sets the current record's "individual_id" value
- * @method DepartmentPeople         setGuid()                      Sets the current record's "guid" value
- * @method DepartmentPeople         setPassport()                  Sets the current record's "passport" value
- * @method DepartmentPeople         setMpkId()                     Sets the current record's "mpk_id" value
- * @method DepartmentPeople         setIndividual()                Sets the current record's "Individual" value
- * @method DepartmentPeople         setMpk()                       Sets the current record's "Mpk" value
- * @method DepartmentPeople         setDepartment()                Sets the current record's "Department" value
- * @method DepartmentPeople         setPosition()                  Sets the current record's "Position" value
- * @method DepartmentPeople         setLookup()                    Sets the current record's "Lookup" value
- * @method DepartmentPeople         setParent()                    Sets the current record's "Parent" value
- * @method DepartmentPeople         setDepartmentPeople()          Sets the current record's "DepartmentPeople" collection
- * @method DepartmentPeople         setDepartmentPeopleMonthInfo() Sets the current record's "DepartmentPeopleMonthInfo" collection
- * @method DepartmentPeople         setGrafik()                    Sets the current record's "Grafik" collection
+ * @method integer                  getId()                            Returns the current record's "id" value
+ * @method integer                  getDepartmentId()                  Returns the current record's "department_id" value
+ * @method string                   getName()                          Returns the current record's "name" value
+ * @method string                   getFirstName()                     Returns the current record's "first_name" value
+ * @method string                   getMiddleName()                    Returns the current record's "middle_name" value
+ * @method string                   getLastName()                      Returns the current record's "last_name" value
+ * @method string                   getSalary()                        Returns the current record's "salary" value
+ * @method string                   getNumber()                        Returns the current record's "number" value
+ * @method string                   getPersonCode()                    Returns the current record's "person_code" value
+ * @method string                   getPositionString()                Returns the current record's "position_string" value
+ * @method integer                  getPositionId()                    Returns the current record's "position_id" value
+ * @method integer                  getYear()                          Returns the current record's "year" value
+ * @method integer                  getMonth()                         Returns the current record's "month" value
+ * @method date                     getBirthday()                      Returns the current record's "birthday" value
+ * @method integer                  getTypeId()                        Returns the current record's "type_id" value
+ * @method string                   getTypeString()                    Returns the current record's "type_string" value
+ * @method integer                  getEmploymentTypeId()              Returns the current record's "employment_type_id" value
+ * @method integer                  getSalaryTypeId()                  Returns the current record's "salary_type_id" value
+ * @method string                   getContacts()                      Returns the current record's "contacts" value
+ * @method string                   getPhone()                         Returns the current record's "phone" value
+ * @method float                    getBonus()                         Returns the current record's "bonus" value
+ * @method float                    getFine()                          Returns the current record's "fine" value
+ * @method boolean                  getIsCleanSalary()                 Returns the current record's "is_clean_salary" value
+ * @method integer                  getNormaDays()                     Returns the current record's "norma_days" value
+ * @method integer                  getParentId()                      Returns the current record's "parent_id" value
+ * @method boolean                  getIsFromOneC()                    Returns the current record's "is_from_one_c" value
+ * @method boolean                  getIsApproved()                    Returns the current record's "is_approved" value
+ * @method string                   getDrfo()                          Returns the current record's "drfo" value
+ * @method string                   getAddress()                       Returns the current record's "address" value
+ * @method date                     getAdmissionDate()                 Returns the current record's "admission_date" value
+ * @method date                     getDismissalDate()                 Returns the current record's "dismissal_date" value
+ * @method date                     getAdmissionDateNotOfficially()    Returns the current record's "admission_date_not_officially" value
+ * @method date                     getDismissalDateNotOfficially()    Returns the current record's "dismissal_date_not_officially" value
+ * @method integer                  getIndividualId()                  Returns the current record's "individual_id" value
+ * @method string                   getGuidDepartmentPeople()          Returns the current record's "guid_department_people" value
+ * @method string                   getGuidIndividual()                Returns the current record's "guid_individual" value
+ * @method string                   getPassport()                      Returns the current record's "passport" value
+ * @method integer                  getMpkId()                         Returns the current record's "mpk_id" value
+ * @method Individual               getIndividual()                    Returns the current record's "Individual" value
+ * @method Mpk                      getMpk()                           Returns the current record's "Mpk" value
+ * @method departments              getDepartment()                    Returns the current record's "Department" value
+ * @method DepartmentPeoplePosition getPosition()                      Returns the current record's "Position" value
+ * @method lookup                   getLookup()                        Returns the current record's "Lookup" value
+ * @method DepartmentPeople         getParent()                        Returns the current record's "Parent" value
+ * @method Doctrine_Collection      getDepartmentPeople()              Returns the current record's "DepartmentPeople" collection
+ * @method Doctrine_Collection      getDepartmentPeopleMonthInfo()     Returns the current record's "DepartmentPeopleMonthInfo" collection
+ * @method Doctrine_Collection      getGrafik()                        Returns the current record's "Grafik" collection
+ * @method DepartmentPeople         setId()                            Sets the current record's "id" value
+ * @method DepartmentPeople         setDepartmentId()                  Sets the current record's "department_id" value
+ * @method DepartmentPeople         setName()                          Sets the current record's "name" value
+ * @method DepartmentPeople         setFirstName()                     Sets the current record's "first_name" value
+ * @method DepartmentPeople         setMiddleName()                    Sets the current record's "middle_name" value
+ * @method DepartmentPeople         setLastName()                      Sets the current record's "last_name" value
+ * @method DepartmentPeople         setSalary()                        Sets the current record's "salary" value
+ * @method DepartmentPeople         setNumber()                        Sets the current record's "number" value
+ * @method DepartmentPeople         setPersonCode()                    Sets the current record's "person_code" value
+ * @method DepartmentPeople         setPositionString()                Sets the current record's "position_string" value
+ * @method DepartmentPeople         setPositionId()                    Sets the current record's "position_id" value
+ * @method DepartmentPeople         setYear()                          Sets the current record's "year" value
+ * @method DepartmentPeople         setMonth()                         Sets the current record's "month" value
+ * @method DepartmentPeople         setBirthday()                      Sets the current record's "birthday" value
+ * @method DepartmentPeople         setTypeId()                        Sets the current record's "type_id" value
+ * @method DepartmentPeople         setTypeString()                    Sets the current record's "type_string" value
+ * @method DepartmentPeople         setEmploymentTypeId()              Sets the current record's "employment_type_id" value
+ * @method DepartmentPeople         setSalaryTypeId()                  Sets the current record's "salary_type_id" value
+ * @method DepartmentPeople         setContacts()                      Sets the current record's "contacts" value
+ * @method DepartmentPeople         setPhone()                         Sets the current record's "phone" value
+ * @method DepartmentPeople         setBonus()                         Sets the current record's "bonus" value
+ * @method DepartmentPeople         setFine()                          Sets the current record's "fine" value
+ * @method DepartmentPeople         setIsCleanSalary()                 Sets the current record's "is_clean_salary" value
+ * @method DepartmentPeople         setNormaDays()                     Sets the current record's "norma_days" value
+ * @method DepartmentPeople         setParentId()                      Sets the current record's "parent_id" value
+ * @method DepartmentPeople         setIsFromOneC()                    Sets the current record's "is_from_one_c" value
+ * @method DepartmentPeople         setIsApproved()                    Sets the current record's "is_approved" value
+ * @method DepartmentPeople         setDrfo()                          Sets the current record's "drfo" value
+ * @method DepartmentPeople         setAddress()                       Sets the current record's "address" value
+ * @method DepartmentPeople         setAdmissionDate()                 Sets the current record's "admission_date" value
+ * @method DepartmentPeople         setDismissalDate()                 Sets the current record's "dismissal_date" value
+ * @method DepartmentPeople         setAdmissionDateNotOfficially()    Sets the current record's "admission_date_not_officially" value
+ * @method DepartmentPeople         setDismissalDateNotOfficially()    Sets the current record's "dismissal_date_not_officially" value
+ * @method DepartmentPeople         setIndividualId()                  Sets the current record's "individual_id" value
+ * @method DepartmentPeople         setGuidDepartmentPeople()          Sets the current record's "guid_department_people" value
+ * @method DepartmentPeople         setGuidIndividual()                Sets the current record's "guid_individual" value
+ * @method DepartmentPeople         setPassport()                      Sets the current record's "passport" value
+ * @method DepartmentPeople         setMpkId()                         Sets the current record's "mpk_id" value
+ * @method DepartmentPeople         setIndividual()                    Sets the current record's "Individual" value
+ * @method DepartmentPeople         setMpk()                           Sets the current record's "Mpk" value
+ * @method DepartmentPeople         setDepartment()                    Sets the current record's "Department" value
+ * @method DepartmentPeople         setPosition()                      Sets the current record's "Position" value
+ * @method DepartmentPeople         setLookup()                        Sets the current record's "Lookup" value
+ * @method DepartmentPeople         setParent()                        Sets the current record's "Parent" value
+ * @method DepartmentPeople         setDepartmentPeople()              Sets the current record's "DepartmentPeople" collection
+ * @method DepartmentPeople         setDepartmentPeopleMonthInfo()     Sets the current record's "DepartmentPeopleMonthInfo" collection
+ * @method DepartmentPeople         setGrafik()                        Sets the current record's "Grafik" collection
  * 
  * @package    helpdesk
  * @subpackage model
@@ -260,16 +269,26 @@ abstract class BaseDepartmentPeople extends sfDoctrineRecord
         $this->hasColumn('dismissal_date', 'date', null, array(
              'type' => 'date',
              ));
+        $this->hasColumn('admission_date_not_officially', 'date', null, array(
+             'type' => 'date',
+             ));
+        $this->hasColumn('dismissal_date_not_officially', 'date', null, array(
+             'type' => 'date',
+             ));
         $this->hasColumn('individual_id', 'integer', null, array(
              'type' => 'integer',
              ));
-        $this->hasColumn('guid', 'string', 32, array(
+        $this->hasColumn('guid_department_people', 'string', 32, array(
              'type' => 'string',
              'length' => 32,
              ));
-        $this->hasColumn('passport', 'string', 8, array(
+        $this->hasColumn('guid_individual', 'string', 32, array(
              'type' => 'string',
-             'length' => 8,
+             'length' => 32,
+             ));
+        $this->hasColumn('passport', 'string', 10, array(
+             'type' => 'string',
+             'length' => 10,
              ));
         $this->hasColumn('mpk_id', 'integer', null, array(
              'type' => 'integer',

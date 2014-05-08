@@ -92,9 +92,15 @@ DepartmentPeople:
       type: date
     dismissal_date:
       type: date
+    admission_date_not_officially:
+      type: date
+    dismissal_date_not_officially:
+      type: date
     individual_id:
       type: integer
-    guid:
+    guid_department_people:
+      type: string(32)
+    guid_individual:
       type: string(32)
     passport:
       type: string(10)
