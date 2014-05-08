@@ -327,6 +327,7 @@ class entityComponents extends sfComponents
   {
     $query = Doctrine::getTable('DepartmentPeople')
       ->createQuery('dp')
+      ->leftJoin('dp.Individual i')
       ->where('dp.parent_id is null')
       ->andWhere('dp.department_id = ?', $this->department->getId())
       ->offset($this->offset)
@@ -341,7 +342,7 @@ class entityComponents extends sfComponents
         break;
       case 0:
         $query
-          ->orderBy('dp.last_name ASC');
+          ->orderBy('i.last_name ASC');
         break;
     }
 
