@@ -17,7 +17,7 @@ Individual:
     tin:
       type: string(24)
     passport:
-      type: string(8)
+      type: string(10)
     phone:
       type: string(32)
     address:
@@ -97,7 +97,7 @@ DepartmentPeople:
     guid:
       type: string(32)
     passport:
-      type: string(8)
+      type: string(10)
     mpk_id:
       type: integer
   relations:
