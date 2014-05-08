@@ -149,7 +149,7 @@ class GrafikTimeForm extends BaseGrafikTimeForm
 
   public function checkIsOfficial($validator, $values, $arguments)
   {
-    if ($values['not_officially'] == true) {
+    if ($values['not_officially'] == false) {
       /** @var DepartmentPeople $person */
       $person = Doctrine::getTable('DepartmentPeople')->findOneBy('id', $values['department_people_id']);
 

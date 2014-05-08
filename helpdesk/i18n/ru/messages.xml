@@ -1468,6 +1468,10 @@
             <source>Substitution</source>
             <target>Совмещение</target>
         </trans-unit>
+        <trans-unit>
+            <source>Invalid. Person can't work officially</source>
+            <target>Возможна работа только по типу "Подряд"</target>
+        </trans-unit>
     </body>
   </file>
 </xliff>

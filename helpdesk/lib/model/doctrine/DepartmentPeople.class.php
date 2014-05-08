@@ -1049,7 +1049,11 @@ class DepartmentPeople extends BaseDepartmentPeople
       return false;
     }
 
-    if ($this->getDismissalDate() > date('Y-m-d') && date('Y-m-d') > $this->getAdmissionDate()) {
+    if ($this->getDismissalDate() && $this->getDismissalDate() < date('Y-m-d')) {
+      return false;
+    }
+
+    if (date('Y-m-d') > $this->getAdmissionDate()) {
       return true;
     }
 
