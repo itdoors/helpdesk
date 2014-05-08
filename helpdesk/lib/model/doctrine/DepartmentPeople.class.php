@@ -91,6 +91,8 @@ class DepartmentPeople extends BaseDepartmentPeople
 
     $this->individualInfo = $this->getIndividual();
 
+    $this->individualInfo = !is_null($this->individualInfo) ? $this->individualInfo : new Individual();
+
     return $this->individualInfo;
   }
 
@@ -103,7 +105,7 @@ class DepartmentPeople extends BaseDepartmentPeople
 
     $individualInfo = $this->getIndividualInfo();
 
-    if ($individualInfo->getLastName() || $individualInfo->getFirstName() || $individualInfo->getMiddleName())
+    if ($individualInfo && ($individualInfo->getLastName() || $individualInfo->getFirstName() || $individualInfo->getMiddleName()))
     {
       $mpk = $this->getMpk();
 
@@ -1030,6 +1032,28 @@ class DepartmentPeople extends BaseDepartmentPeople
   public function getBaseSalary()
   {
     return $this->_data['salary'];
+  }
+
+  /**
+   * Is official depending on number && admission_date && dismissal_date
+   *
+   * @return bool
+   */
+  public function isOfficial()
+  {
+    if ($this->getNumber()) {
+      return true;
+    }
+
+    if (!$this->getAdmissionDate()) {
+      return false;
+    }
+
+    if ($this->getDismissalDate() > date('Y-m-d') && date('Y-m-d') > $this->getAdmissionDate()) {
+      return true;
+    }
+
+    return false;
   }
 }
 

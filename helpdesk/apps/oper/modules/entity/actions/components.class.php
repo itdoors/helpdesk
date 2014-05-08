@@ -342,7 +342,7 @@ class entityComponents extends sfComponents
         break;
       case 0:
         $query
-          ->orderBy('i.last_name ASC');
+          ->orderBy('dp.last_name ASC');
         break;
     }
 

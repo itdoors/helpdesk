@@ -28,7 +28,19 @@ class GrafikTimeForm extends BaseGrafikTimeForm
     $this->setValidator('department_people_replacement_id', new sfValidatorInteger());
 
     $this->validatorSchema->setPostValidator(
-      new sfValidatorCallback(array('callback' => array($this, 'checkTime')))
+      new sfValidatorAnd(
+        array(
+          new sfValidatorCallback(
+            array(
+              'callback' => array($this, 'checkTime'),
+            )
+          ),
+          new sfValidatorCallback(
+            array(
+              'callback' => array($this, 'checkIsOfficial'),
+            )
+          )
+        ))
     );
 
     if ($this->getObject()->isNew())
@@ -129,6 +141,31 @@ class GrafikTimeForm extends BaseGrafikTimeForm
       {
         $error = $this->i18n->__('Invalid. Enter correct time range. From-to time error');
         throw new sfValidatorError($validator, $error);
+      }
+    }
+
+    return $values;
+  }
+
+  public function checkIsOfficial($validator, $values, $arguments)
+  {
+    if ($values['not_officially'] == true) {
+      /** @var DepartmentPeople $person */
+      $person = Doctrine::getTable('DepartmentPeople')->findOneBy('id', $values['department_people_id']);
+
+      if (!$person->isOfficial()) {
+        $error = $this->i18n->__("Invalid. Person can't work officially");
+        throw new sfValidatorError($validator, $error);
+      }
+
+      if ($values['department_people_replacement_id']) {
+        /** @var DepartmentPeople $personReplacement */
+        $personReplacement  = Doctrine::getTable('DepartmentPeople')->findOneBy('id', $values['department_people_replacement_id']);
+
+        if (!$personReplacement->isOfficial()) {
+          $error = $this->i18n->__("Invalid. Person can't work officially");
+          throw new sfValidatorError($validator, $error);
+        }
       }
     }
 
