@@ -476,7 +476,7 @@ class entityActions extends sfActions
     }
 
 
-    return $this->renderPartial('entity/peopleMonthInfoForm', array('peopleMonthInfoForm' => $peopleMonthInfoForm));
+    return $this->renderPartial('entity/peopleMonthInfoHolder', array('peopleMonthInfoForm' => $peopleMonthInfoForm));
   }
   
   public function executeGrafik_form_submit(sfWebRequest $request)

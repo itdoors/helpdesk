@@ -1596,3 +1596,8 @@ update department_people set admission_date_not_officially = admission_date wher
 
 
 
+CREATE TABLE planned_accrual (id BIGSERIAL, name VARCHAR(100) NOT NULL, code VARCHAR(10) NOT NULL, period DATE NOT NULL, type VARCHAR(10) NOT NULL, value VARCHAR(100) NOT NULL, department_people_id BIGINT NOT NULL, PRIMARY KEY(id));
+ALTER TABLE planned_accrual
+  ADD CONSTRAINT department_people_id_fk FOREIGN KEY (department_people_id)
+      REFERENCES department_people (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION;

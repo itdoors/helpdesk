@@ -148,6 +148,37 @@ DepartmentPeople:
       local: parent_id
       foreign: id
 
+PlannedAccrual:
+  columns:
+    id:
+      primary: true
+      type: integer
+      autoincrement: true
+    name:
+      type: string(100)
+      notnull: true
+    code:
+      type: string(10)
+      notnull: true
+    period:
+      type: date
+      notnull: true
+    type:
+      type: string(10)
+      notnull: true
+    value:
+      type: string(100)
+      notnull: true
+    department_people_id:
+      type: integer
+      notnull: true
+  relations:
+    DepartmentPeople:
+      class: DepartmentPeople
+      foreignAlias: PlannedAccrual
+      local: department_people_id
+      foreign: id
+
 DepartmentPeopleMonthInfo:
   columns:
     department_people_id:

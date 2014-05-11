@@ -355,5 +355,16 @@ class entityComponents extends sfComponents
 
     $this->departmentId = $this->department->getId();
   }
+
+  public function executePlannedAccrual()
+  {
+    $this->plannedAccrualOfficially = $this->departmentPeopleMonthInfo->getPlannedAccrualOfficially();
+    $this->plannedAccrualNotOfficially = $this->departmentPeopleMonthInfo->getPlannedAccrualNotOfficially();
+  }
+
+  public function executeWorkInformation()
+  {
+    $this->departmentPeople = $this->departmentPeopleMonthInfo->getDepartmentPeople();
+  }
 }
 

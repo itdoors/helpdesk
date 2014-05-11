@@ -21,8 +21,6 @@
     //echo $peopleMonthInfoForm['department_people_parent_id']->renderRow();
   }
 
-  echo $peopleMonthInfoForm['salary']->renderRow();
-  echo $peopleMonthInfoForm['position_id']->renderRow();
   echo $peopleMonthInfoForm['type_id']->renderRow();
   echo $peopleMonthInfoForm['type_string']->renderRow(); ?>
 

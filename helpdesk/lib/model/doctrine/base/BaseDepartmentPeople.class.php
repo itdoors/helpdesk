@@ -50,6 +50,7 @@
  * @property lookup $Lookup
  * @property DepartmentPeople $Parent
  * @property Doctrine_Collection $DepartmentPeople
+ * @property Doctrine_Collection $PlannedAccrual
  * @property Doctrine_Collection $DepartmentPeopleMonthInfo
  * @property Doctrine_Collection $Grafik
  * 
@@ -98,6 +99,7 @@
  * @method lookup                   getLookup()                        Returns the current record's "Lookup" value
  * @method DepartmentPeople         getParent()                        Returns the current record's "Parent" value
  * @method Doctrine_Collection      getDepartmentPeople()              Returns the current record's "DepartmentPeople" collection
+ * @method Doctrine_Collection      getPlannedAccrual()                Returns the current record's "PlannedAccrual" collection
  * @method Doctrine_Collection      getDepartmentPeopleMonthInfo()     Returns the current record's "DepartmentPeopleMonthInfo" collection
  * @method Doctrine_Collection      getGrafik()                        Returns the current record's "Grafik" collection
  * @method DepartmentPeople         setId()                            Sets the current record's "id" value
@@ -145,6 +147,7 @@
  * @method DepartmentPeople         setLookup()                        Sets the current record's "Lookup" value
  * @method DepartmentPeople         setParent()                        Sets the current record's "Parent" value
  * @method DepartmentPeople         setDepartmentPeople()              Sets the current record's "DepartmentPeople" collection
+ * @method DepartmentPeople         setPlannedAccrual()                Sets the current record's "PlannedAccrual" collection
  * @method DepartmentPeople         setDepartmentPeopleMonthInfo()     Sets the current record's "DepartmentPeopleMonthInfo" collection
  * @method DepartmentPeople         setGrafik()                        Sets the current record's "Grafik" collection
  * 
@@ -325,6 +328,10 @@ abstract class BaseDepartmentPeople extends sfDoctrineRecord
         $this->hasMany('DepartmentPeople', array(
              'local' => 'id',
              'foreign' => 'parent_id'));
+
+        $this->hasMany('PlannedAccrual', array(
+             'local' => 'id',
+             'foreign' => 'department_people_id'));
 
         $this->hasMany('DepartmentPeopleMonthInfo', array(
              'local' => 'id',

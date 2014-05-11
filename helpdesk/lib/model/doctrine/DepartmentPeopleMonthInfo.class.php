@@ -338,4 +338,41 @@ class DepartmentPeopleMonthInfo extends BaseDepartmentPeopleMonthInfo
 
     return $q->fetchOne();
   }
+
+  /**
+   * Return planned accrual base
+   *
+   * @param string $key
+   *
+   * @return PlannedAccrual[]
+   */
+  public function getPlannedAccrualBase($key)
+  {
+    return Doctrine::getTable('PlannedAccrual')
+      ->createQuery('pa')
+      ->where('pa.type = ?', $key)
+      ->andWhere('pa.department_people_id = ?', $this->getDepartmentPeopleId())
+      ->orderBy('pa.period DESC')
+      ->execute();
+  }
+
+  /**
+   * Return planned accrual officially
+   *
+   * @return PlannedAccrual[]
+   */
+  public function getPlannedAccrualOfficially()
+  {
+    return $this->getPlannedAccrualBase(PlannedAccrual::TYPE_OFFICIALLY);
+  }
+
+  /**
+   * Return planned accrual not officially
+   *
+   * @return PlannedAccrual[]
+   */
+  public function getPlannedAccrualNotOfficially()
+  {
+    return $this->getPlannedAccrualBase(PlannedAccrual::TYPE_NOT_OFFICIALLY);
+  }
 }
