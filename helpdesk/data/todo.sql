@@ -1601,3 +1601,8 @@ ALTER TABLE planned_accrual
   ADD CONSTRAINT department_people_id_fk FOREIGN KEY (department_people_id)
       REFERENCES department_people (id) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION;
+
+
+ALTER TABLE individual ADD COLUMN merged_at timestamp without time zone;
+ALTER TABLE department_people ADD COLUMN created_at timestamp without time zone;
+ALTER TABLE department_people ADD COLUMN merged_at timestamp without time zone;
