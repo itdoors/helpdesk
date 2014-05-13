@@ -153,6 +153,11 @@ class GrafikTimeForm extends BaseGrafikTimeForm
       /** @var DepartmentPeople $person */
       $person = Doctrine::getTable('DepartmentPeople')->findOneBy('id', $values['department_people_id']);
 
+      $person->setParamMonth($values['month']);
+      $person->setParamYear($values['year']);
+      $person->setParamReplacementId($values['department_people_replacement_id']);
+      $person->setParamReplacementType($values['replacement_type']);
+
       if (!$person->isOfficial()) {
         $error = $this->i18n->__("Invalid. Person can't work officially");
         throw new sfValidatorError($validator, $error);
