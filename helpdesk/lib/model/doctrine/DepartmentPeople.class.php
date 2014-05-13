@@ -1041,7 +1041,7 @@ class DepartmentPeople extends BaseDepartmentPeople
    */
   public function isOfficial()
   {
-    if ($this->getTypeLukey() == Lookup::EMPLOYMENT_TYPE_A) {
+    if ($this->getEmploymentTypeLukey() == Lookup::EMPLOYMENT_TYPE_A) {
       return true;
     }
 
