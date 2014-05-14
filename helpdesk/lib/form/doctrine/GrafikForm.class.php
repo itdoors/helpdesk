@@ -97,6 +97,8 @@ class GrafikForm extends BaseGrafikForm
       'required' => false
     )));
 
+    $this->setValidator('replacement_type', new sfValidatorString());
+
     $this->validatorSchema->setOption('allow_extra_fields', true);
     $this->validatorSchema->setOption('filter_extra_fields', false);
 
