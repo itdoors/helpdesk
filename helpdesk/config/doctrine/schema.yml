@@ -1228,6 +1228,7 @@ District:
       foreign: id
    
 HelpdeskGuid:
+  tableName: helpdesk_1Cguid
   columns:
     helpdesk_name:
       primary: true
@@ -1241,4 +1242,28 @@ HelpdeskGuid:
       primary: true
       type: string(32)
       notnull: true
+
+HelpdeskProtocol:
+  columns:
+    table_name:
+      type: string(100)
+      notnull: true
+    table_id:
+      type: integer
+      notnull: true
+    field_name:
+      type: string(100)
+      notnull: true
+    value_before:
+      type: string(100)
+      notnull: true
+    value_after:
+      type: string(100)
+      notnull: true
+    created_at:
+      type: timestamp
+      notnull: true
+
+
+
 
