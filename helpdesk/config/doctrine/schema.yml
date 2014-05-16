@@ -1228,7 +1228,7 @@ District:
       foreign: id
    
 HelpdeskGuid:
-  tableName: helpdesk_1Cguid
+  tableName: helpdesk_1cguid
   columns:
     helpdesk_name:
       primary: true
@@ -1245,10 +1245,15 @@ HelpdeskGuid:
 
 HelpdeskProtocol:
   columns:
-    table_name:
+    id:
+      primary: true
+      type: integer
+      notnull: true
+      autoincrement: true
+    model_name:
       type: string(100)
       notnull: true
-    table_id:
+    model_id:
       type: integer
       notnull: true
     field_name:
@@ -1263,6 +1268,8 @@ HelpdeskProtocol:
     created_at:
       type: timestamp
       notnull: true
+    action:
+      type: string(100)
 
 
 
