@@ -61,6 +61,7 @@
          data-day="<?php echo $grafik->getDay()?>"
          data-people_id="<?php echo $grafik->getDepartmentPeopleId()?>"
          data-replacement_id="<?php echo $grafik->getDepartmentPeopleReplacementId()?>"
+         data-replacement_type="<?php echo $grafik->getReplacementType()?>"
         >
         <?php echo __('Edit')?>
       </a>

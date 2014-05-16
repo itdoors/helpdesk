@@ -20,6 +20,8 @@ class GrafikTimeForm extends BaseGrafikTimeForm
     $this->setWidget('to_time', new helpdeskWidgetFormTime());
     $this->getWidget('to_time')->setOption('range_type', 'to');
 
+    $this->setWidget('replacement_type', new sfWidgetFormInputHidden());
+
     $this->setValidator('year', new sfValidatorInteger());
     $this->setValidator('month', new sfValidatorInteger());
     $this->setValidator('day', new sfValidatorInteger());
@@ -150,22 +152,32 @@ class GrafikTimeForm extends BaseGrafikTimeForm
   public function checkIsOfficial($validator, $values, $arguments)
   {
     if ($values['not_officially'] == false) {
-      /** @var DepartmentPeople $person */
-      $person = Doctrine::getTable('DepartmentPeople')->findOneBy('id', $values['department_people_id']);
 
-      $person->setParamMonth($values['month']);
-      $person->setParamYear($values['year']);
-      $person->setParamReplacementId($values['department_people_replacement_id']);
-      $person->setParamReplacementType($values['replacement_type']);
+      $object = $values;
+
+      if (isset($values['id']) && $values['id'])
+      {
+        $object = Doctrine::getTable('GrafikTime')->findOneBy('id', $values['id']);
+
+        $object = $object->toArray();
+      }
+
+      /** @var DepartmentPeople $person */
+      $person = Doctrine::getTable('DepartmentPeople')->findOneBy('id', $object['department_people_id']);
+
+      $person->setParamMonth($object['month']);
+      $person->setParamYear($object['year']);
+      $person->setParamReplacementId($object['department_people_replacement_id']);
+      $person->setParamReplacementType($object['replacement_type']);
 
       if (!$person->isOfficial()) {
         $error = $this->i18n->__("Invalid. Person can't work officially");
         throw new sfValidatorError($validator, $error);
       }
 
-      if ($values['department_people_replacement_id']) {
+      if ($object['department_people_replacement_id']) {
         /** @var DepartmentPeople $personReplacement */
-        $personReplacement  = Doctrine::getTable('DepartmentPeople')->findOneBy('id', $values['department_people_replacement_id']);
+        $personReplacement  = Doctrine::getTable('DepartmentPeople')->findOneBy('id', $object['department_people_replacement_id']);
 
         if (!$personReplacement->isOfficial()) {
           $error = $this->i18n->__("Invalid. Person can't work officially");
@@ -180,6 +192,7 @@ class GrafikTimeForm extends BaseGrafikTimeForm
   public function unsetDefaults()
   {
     unset(
+     $this['replacement_type'],
      $this['department_id'],
      $this['department_people_id'],
      $this['department_people_replacement_id'],

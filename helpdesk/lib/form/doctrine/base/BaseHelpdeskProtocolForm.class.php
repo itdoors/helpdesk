@@ -19,8 +19,8 @@ abstract class BaseHelpdeskProtocolForm extends BaseFormDoctrine
       'model_name'   => new sfWidgetFormInputText(),
       'model_id'     => new sfWidgetFormInputText(),
       'field_name'   => new sfWidgetFormInputText(),
-      'value_before' => new sfWidgetFormInputText(),
-      'value_after'  => new sfWidgetFormInputText(),
+      'value_before' => new sfWidgetFormTextarea(),
+      'value_after'  => new sfWidgetFormTextarea(),
       'created_at'   => new sfWidgetFormDateTime(),
       'action'       => new sfWidgetFormInputText(),
     ));
@@ -30,8 +30,8 @@ abstract class BaseHelpdeskProtocolForm extends BaseFormDoctrine
       'model_name'   => new sfValidatorString(array('max_length' => 100)),
       'model_id'     => new sfValidatorInteger(),
       'field_name'   => new sfValidatorString(array('max_length' => 100)),
-      'value_before' => new sfValidatorString(array('max_length' => 100)),
-      'value_after'  => new sfValidatorString(array('max_length' => 100)),
+      'value_before' => new sfValidatorString(),
+      'value_after'  => new sfValidatorString(),
       'created_at'   => new sfValidatorDateTime(),
       'action'       => new sfValidatorString(array('max_length' => 100, 'required' => false)),
     ));

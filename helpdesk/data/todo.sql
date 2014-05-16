@@ -1594,5 +1594,45 @@ ALTER TABLE department_people ADD COLUMN guid_department_people uuid;
 ALTER TABLE department_people ADD COLUMN guid_individual uuid;
 update department_people set admission_date_not_officially = admission_date where admission_date is not null;
 
+CREATE OR REPLACE FUNCTION log_people_merge()
+  RETURNS trigger AS
+$BODY$
+DECLARE
+	valueOld text;
+	valueNew text;
+BEGIN
+	valueOld = '';
 
+	IF TG_OP = 'UPDATE' THEN
+		valueOld = OLD;
+	END IF;
 
+	valueNew = NEW;
+
+	INSERT INTO helpdesk_protocol (model_name, model_id, field_name, value_before, value_after, created_at, action)
+	VALUES (TG_TABLE_NAME, NEW.ID, TG_OP, valueOld, valueNew, now(), TG_OP);
+
+	return NEW;
+END;
+$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
+
+  CREATE TRIGGER individual_log_people_merge_trigger
+	AFTER INSERT OR UPDATE ON individual
+    FOR EACH ROW EXECUTE PROCEDURE log_people_merge();
+
+  CREATE TRIGGER department_people_log_people_merge_trigger
+	AFTER INSERT OR UPDATE ON department_people
+    FOR EACH ROW EXECUTE PROCEDURE log_people_merge();
+
+  CREATE TRIGGER helpdesk_1cguid_log_people_merge_trigger
+	AFTER INSERT OR UPDATE ON helpdesk_1cguid
+    FOR EACH ROW EXECUTE PROCEDURE log_people_merge();
+
+  CREATE TRIGGER planned_accrual_log_people_merge_trigger
+	AFTER INSERT OR UPDATE ON planned_accrual
+    FOR EACH ROW EXECUTE PROCEDURE log_people_merge();
+
+GRANT ALL ON table helpdesk_protocol TO "1c";
+GRANT USAGE, SELECT ON SEQUENCE helpdesk_protocol_id_seq TO "1c";

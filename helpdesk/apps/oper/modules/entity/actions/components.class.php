@@ -314,6 +314,7 @@ class entityComponents extends sfComponents
       ->addWhere('department_id = ?', $params['department_id'])
       ->addWhere('department_people_id = ?', $params['department_people_id'])
       ->addWhere('department_people_replacement_id = ?', $params['department_people_replacement_id'])
+      ->addWhere('replacement_type = ?', $params['replacement_type'])
       ->orderBy('from_time ASC')
       ->execute();
   }

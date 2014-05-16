@@ -499,6 +499,7 @@ $('.grafik_href').live('click', function (e){
   data.day = $(this).data('day');
   data.department_people_id = $(this).data('people_id');
   data.department_people_replacement_id = $(this).data('replacement_id');
+  data.replacement_type = $(this).data('replacement_type');
   data.department_id = $('#grafik_holder').data('department_id');
   var url = $('#grafik_holder').data('grafik_time_form_url');
   
@@ -708,6 +709,7 @@ function refreshGrafikDayList()
   data.day = grafik_day_holder.data('day');
   data.department_people_id = grafik_day_holder.data('people_id');
   data.department_people_replacement_id = grafik_day_holder.data('replacement_id');
+  data.replacement_type = grafik_day_holder.data('replacement_type');
   data.department_id = $('#grafik_holder').data('department_id');
 
   var url = $('#grafik_holder').data('refresh_grafik_day_list_url');

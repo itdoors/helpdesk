@@ -60,15 +60,13 @@ abstract class BaseHelpdeskProtocol extends sfDoctrineRecord
              'notnull' => true,
              'length' => 100,
              ));
-        $this->hasColumn('value_before', 'string', 100, array(
+        $this->hasColumn('value_before', 'string', null, array(
              'type' => 'string',
              'notnull' => true,
-             'length' => 100,
              ));
-        $this->hasColumn('value_after', 'string', 100, array(
+        $this->hasColumn('value_after', 'string', null, array(
              'type' => 'string',
              'notnull' => true,
-             'length' => 100,
              ));
         $this->hasColumn('created_at', 'timestamp', null, array(
              'type' => 'timestamp',
