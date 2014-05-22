@@ -1636,3 +1636,102 @@ $BODY$
 
 GRANT ALL ON table helpdesk_protocol TO "1c";
 GRANT USAGE, SELECT ON SEQUENCE helpdesk_protocol_id_seq TO "1c";
+
+--Delete duplicated department_people
+SELECT
+	dp.id,
+	dp.last_name,
+	dp.first_name,
+	dp.department_id,
+	dp.mpk_id,
+	dp.individual_id,
+	dpmi.year,
+	dpmi.month
+FROM
+	department_people dp
+LEFT OUTER JOIN
+	department_people_month_info dpmi ON dpmi.department_people_id = dp.id
+WHERE
+	department_id = 657 AND
+	individual_id = 3332 AND
+	mpk_id = 836 AND
+	dpmi.year IS NULL AND
+	dpmi.month IS NULL
+
+
+CREATE OR REPLACE VIEW duplicate_individual_mpk_department as
+SELECT
+	department_id, mpk_id, individual_id, count(id) as count_id
+FROM
+	department_people
+GROUP BY
+	department_id, mpk_id, individual_id
+HAVING
+	count(id) > 1;
+
+CREATE OR REPLACE FUNCTION delete_old_department_people()
+  RETURNS integer AS
+$BODY$
+DECLARE
+	dpRow department_people%ROWTYPE;
+	dpDeepRow department_people%ROWTYPE;
+	totalCount int;
+BEGIN
+	totalCount = 0;
+	FOR dpRow IN SELECT * FROM department_people WHERE parent_id IS NOT NULL
+	LOOP
+		FOR dpDeepRow IN SELECT * FROM department_people WHERE parent_id = dpRow.id
+		LOOP
+			PERFORM delete_department_people(dpDeepRow.id::integer);
+			totalCount = totalCount + 1;
+		END LOOP;
+
+		PERFORM delete_department_people(dpRow.id::integer);
+		totalCount = totalCount + 1;
+	END LOOP;
+	RETURN totalCount;
+END$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
+
+ SELECT delete_old_department_people();
+
+ CREATE OR REPLACE FUNCTION process_duplicate_department_people_delete()
+  RETURNS integer AS
+$BODY$
+DECLARE
+	dRow RECORD;
+	dpRow department_people%ROWTYPE;
+	totalCount int;
+BEGIN
+	totalCount = 0;
+	FOR dRow IN SELECT * FROM duplicate_individual_mpk_department
+	LOOP
+		FOR dpRow IN
+			SELECT
+				dp.id
+			FROM
+				department_people dp
+			LEFT OUTER JOIN
+				department_people_month_info dpmi ON dpmi.department_people_id = dp.id
+			WHERE
+				department_id = dRow.department_id AND
+				individual_id = dRow.individual_id AND
+				mpk_id = dRow.mpk_id AND
+				dpmi.year IS NULL AND
+				dpmi.month IS NULL
+		LOOP
+			PERFORM delete_department_people(dpRow.id::integer);
+			totalCount = totalCount + 1;
+		END LOOP;
+		totalCount = totalCount + 1;
+	END LOOP;
+	RETURN totalCount;
+END$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
+
+ select process_duplicate_department_people_delete();
+--EOFDelete duplicated department_people
+
+

@@ -111,7 +111,15 @@ class DepartmentPeople extends BaseDepartmentPeople
 
       $mpk = $mpk ? ' ('.$mpk.')' : '';
 
-      return  $individualInfo->getLastName() . ' ' .
+
+      $id = '';
+      // Temp information. delete when dev-grafik will be merged with master
+      if (sfContext::getInstance()->getUser()->hasCredential('admin')) {
+        $id = $this->getId() . ' ';
+      }
+
+      return  $id .
+              $individualInfo->getLastName() . ' ' .
               $individualInfo->getFirstName() . ' ' .
               $individualInfo->getMiddleName() .
               $mpk;
