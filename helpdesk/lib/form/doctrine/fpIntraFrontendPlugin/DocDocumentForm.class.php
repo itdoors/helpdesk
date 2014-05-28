@@ -23,12 +23,19 @@ class DocDocumentForm extends PluginDocDocumentForm
       } else
       {
          $this->setWidget('category_id', new sfWidgetFormDoctrineChoiceTree(array('model' => $this->getRelatedModelName('Category'),'table_method' => 'getParentTree','method'=>'getTreeElement', 'add_empty' => true))); 
-      }     
+      }
+
+      $this->setWidget('enddate', new sfWidgetFormJQueryDate(array(
+        'config' => '{}',
+        'culture' => 'ru',
+        'date_widget' => new sfWidgetFormDate(array('format' => '%day%%month%%year%',), array('style'=>'min-width:70px;'))
+      )));
       
       $this->setValidator('category_id', new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Category'), 'required' => false)));
       $this->useFields(array(
         'name',
         'description',
+        'enddate',
         'tags',
         'category_id',
         //'user_id'

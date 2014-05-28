@@ -9,6 +9,7 @@
  * @property string $name
  * @property string $description
  * @property timestamp $createdatetime
+ * @property date $enddate
  * @property string $tags
  * @property integer $user_id
  * @property integer $category_id
@@ -22,6 +23,7 @@
  * @method string              getName()               Returns the current record's "name" value
  * @method string              getDescription()        Returns the current record's "description" value
  * @method timestamp           getCreatedatetime()     Returns the current record's "createdatetime" value
+ * @method date                getEnddate()            Returns the current record's "enddate" value
  * @method string              getTags()               Returns the current record's "tags" value
  * @method integer             getUserId()             Returns the current record's "user_id" value
  * @method integer             getCategoryId()         Returns the current record's "category_id" value
@@ -34,6 +36,7 @@
  * @method DocDocument         setName()               Sets the current record's "name" value
  * @method DocDocument         setDescription()        Sets the current record's "description" value
  * @method DocDocument         setCreatedatetime()     Sets the current record's "createdatetime" value
+ * @method DocDocument         setEnddate()            Sets the current record's "enddate" value
  * @method DocDocument         setTags()               Sets the current record's "tags" value
  * @method DocDocument         setUserId()             Sets the current record's "user_id" value
  * @method DocDocument         setCategoryId()         Sets the current record's "category_id" value
@@ -58,10 +61,10 @@ abstract class BaseDocDocument extends sfDoctrineRecord
              'type' => 'integer',
              'autoincrement' => true,
              ));
-        $this->hasColumn('name', 'string', 100, array(
+        $this->hasColumn('name', 'string', 255, array(
              'type' => 'string',
              'notnull' => true,
-             'length' => 100,
+             'length' => 255,
              ));
         $this->hasColumn('description', 'string', 255, array(
              'type' => 'string',
@@ -69,6 +72,9 @@ abstract class BaseDocDocument extends sfDoctrineRecord
              ));
         $this->hasColumn('createdatetime', 'timestamp', null, array(
              'type' => 'timestamp',
+             ));
+        $this->hasColumn('enddate', 'date', null, array(
+             'type' => 'date',
              ));
         $this->hasColumn('tags', 'string', 255, array(
              'type' => 'string',

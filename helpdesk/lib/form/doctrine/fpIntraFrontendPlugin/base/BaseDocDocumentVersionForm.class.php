@@ -27,7 +27,7 @@ abstract class BaseDocDocumentVersionForm extends BaseFormDoctrine
 
     $this->setValidators(array(
       'id'             => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id')), 'empty_value' => $this->getObject()->get('id'), 'required' => false)),
-      'name'           => new sfValidatorString(array('max_length' => 100)),
+      'name'           => new sfValidatorString(array('max_length' => 255)),
       'filepath'       => new sfValidatorString(array('max_length' => 255)),
       'mime_type'      => new sfValidatorString(array('max_length' => 50, 'required' => false)),
       'createdatetime' => new sfValidatorDateTime(array('required' => false)),

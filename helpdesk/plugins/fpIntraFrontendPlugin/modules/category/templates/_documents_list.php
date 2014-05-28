@@ -6,6 +6,7 @@
     <th><?php echo __('Name')?></th>
     <th><?php echo __('Last document version')?></th>
     <th><?php echo __('Last version date')?></th>
+    <th><?php echo __('Enddate')?></th>
     <th><?php echo __('Actions')?></th>
   </thead>
 <?php endif;?>
@@ -34,6 +35,7 @@
     <?php } else //echo $document->getName()?>
       </td>
       <td><?php echo format_date($document->getCreatedatetime())?></td>
+      <td><?php echo format_date($document->getEnddate())?></td>
       <td>
     <?php
     if (!$document->getIsdeleted()) {

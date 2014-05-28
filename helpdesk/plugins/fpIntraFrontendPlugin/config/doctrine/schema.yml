@@ -69,12 +69,14 @@ DocDocument:
       notnull: true
       autoincrement: true
     name:
-      type: string(100)
+      type: string(255)
       notnull: true
     description:
       type: string(255)
     createdatetime:
       type: timestamp
+    enddate:
+      type: date
     tags:
       type: string(255)
     user_id:
@@ -112,7 +114,7 @@ DocDocumentVersion:
       notnull: true
       autoincrement: true
     name:
-      type: string(100)
+      type: string(255)
       notnull: true
     filepath:
       type: string(255)

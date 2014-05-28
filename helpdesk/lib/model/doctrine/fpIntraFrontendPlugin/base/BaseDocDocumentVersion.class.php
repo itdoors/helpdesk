@@ -55,10 +55,10 @@ abstract class BaseDocDocumentVersion extends sfDoctrineRecord
              'type' => 'integer',
              'autoincrement' => true,
              ));
-        $this->hasColumn('name', 'string', 100, array(
+        $this->hasColumn('name', 'string', 255, array(
              'type' => 'string',
              'notnull' => true,
-             'length' => 100,
+             'length' => 255,
              ));
         $this->hasColumn('filepath', 'string', 255, array(
              'type' => 'string',

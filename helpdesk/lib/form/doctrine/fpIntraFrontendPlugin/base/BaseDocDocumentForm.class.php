@@ -19,6 +19,7 @@ abstract class BaseDocDocumentForm extends BaseFormDoctrine
       'name'           => new sfWidgetFormInputText(),
       'description'    => new sfWidgetFormInputText(),
       'createdatetime' => new sfWidgetFormDateTime(),
+      'enddate'        => new sfWidgetFormDate(),
       'tags'           => new sfWidgetFormInputText(),
       'user_id'        => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Users'), 'add_empty' => false)),
       'category_id'    => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Category'), 'add_empty' => false)),
@@ -27,9 +28,10 @@ abstract class BaseDocDocumentForm extends BaseFormDoctrine
 
     $this->setValidators(array(
       'id'             => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id')), 'empty_value' => $this->getObject()->get('id'), 'required' => false)),
-      'name'           => new sfValidatorString(array('max_length' => 100)),
+      'name'           => new sfValidatorString(array('max_length' => 255)),
       'description'    => new sfValidatorString(array('max_length' => 255, 'required' => false)),
       'createdatetime' => new sfValidatorDateTime(array('required' => false)),
+      'enddate'        => new sfValidatorDate(array('required' => false)),
       'tags'           => new sfValidatorString(array('max_length' => 255, 'required' => false)),
       'user_id'        => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Users'))),
       'category_id'    => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Category'))),
