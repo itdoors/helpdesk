@@ -1,5 +1,3 @@
-<h1></h2>
-
 <?php foreach ($categories as $category): ?>
     <?php if (!$category->getIsdeleted()) {?>
        <a href="<?php echo url_for('category/index?parent_id='.$category->getId()) ?>" class="folder">
@@ -20,6 +18,6 @@
         
     //} else echo link_to_if(DocDocumentGroup::hasPermmisions() == 'action_all',__('Return'), 'category/restore?id='.$category->getId(), array('method' => 'put', 'confirm' => 'Are you sure?','style'=>"font-size: 9px;"));  
     } else echo link_to(__('Return'), 'category/restore?id='.$category->getId(), array('method' => 'put', 'confirm' => __('Are you sure?'),'style'=>"font-size: 9px;"));  
-    ?> 
-      
+    ?>
+  <br />
 <?php endforeach; ?>

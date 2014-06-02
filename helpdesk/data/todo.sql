@@ -1734,4 +1734,35 @@ END$BODY$
  select process_duplicate_department_people_delete();
 --EOFDelete duplicated department_people
 
+-------INTRANET MESS DELETE
+--1
+update doc_document_group set isdeleted = true where parent_id in (
+	select id from doc_document_group where isdeleted = true
+);
+--2
+update doc_document_group set isdeleted = true where parent_id in (
+	select id from doc_document_group where isdeleted = true
+);
+--3
+update doc_document_group set isdeleted = true where parent_id in (
+	select id from doc_document_group where isdeleted = true
+);
+-- doc document
+update doc_document set isdeleted = true where category_id in (
+	select id from doc_document_group where isdeleted = true
+);
+
+update doc_document_version set isdeleted = true where document_id in (
+	select id from doc_document where isdeleted = true
+);
+
+delete from doc_document_group_sf_users where docdocumentgroup_id in (
+	select id from doc_document_group where isdeleted = true
+);
+
+delete from doc_document_version where isdeleted = true;
+delete from doc_document where isdeleted = true;
+delete from doc_document_group where isdeleted = true;
+-------EOF INTRANET MESS DELETE EOF
+
 
