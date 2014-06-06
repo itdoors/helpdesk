@@ -1227,4 +1227,6 @@ HelpdeskGuid:
       primary: true
       type: string(32)
       notnull: true
+    name_1c:
+      type: string(255)
 
