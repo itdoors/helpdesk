@@ -172,6 +172,9 @@ PlannedAccrual:
     department_people_id:
       type: integer
       notnull: true
+    is_active:
+      type: boolean
+      default: true
   relations:
     DepartmentPeople:
       class: DepartmentPeople
