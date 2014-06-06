@@ -22,6 +22,7 @@ abstract class BasePlannedAccrualForm extends BaseFormDoctrine
       'type'                 => new sfWidgetFormInputText(),
       'value'                => new sfWidgetFormInputText(),
       'department_people_id' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('DepartmentPeople'), 'add_empty' => false)),
+      'is_active'            => new sfWidgetFormInputCheckbox(),
     ));
 
     $this->setValidators(array(
@@ -32,6 +33,7 @@ abstract class BasePlannedAccrualForm extends BaseFormDoctrine
       'type'                 => new sfValidatorString(array('max_length' => 10)),
       'value'                => new sfValidatorString(array('max_length' => 100)),
       'department_people_id' => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('DepartmentPeople'))),
+      'is_active'            => new sfValidatorBoolean(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('planned_accrual[%s]');

@@ -12,6 +12,7 @@
  * @property string $type
  * @property string $value
  * @property integer $department_people_id
+ * @property boolean $is_active
  * @property DepartmentPeople $DepartmentPeople
  * 
  * @method integer          getId()                   Returns the current record's "id" value
@@ -21,6 +22,7 @@
  * @method string           getType()                 Returns the current record's "type" value
  * @method string           getValue()                Returns the current record's "value" value
  * @method integer          getDepartmentPeopleId()   Returns the current record's "department_people_id" value
+ * @method boolean          getIsActive()             Returns the current record's "is_active" value
  * @method DepartmentPeople getDepartmentPeople()     Returns the current record's "DepartmentPeople" value
  * @method PlannedAccrual   setId()                   Sets the current record's "id" value
  * @method PlannedAccrual   setName()                 Sets the current record's "name" value
@@ -29,6 +31,7 @@
  * @method PlannedAccrual   setType()                 Sets the current record's "type" value
  * @method PlannedAccrual   setValue()                Sets the current record's "value" value
  * @method PlannedAccrual   setDepartmentPeopleId()   Sets the current record's "department_people_id" value
+ * @method PlannedAccrual   setIsActive()             Sets the current record's "is_active" value
  * @method PlannedAccrual   setDepartmentPeople()     Sets the current record's "DepartmentPeople" value
  * 
  * @package    helpdesk
@@ -73,6 +76,10 @@ abstract class BasePlannedAccrual extends sfDoctrineRecord
         $this->hasColumn('department_people_id', 'integer', null, array(
              'type' => 'integer',
              'notnull' => true,
+             ));
+        $this->hasColumn('is_active', 'boolean', null, array(
+             'type' => 'boolean',
+             'default' => true,
              ));
     }
 

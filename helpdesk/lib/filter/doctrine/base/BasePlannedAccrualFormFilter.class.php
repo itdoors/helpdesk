@@ -19,6 +19,7 @@ abstract class BasePlannedAccrualFormFilter extends BaseFormFilterDoctrine
       'type'                 => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'value'                => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'department_people_id' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('DepartmentPeople'), 'add_empty' => true)),
+      'is_active'            => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
     ));
 
     $this->setValidators(array(
@@ -28,6 +29,7 @@ abstract class BasePlannedAccrualFormFilter extends BaseFormFilterDoctrine
       'type'                 => new sfValidatorPass(array('required' => false)),
       'value'                => new sfValidatorPass(array('required' => false)),
       'department_people_id' => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('DepartmentPeople'), 'column' => 'id')),
+      'is_active'            => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
     ));
 
     $this->widgetSchema->setNameFormat('planned_accrual_filters[%s]');
@@ -54,6 +56,7 @@ abstract class BasePlannedAccrualFormFilter extends BaseFormFilterDoctrine
       'type'                 => 'Text',
       'value'                => 'Text',
       'department_people_id' => 'ForeignKey',
+      'is_active'            => 'Boolean',
     );
   }
 }
