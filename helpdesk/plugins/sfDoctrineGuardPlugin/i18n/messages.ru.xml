@@ -48,7 +48,10 @@
         <source>Impel Griffin Group</source>
         <target>Импел Гриффин Груп</target>
       </trans-unit>
-      
+      <trans-unit>
+          <source>Not officially</source>
+          <target>Не официально</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

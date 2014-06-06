@@ -26,7 +26,7 @@ all:
   .settings:
     # Form security secret (CSRF protection)
     csrf_secret:            59cf622216890f6758099d956ebbabc7edaf2433
-    enabled_modules:        [default, sfGuardAuth, sfJqueryFormVal, language, claim, common, nopermission, claimopened, claimclosed, messages, ajax, attach, Fmodel, dialog, FcCostsn, F_finance_claim]
+    enabled_modules:        [default, sfGuardAuth, sfJqueryFormVal, language, claim, common, nopermission, claimopened, claimclosed, messages, ajax, attach, Fmodel, dialog, FcCostsn, F_finance_claim, changepass]
     # Output escaping settings
     escaping_strategy:      true
     escaping_method:        ESC_SPECIALCHARS

@@ -1,6 +1,9 @@
 # You can find more information about this file on the symfony website:
 # http://www.symfony-project.org/reference/1_4/en/10-Routing
 
+changepass:
+  url:   /changepass
+  param: { module: changepass, action: index }
 
 entity_show:
   url:   /entity/show/:department_id
