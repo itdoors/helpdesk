@@ -14,7 +14,7 @@ default:
 
   stylesheets:    [reset.css, style.css, main.css, jquery-ui.css, default.css]
 
-  javascripts:    [jquery.min.js, jquery.ui.min.js, jquery.validate.min.js, forms.js, helpdesk.js, saveClass/DSaveStatus.js, saveClass/DSaveClaimtype.js, saveClass/DSaveDescription.js, saveClass/DSaveSDescription.js, saveClass/DSaveKurator.js, saveClass/DSaveStuff.js, saveClass/DSaveOurcosts.js]
+  javascripts:    [jquery.min.js, jquery.ui.min.js, jquery.validate.min.js, forms.js, helpdesk.js, saveClass/DSaveStatus.js, saveClass/DSaveClaimtype.js, saveClass/DSaveDescription.js, saveClass/DSaveSDescription.js, saveClass/DSaveKurator.js, saveClass/DSaveStuff.js, saveClass/DSaveOurcosts.jsjqprint.js, /js/jquery.dataTables.js, media/ZeroClipboard/ZeroClipboard.js, media/js/TableTools.js]
 
   has_layout:     true
   layout:         layout
