@@ -296,7 +296,7 @@ class claimDispatcherNewForm extends claimWithCommentsForm
     
     // дабавляем тип организации
     $organization = organizationTable::getInstance()->find($values['organization_list']);
-    $organization_type_id = $organization ? $organization->getOrganizationTypeId() : null;
+    $organization_type_id = $organization ? $organization->getOrganizationTypeId() : OrganizationType::TYPE__NETWORK_ID;
     
     $this->organization_type_id = $organization_type_id;
     
